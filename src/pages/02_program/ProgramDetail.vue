@@ -14,7 +14,7 @@ const day = computed(() => festivalDays.find((item) => item.id === dayId.value))
 <template>
   <section class="bg-background">
     <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
-      <Button as-child variant="ghost" class="mb-8 px-0">
+      <Button as-child variant="ghost" class="mb-8 px-0" data-reveal="left">
         <RouterLink :to="{ path: '/', hash: '#programa' }">
           <ArrowLeft class="size-4" />
           Volver al programa
@@ -22,7 +22,7 @@ const day = computed(() => festivalDays.find((item) => item.id === dayId.value))
       </Button>
 
       <article v-if="day" class="space-y-8">
-        <div class="space-y-4">
+        <div data-reveal class="space-y-4">
           <p class="inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground">
             <CalendarDays class="size-4" />
             {{ day.date }}
@@ -35,7 +35,7 @@ const day = computed(() => festivalDays.find((item) => item.id === dayId.value))
           </p>
         </div>
 
-        <Card>
+        <Card data-reveal style="--reveal-delay: 140ms">
           <CardHeader>
             <CardTitle class="text-2xl">Actividades destacadas</CardTitle>
           </CardHeader>
@@ -43,6 +43,7 @@ const day = computed(() => festivalDays.find((item) => item.id === dayId.value))
             <div
               v-for="activity in day.activities"
               :key="activity"
+              data-reveal
               class="flex items-center gap-3 rounded-md bg-secondary px-4 py-3 text-sm font-medium"
             >
               <CheckCircle2 class="size-4 text-primary" />

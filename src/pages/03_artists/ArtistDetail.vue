@@ -14,7 +14,7 @@ const artist = computed(() => artists.find((item) => item.id === artistId.value)
 <template>
   <section class="bg-background">
     <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
-      <Button as-child variant="ghost" class="mb-8 px-0">
+      <Button as-child variant="ghost" class="mb-8 px-0" data-reveal="left">
         <RouterLink :to="{ path: '/', hash: '#artistas' }">
           <ArrowLeft class="size-4" />
           Volver a artistas
@@ -22,7 +22,7 @@ const artist = computed(() => artists.find((item) => item.id === artistId.value)
       </Button>
 
       <article v-if="artist" class="grid gap-8 lg:grid-cols-[0.8fr_1fr]">
-        <Card class="aspect-[4/5] justify-between overflow-hidden bg-primary text-primary-foreground">
+        <Card data-reveal="left" class="aspect-[4/5] justify-between overflow-hidden bg-primary text-primary-foreground">
           <CardHeader>
             <div class="flex items-center justify-between">
               <span class="rounded-md bg-background px-3 py-2 text-sm font-semibold text-foreground">
@@ -37,7 +37,7 @@ const artist = computed(() => artists.find((item) => item.id === artistId.value)
           </CardContent>
         </Card>
 
-        <div class="space-y-6">
+        <div data-reveal="right" style="--reveal-delay: 120ms" class="space-y-6">
           <div>
             <h2 class="text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
               {{ artist.name }} en Esclat.

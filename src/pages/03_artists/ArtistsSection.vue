@@ -63,9 +63,9 @@ function descriptionClass(index: number, isPlaceholder?: boolean) {
 </script>
 
 <template>
-  <section class="festival-section-center bg-background">
+  <section class="festival-section-center festival-theme-alt">
     <div class="section-container-narrow">
-      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div data-reveal class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="text-sm font-semibold uppercase text-primary">Line-up</p>
           <h2 class="mt-3 text-4xl font-semibold text-foreground sm:text-5xl">Artistas.</h2>
@@ -76,7 +76,7 @@ function descriptionClass(index: number, isPlaceholder?: boolean) {
         </p>
       </div>
 
-      <div class="mt-8 grid grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-5">
+      <div data-reveal style="--reveal-delay: 120ms" class="mt-8 grid grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-5">
         <Button
           variant="ghost"
           size="icon-lg"
@@ -93,6 +93,8 @@ function descriptionClass(index: number, isPlaceholder?: boolean) {
             v-for="(artist, index) in visibleArtists"
             :key="artist.id"
             :to="artist.isPlaceholder ? undefined : { name: 'artist-detail', params: { id: artist.id } }"
+            data-reveal="clip"
+            :style="{ '--reveal-delay': `${index * 70}ms` }"
             class="group block rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <Card

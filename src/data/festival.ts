@@ -30,13 +30,20 @@ export interface FaqItem {
   answer: string
 }
 
+export interface TicketOption {
+  id: string
+  name: string
+  description: string
+  price: number
+}
+
 export const festivalInfo = {
   name: "Esclat",
   claim: "Las cosas que crecen dentro hasta terminar por esclatar.",
   dates: "23/10 - 25/10",
   place: "La Naves, Valencia",
   email: "somos@esclat.com",
-  phone: "+34 600 27 05 02",
+  phone: "+34 6XX XX XX XX",
   producer: "Campaña, programación y experiencia de marca por Esclat Studio.",
 }
 
@@ -124,6 +131,27 @@ export const programBlocks: ProgramBlock[] = [
     title: "Stands & Merch.",
     summary:
       "Zona de marcas, publicaciones independientes, camisetas, prints y objetos de edición limitada.",
+  },
+]
+
+export const ticketOptions: TicketOption[] = [
+  {
+    id: "dia",
+    name: "Entrada de día",
+    description: "Acceso a conciertos, exposiciones y actividades de una jornada.",
+    price: 18,
+  },
+  {
+    id: "abono",
+    name: "Abono completo",
+    description: "Acceso a los tres días del festival con prioridad de entrada.",
+    price: 42,
+  },
+  {
+    id: "pro",
+    name: "Pase profesional",
+    description: "Entrada completa, acreditación y acceso preferente a charlas.",
+    price: 64,
   },
 ]
 

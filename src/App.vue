@@ -2,6 +2,9 @@
 import { RouterView } from "vue-router"
 import SiteFooter from "@/components/layout/SiteFooter.vue"
 import SiteHeader from "@/components/layout/SiteHeader.vue"
+import { useScrollReveal } from "@/composables/useScrollReveal"
+
+useScrollReveal()
 </script>
 
 <template>

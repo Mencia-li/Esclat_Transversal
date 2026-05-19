@@ -22,9 +22,9 @@ function dayClass(index: number) {
 </script>
 
 <template>
-  <section class="festival-section-center bg-background">
+  <section class="festival-section-center festival-theme-program">
     <div class="section-container">
-      <div class="max-w-4xl">
+      <div data-reveal class="max-w-4xl">
         <p class="text-sm font-semibold uppercase text-primary">Programa</p>
         <h2 class="mt-3 text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
           {{ festivalInfo.claim }}
@@ -36,6 +36,8 @@ function dayClass(index: number) {
           v-for="(day, index) in festivalDays"
           :key="day.id"
           :to="{ name: 'program-detail', params: { dia: day.id } }"
+          data-reveal="clip"
+          :style="{ '--reveal-delay': `${index * 120}ms` }"
           class="group block rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <Card

@@ -128,7 +128,96 @@
   }
 }
 
+[data-reveal] {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(0, 2rem, 0) scale(0.985);
+  clip-path: inset(0 0 0 0 round 0);
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    clip-path 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter, clip-path;
+}
+
+[data-reveal="fade"] {
+  transform: none;
+}
+
+[data-reveal="left"] {
+  transform: translate3d(-2rem, 0, 0);
+}
+
+[data-reveal="right"] {
+  transform: translate3d(2rem, 0, 0);
+}
+
+[data-reveal="scale"] {
+  transform: scale(0.94);
+}
+
+[data-reveal="clip"] {
+  filter: blur(4px);
+  clip-path: inset(14% 0 14% 0 round var(--radius));
+  transform: translate3d(0, 1.5rem, 0) scale(1.035);
+}
+
+[data-reveal="panel"] {
+  filter: none;
+  clip-path: inset(0 0 100% 0 round var(--radius));
+  transform: translate3d(0, 0, 0);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0) scale(1);
+  clip-path: inset(0 0 0 0 round 0);
+}
+
+[data-parallax] {
+  transform: translate3d(0, var(--parallax-y, 0px), 0) scale(var(--parallax-scale, 1));
+  transform-origin: center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    filter: none;
+    clip-path: none;
+    transform: none;
+    transition: none;
+  }
+
+  [data-parallax] {
+    transform: none;
+  }
+}
+
 @layer utilities {
+  .festival-theme-program {
+    background-color: var(--esclat-gray);
+    color: var(--esclat-dark-gray);
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
+  }
+
+  .festival-theme-alt {
+    background-color: var(--esclat-white);
+    color: var(--esclat-dark-gray);
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
+  }
+
   .section-container {
     @apply mx-auto w-full max-w-7xl px-6 py-12 md:py-14;
   }
@@ -147,5 +236,29 @@
     position: relative;
     min-height: calc(100svh - 5rem);
     @apply flex items-center border-b border-border;
+  }
+
+  .festival-section-shop {
+    position: relative;
+    @apply flex items-center border-b border-border;
+    min-height: calc(100svh - 5rem);
+  }
+
+  .shop-section-container {
+    @apply mx-auto flex w-full max-w-7xl flex-col px-6 py-8 md:py-10;
+  }
+
+  @media (min-width: 1024px) {
+    .festival-section-shop {
+      height: calc(100svh - 5rem);
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .shop-section-container {
+      height: 100%;
+      min-height: 0;
+      @apply py-5;
+    }
   }
 }

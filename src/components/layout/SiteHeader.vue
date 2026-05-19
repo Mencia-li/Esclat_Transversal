@@ -24,7 +24,7 @@ const programLinks = [
 
 const navLinks = [
   { label: "Artistas", to: { path: "/", hash: "#artistas" }, icon: Users },
-  { label: "Tienda", to: { path: "/", hash: "#contacto" }, icon: Music2 },
+  { label: "Tienda", to: { path: "/", hash: "#tienda" }, icon: Music2 },
   { label: "FAQs", to: { path: "/", hash: "#faqs" }, icon: HelpCircle },
 ]
 </script>
@@ -103,7 +103,7 @@ const navLinks = [
         </DropdownMenu>
 
         <Button as-child size="sm">
-          <RouterLink :to="{ path: '/', hash: '#contacto' }">
+          <RouterLink :to="{ path: '/', hash: '#tienda' }">
             <Ticket class="size-4" />
             Entradas
           </RouterLink>

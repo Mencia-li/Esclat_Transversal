@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 function blockClass(index: number) {
   const classes = [
-    "bg-card text-card-foreground",
-    "bg-muted text-muted-foreground",
+    "bg-background text-foreground",
+    "bg-foreground text-background",
     "bg-primary text-primary-foreground",
     "bg-secondary text-secondary-foreground",
   ] as const
@@ -15,20 +15,26 @@ function blockClass(index: number) {
 </script>
 
 <template>
-  <section class="festival-section-center bg-background">
+  <section class="festival-section-center festival-theme-program">
     <div class="section-container">
-      <h2 class="text-4xl font-semibold text-foreground sm:text-5xl">Programación.</h2>
+      <h2 data-reveal class="border-b border-border pb-4 text-4xl font-semibold text-foreground sm:text-5xl">
+        Programación.
+      </h2>
 
-      <div class="mt-8 grid gap-4 md:grid-cols-2">
+      <div data-reveal class="grid border-x border-b border-border md:grid-cols-2">
         <Card
           v-for="(block, index) in programBlocks"
           :key="block.id"
-          :class="['min-h-56 justify-between transition hover:-translate-y-1 hover:shadow-lg', blockClass(index)]"
+          :class="[
+            'min-h-44 justify-between rounded-none border-0 border-b border-border shadow-none transition hover:brightness-95 md:min-h-48 md:odd:border-r md:[&:nth-last-child(-n+2)]:border-b-0',
+            blockClass(index),
+          ]"
         >
-          <CardHeader>
-            <CardTitle class="text-4xl leading-tight">{{ block.title }}</CardTitle>
+          <CardHeader class="px-6 pt-6">
+            <CardTitle class="text-4xl leading-tight tracking-normal">{{ block.title }}</CardTitle>
           </CardHeader>
-          <CardContent class="pb-6">
+
+          <CardContent class="px-6 pb-6">
             <p class="max-w-xl text-sm leading-relaxed">
               {{ block.summary }}
             </p>
