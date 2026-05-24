@@ -2,6 +2,7 @@ import Home from "@/pages/01_home/Home.vue"
 import ArtistDetail from "@/pages/03_artists/ArtistDetail.vue"
 import RouteShell from "@/pages/detail/RouteShell.vue"
 import ProgramDetail from "@/pages/02_program/ProgramDetail.vue"
+import ShopSection from "@/pages/05_shop/ShopSection.vue"
 import { createRouter, createWebHashHistory } from "vue-router"
 
 export const router = createRouter({
@@ -47,6 +48,11 @@ export const router = createRouter({
           component: ArtistDetail,
         },
       ],
+    },
+    {
+      path: "/tienda",
+      name: "shop",
+      component: ShopSection,
     },
     {
       path: "/:pathMatch(.*)",

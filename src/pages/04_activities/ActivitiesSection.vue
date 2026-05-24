@@ -1,46 +1,65 @@
 <script setup lang="ts">
-import { programBlocks } from "@/data/festival"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { RouterLink } from "vue-router"
 
-function blockClass(index: number) {
-  const classes = [
-    "bg-background text-foreground",
-    "bg-foreground text-background",
-    "bg-primary text-primary-foreground",
-    "bg-secondary text-secondary-foreground",
-  ] as const
-
-  return classes[index] ?? classes[0]
-}
+const activityBlocks = [
+  {
+    id: "talleres",
+    title: "Talleres.",
+    summary:
+      "Producción musical, collage, maquillaje, movimiento y creación de objetos para transformar los temas del festival en práctica.",
+    className: "bg-background text-foreground",
+    to: undefined,
+  },
+  {
+    id: "charlas",
+    title: "Charlas.",
+    summary:
+      "Conversaciones en La Polivalent con formato abierto, preguntas del público y enfoque accesible.",
+    className: "bg-foreground text-background",
+    to: undefined,
+  },
+  {
+    id: "exposiciones",
+    title: "Exposiciones.",
+    summary:
+      "Tres exposiciones fotográficas sobre salud mental, cuerpo, fama, privacidad e industria musical.",
+    className: "bg-primary text-primary-foreground",
+    to: undefined,
+  },
+  {
+    id: "stands-merch",
+    title: "Tienda.",
+    summary:
+      "Food trucks, bebidas, merchandising oficial y espacios comunes abiertos durante todo el horario del festival.",
+    className: "bg-secondary text-secondary-foreground",
+    to: { path: "/tienda" },
+  },
+] as const
 </script>
 
 <template>
-  <section class="festival-section-center festival-theme-program">
-    <div class="section-container">
-      <h2 data-reveal class="border-b border-border pb-4 text-4xl font-semibold text-foreground sm:text-5xl">
-        Programación.
-      </h2>
+  <section class="border-b border-foreground bg-background">
+    <h2 data-reveal class="border-b border-foreground px-5 py-4 text-4xl font-normal leading-none text-foreground sm:px-6 sm:text-5xl lg:px-8">
+      Programación.
+    </h2>
 
-      <div data-reveal class="grid border-x border-b border-border md:grid-cols-2">
-        <Card
-          v-for="(block, index) in programBlocks"
-          :key="block.id"
-          :class="[
-            'min-h-44 justify-between rounded-none border-0 border-b border-border shadow-none transition hover:brightness-95 md:min-h-48 md:odd:border-r md:[&:nth-last-child(-n+2)]:border-b-0',
-            blockClass(index),
-          ]"
-        >
-          <CardHeader class="px-6 pt-6">
-            <CardTitle class="text-4xl leading-tight tracking-normal">{{ block.title }}</CardTitle>
-          </CardHeader>
-
-          <CardContent class="px-6 pb-6">
-            <p class="max-w-xl text-sm leading-relaxed">
-              {{ block.summary }}
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+    <div data-reveal class="grid grid-cols-2">
+      <component
+        :is="block.to ? RouterLink : 'article'"
+        v-for="block in activityBlocks"
+        :key="block.id"
+        :to="block.to"
+        :class="[
+          'block min-h-44 border-b border-foreground p-4 outline-none transition odd:border-r [&:nth-last-child(-n+2)]:border-b-0 sm:min-h-52 sm:p-6 lg:min-h-60 lg:p-8',
+          block.to ? 'hover:brightness-95 focus-visible:ring-2 focus-visible:ring-ring' : '',
+          block.className,
+        ]"
+      >
+        <h3 class="text-2xl font-normal leading-none sm:text-4xl lg:text-5xl">{{ block.title }}</h3>
+        <p class="mt-5 max-w-2xl text-xs leading-relaxed sm:mt-8 sm:text-sm lg:text-base">
+          {{ block.summary }}
+        </p>
+      </component>
     </div>
   </section>
 </template>

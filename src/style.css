@@ -219,7 +219,7 @@
   }
 
   .section-container {
-    @apply mx-auto w-full max-w-7xl px-6 py-12 md:py-14;
+    @apply mx-auto w-full max-w-[92rem] px-6 py-12 md:py-14 lg:px-8;
   }
 
   .section-container-narrow {
@@ -245,20 +245,16 @@
   }
 
   .shop-section-container {
-    @apply mx-auto flex w-full max-w-7xl flex-col px-6 py-8 md:py-10;
+    @apply mx-auto flex w-full max-w-[92rem] flex-col px-6 py-8 md:py-10 lg:px-8;
   }
 
   @media (min-width: 1024px) {
     .festival-section-shop {
-      height: calc(100svh - 5rem);
-      min-height: 0;
-      overflow: hidden;
+      align-items: stretch;
     }
 
     .shop-section-container {
-      height: 100%;
-      min-height: 0;
-      @apply py-5;
+      @apply py-10;
     }
   }
 }

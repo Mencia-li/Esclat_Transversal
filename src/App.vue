@@ -9,7 +9,7 @@ useScrollReveal()
 
 <template>
   <SiteHeader />
-  <main class="pt-20">
+  <main class="pt-14">
     <RouterView />
   </main>
   <SiteFooter />

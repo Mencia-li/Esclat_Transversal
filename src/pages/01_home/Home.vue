@@ -3,12 +3,11 @@ import HeroSection from "@/pages/01_home/HeroSection.vue"
 import CalendarSection from "@/pages/02_program/CalendarSection.vue"
 import ArtistsSection from "@/pages/03_artists/ArtistsSection.vue"
 import ActivitiesSection from "@/pages/04_activities/ActivitiesSection.vue"
-import ShopSection from "@/pages/05_shop/ShopSection.vue"
 import FaqSection from "@/pages/06_faqs/FaqSection.vue"
 </script>
 
 <template>
-  <main>
+  <div>
     <section id="inicio" class="scroll-mt-20">
       <HeroSection />
     </section>
@@ -25,12 +24,8 @@ import FaqSection from "@/pages/06_faqs/FaqSection.vue"
       <ActivitiesSection />
     </section>
 
-    <section id="tienda" class="scroll-mt-20">
-      <ShopSection />
-    </section>
-
     <section id="faqs" class="scroll-mt-20">
       <FaqSection />
     </section>
-  </main>
+  </div>
 </template>

@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue"
-import { CreditCard, LockKeyhole, MapPin, Minus, Plus, ShieldCheck, Ticket } from "lucide-vue-next"
+import { RouterLink } from "vue-router"
+import {
+  ArrowUpRight,
+  BadgeCheck,
+  CheckCircle2,
+  ClipboardList,
+  Mail,
+  Package,
+  ShieldCheck,
+  ShoppingBag,
+  Ticket,
+} from "lucide-vue-next"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -13,57 +24,37 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { festivalInfo, ticketOptions } from "@/data/festival"
+import { accessSteps, safetyRules, ticketOptions } from "@/data/festival"
 
-type PurchaseField = "name" | "email" | "notes"
-
-const mapSrc =
-  "https://www.google.com/maps?q=Las%20Naves%20Valencia&output=embed"
+type AccessField = "name" | "email" | "notes"
 
 const form = reactive({
   name: "",
   email: "",
-  ticketId: ticketOptions[1]?.id ?? ticketOptions[0]?.id ?? "",
-  paymentMethod: "tarjeta",
+  ticketId: ticketOptions[0]?.id ?? "",
   notes: "",
 })
 
-const quantity = ref(2)
 const submitted = ref(false)
 const triedSubmit = ref(false)
 
-const validEmail = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+const merchItems = [
+  "Camiseta azul Esclat",
+  "Tote bag del festival",
+  "Prints y pegatinas",
+]
+
 const selectedTicket = computed(() => ticketOptions.find((ticket) => ticket.id === form.ticketId) ?? ticketOptions[0])
-const subtotal = computed(() => (selectedTicket.value?.price ?? 0) * quantity.value)
-const serviceFee = computed(() => quantity.value * 1.2)
-const total = computed(() => subtotal.value + serviceFee.value)
-const canSubmit = computed(
-  () =>
-    form.name.trim().length > 1 &&
-    validEmail.value &&
-    form.ticketId.length > 0 &&
-    form.paymentMethod.length > 0,
-)
+const validEmail = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+const canSubmit = computed(() => form.name.trim().length > 1 && validEmail.value && form.ticketId.length > 0)
 
-function formatPrice(value: number) {
-  return new Intl.NumberFormat("es-ES", {
-    style: "currency",
-    currency: "EUR",
-  }).format(value)
-}
-
-function updateField(field: PurchaseField, event: Event) {
+function updateField(field: AccessField, event: Event) {
   const target = event.target as HTMLInputElement | HTMLTextAreaElement
   form[field] = target.value
   submitted.value = false
 }
 
-function updateQuantity(change: number) {
-  quantity.value = Math.min(6, Math.max(1, quantity.value + change))
-  submitted.value = false
-}
-
-function submitPurchase() {
+function submitAccess() {
   triedSubmit.value = true
 
   if (!canSubmit.value) {
@@ -75,95 +66,90 @@ function submitPurchase() {
 </script>
 
 <template>
-  <section class="festival-section-shop bg-secondary">
+  <section class="festival-section-shop festival-theme-alt">
     <div class="shop-section-container">
       <div data-reveal class="mb-5 flex shrink-0 flex-col gap-3 md:flex-row md:items-end md:justify-between lg:mb-4">
         <div>
-          <p class="text-sm font-semibold uppercase text-primary">Tienda</p>
-          <h2 class="mt-2 text-4xl font-semibold text-foreground sm:text-5xl">Entradas.</h2>
+          <p class="text-sm font-semibold uppercase text-primary">Entradas gratuitas</p>
+          <h2 class="mt-2 text-4xl font-semibold leading-tight text-foreground sm:text-5xl">Tienda.</h2>
         </div>
 
         <p class="max-w-md text-sm leading-relaxed text-muted-foreground">
-          Compra o reserva tus entradas para Esclat con un resumen claro antes de confirmar.
+          El acceso a ESCLAT es gratuito. Solo los talleres necesitan inscripción previa por aforo limitado.
         </p>
       </div>
 
-      <div class="grid min-h-0 flex-1 gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-        <Card data-reveal="clip" class="min-h-0 overflow-hidden bg-background lg:h-full">
-          <CardHeader class="shrink-0 px-5 pt-5">
-            <div class="flex items-center gap-3 text-primary">
-              <MapPin class="size-5" />
-              <span class="text-sm font-semibold uppercase">Ubicación</span>
-            </div>
-            <CardTitle class="text-2xl leading-tight md:text-3xl">{{ festivalInfo.place }}</CardTitle>
-          </CardHeader>
-
-          <CardContent class="flex min-h-0 flex-1 flex-col gap-3 px-5 pb-5">
-            <div class="min-h-64 flex-1 overflow-hidden rounded-lg border border-border bg-muted md:min-h-80 lg:min-h-0">
-              <iframe
-                :src="mapSrc"
-                width="100%"
-                height="100%"
-                style="border:0;"
-                allowfullscreen
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                class="size-full"
-                title="Mapa del lugar del evento Esclat"
-              />
-            </div>
-
-            <p class="shrink-0 text-sm leading-relaxed text-muted-foreground">
-              Acceso recomendado en transporte público. La validación de entradas se hará en el punto de acceso principal.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card
-          id="contacto"
-          data-reveal="clip"
-          style="--reveal-delay: 140ms"
-          class="scroll-mt-20 min-h-0 overflow-hidden bg-background lg:h-full"
-        >
-          <CardHeader class="shrink-0 border-b border-border bg-foreground px-5 pt-5 pb-5 text-background">
-            <div class="flex items-center justify-between gap-4">
-              <div class="flex items-center gap-3 text-background">
-                <Ticket class="size-5" />
-                <span class="text-sm font-semibold uppercase">Compra de entradas</span>
-              </div>
-              <span class="inline-flex items-center gap-2 rounded-md bg-background/10 px-3 py-1 text-xs font-semibold">
-                <LockKeyhole class="size-3" />
-                Pago seguro
-              </span>
-            </div>
-            <CardTitle class="text-3xl leading-tight">Reserva tu acceso.</CardTitle>
-          </CardHeader>
-
-          <CardContent class="min-h-0 space-y-5 overflow-y-auto px-5 py-5 lg:flex-1">
-            <div class="grid gap-3">
-              <Button
-                v-for="ticket in ticketOptions"
-                :key="ticket.id"
-                type="button"
-                :variant="form.ticketId === ticket.id ? 'default' : 'outline'"
-                class="h-auto w-full justify-between p-4 text-left"
-                @click="form.ticketId = ticket.id"
-              >
-                <span class="min-w-0 space-y-1">
-                  <span class="block text-base font-semibold">{{ ticket.name }}</span>
-                  <span class="block whitespace-normal text-xs opacity-80">{{ ticket.description }}</span>
+      <div class="grid min-h-0 flex-1 gap-5 lg:grid-cols-[1.55fr_0.85fr]">
+        <Card data-reveal="clip" class="min-h-0 overflow-hidden border-0 bg-primary text-primary-foreground lg:h-full">
+          <CardContent class="grid min-h-[36rem] p-0 lg:h-full lg:grid-cols-[1fr_0.78fr]">
+            <div class="flex min-h-[26rem] flex-col justify-between p-6 sm:p-8">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="inline-flex items-center gap-2 rounded-md bg-background px-3 py-2 text-xs font-semibold uppercase text-foreground">
+                    <Ticket class="size-4" />
+                    Acceso gratuito
+                  </p>
+                  <h3 class="mt-5 max-w-xl text-4xl font-semibold leading-tight sm:text-5xl">
+                    Reserva tu plaza en los talleres de ESCLAT.
+                  </h3>
+                </div>
+                <span class="hidden rounded-md border border-background/30 px-3 py-2 text-sm font-semibold sm:inline-flex">
+                  0 EUR
                 </span>
-                <span class="shrink-0 text-base font-semibold">{{ formatPrice(ticket.price) }}</span>
-              </Button>
+              </div>
+
+              <div class="mt-8 rounded-xl border border-background/25 bg-background/10 p-4 shadow-inner">
+                <div class="grid gap-3 sm:grid-cols-[1fr_auto]">
+                  <div class="relative overflow-hidden rounded-lg bg-background p-5 text-foreground">
+                    <div class="absolute bottom-0 top-0 right-20 border-l border-dashed border-primary/40" />
+                    <div class="flex h-full min-h-40 flex-col justify-between">
+                      <div class="flex items-center justify-between gap-4">
+                        <span class="text-xs font-semibold uppercase text-primary">ESCLAT 2026</span>
+                        <BadgeCheck class="size-5 text-primary" />
+                      </div>
+                      <div>
+                        <p class="text-3xl font-semibold leading-none">Entrada gratis</p>
+                        <p class="mt-3 max-w-sm text-sm text-muted-foreground">
+                          Las Naves · 23-25 octubre · 16:00-00:00 h
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex min-h-40 min-w-24 flex-col items-center justify-between rounded-lg bg-background/90 px-4 py-5 text-foreground">
+                    <Ticket class="size-6 text-primary" />
+                    <span class="text-center text-xs font-semibold uppercase leading-tight">Libre acceso</span>
+                    <span class="text-xs text-muted-foreground">QR</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 flex flex-wrap items-center gap-3">
+                <Button as-child variant="secondary" size="lg">
+                  <RouterLink :to="{ path: '/tienda', hash: '#contacto' }">
+                    Reservar gratis
+                    <ArrowUpRight class="size-4" />
+                  </RouterLink>
+                </Button>
+                <span class="inline-flex items-center gap-2 text-sm font-semibold text-primary-foreground/85">
+                  <CheckCircle2 class="size-4" />
+                  Sin pago ni gastos de gestión
+                </span>
+              </div>
             </div>
 
-            <form class="space-y-4" @submit.prevent="submitPurchase">
-              <div class="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
+            <div id="contacto" class="scroll-mt-20 bg-background p-5 text-foreground sm:p-6 lg:overflow-y-auto">
+              <div class="mb-5 flex items-center gap-3 text-primary">
+                <Mail class="size-5" />
+                <span class="text-sm font-semibold uppercase">Inscripción</span>
+              </div>
+
+              <form class="space-y-4" @submit.prevent="submitAccess">
                 <div class="space-y-2">
-                  <Label>Tipo de entrada</Label>
+                  <Label for="access-type">Tipo de acceso</Label>
                   <Select v-model="form.ticketId">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona una entrada" />
+                    <SelectTrigger id="access-type">
+                      <SelectValue placeholder="Selecciona un acceso" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem v-for="ticket in ticketOptions" :key="ticket.id" :value="ticket.id">
@@ -173,118 +159,148 @@ function submitPurchase() {
                   </Select>
                 </div>
 
+                <div v-if="selectedTicket" class="rounded-lg border border-border bg-secondary p-4">
+                  <p class="text-sm font-semibold text-foreground">{{ selectedTicket.access }}</p>
+                  <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {{ selectedTicket.description }}
+                  </p>
+                </div>
+
                 <div class="space-y-2">
-                  <Label>Cantidad</Label>
-                  <div class="flex h-9 items-center rounded-md border border-input bg-background">
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon-sm"
-                      aria-label="Quitar entrada"
-                      :disabled="quantity === 1"
-                      @click="updateQuantity(-1)"
-                    >
-                      <Minus class="size-4" />
-                    </Button>
-                    <span class="w-10 text-center text-sm font-semibold tabular-nums">{{ quantity }}</span>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon-sm"
-                      aria-label="Añadir entrada"
-                      :disabled="quantity === 6"
-                      @click="updateQuantity(1)"
-                    >
-                      <Plus class="size-4" />
-                    </Button>
-                  </div>
+                  <Label for="access-name">Nombre</Label>
+                  <Input
+                    id="access-name"
+                    :value="form.name"
+                    placeholder="Nombre y apellidos"
+                    @input="updateField('name', $event)"
+                  />
                 </div>
-              </div>
 
-              <div class="space-y-2">
-                <Label for="ticket-name">Nombre del comprador</Label>
-                <Input
-                  id="ticket-name"
-                  :value="form.name"
-                  placeholder="Nombre y apellidos"
-                  @input="updateField('name', $event)"
-                />
-              </div>
-
-              <div class="space-y-2">
-                <Label for="ticket-email">Email de confirmación</Label>
-                <Input
-                  id="ticket-email"
-                  type="email"
-                  :value="form.email"
-                  placeholder="tu@email.com"
-                  @input="updateField('email', $event)"
-                />
-              </div>
-
-              <div class="space-y-2">
-                <Label for="payment-method">Método de pago</Label>
-                <Select v-model="form.paymentMethod">
-                  <SelectTrigger id="payment-method">
-                    <SelectValue placeholder="Selecciona un método" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="tarjeta">Tarjeta bancaria</SelectItem>
-                    <SelectItem value="bizum">Bizum</SelectItem>
-                    <SelectItem value="taquilla">Pago en taquilla</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div class="space-y-2">
-                <Label for="ticket-notes">Notas</Label>
-                <Textarea
-                  id="ticket-notes"
-                  :value="form.notes"
-                  placeholder="Accesibilidad, acreditaciones o dudas sobre la reserva"
-                  class="min-h-20"
-                  @input="updateField('notes', $event)"
-                />
-              </div>
-
-              <div class="rounded-lg border border-border bg-secondary p-4">
-                <div class="mb-3 flex items-center gap-2 font-semibold text-foreground">
-                  <CreditCard class="size-4 text-primary" />
-                  Resumen
+                <div class="space-y-2">
+                  <Label for="access-email">Email</Label>
+                  <Input
+                    id="access-email"
+                    type="email"
+                    :value="form.email"
+                    placeholder="tu@email.com"
+                    @input="updateField('email', $event)"
+                  />
                 </div>
-                <div class="space-y-2 text-sm text-muted-foreground">
-                  <div class="flex justify-between gap-4">
-                    <span>{{ selectedTicket?.name }} x {{ quantity }}</span>
-                    <span class="font-medium text-foreground">{{ formatPrice(subtotal) }}</span>
-                  </div>
-                  <div class="flex justify-between gap-4">
-                    <span>Gastos de gestión</span>
-                    <span class="font-medium text-foreground">{{ formatPrice(serviceFee) }}</span>
-                  </div>
-                  <div class="border-t border-border pt-3">
-                    <div class="flex justify-between gap-4 text-base font-semibold text-foreground">
-                      <span>Total</span>
-                      <span>{{ formatPrice(total) }}</span>
-                    </div>
-                  </div>
+
+                <div class="space-y-2">
+                  <Label for="access-notes">Notas</Label>
+                  <Textarea
+                    id="access-notes"
+                    :value="form.notes"
+                    placeholder="Talleres, accesibilidad o dudas"
+                    class="min-h-20"
+                    @input="updateField('notes', $event)"
+                  />
                 </div>
-              </div>
 
-              <p v-if="triedSubmit && !canSubmit" class="text-sm font-medium text-primary">
-                Completa el nombre, un email válido, tipo de entrada y método de pago.
-              </p>
+                <p v-if="triedSubmit && !canSubmit" class="text-sm font-medium text-primary">
+                  Completa el nombre, un email válido y el tipo de acceso.
+                </p>
 
-              <p v-if="submitted" class="rounded-md bg-secondary px-3 py-2 text-sm font-medium text-foreground">
-                Reserva preparada. Enviaremos la confirmación a {{ form.email }}.
-              </p>
+                <p v-if="submitted" class="rounded-md bg-secondary px-3 py-2 text-sm font-medium text-foreground">
+                  Solicitud recibida. Enviaremos la confirmación gratuita a {{ form.email }}.
+                </p>
 
-              <Button type="submit" class="w-full">
-                <ShieldCheck class="size-4" />
-                Confirmar reserva
-              </Button>
-            </form>
+                <Button type="submit" class="w-full">
+                  <CheckCircle2 class="size-4" />
+                  Confirmar inscripción
+                </Button>
+              </form>
+            </div>
           </CardContent>
         </Card>
+
+        <Card
+          data-reveal="clip"
+          style="--reveal-delay: 140ms"
+          class="min-h-[36rem] overflow-hidden border-0 bg-[#86a0d5] text-background lg:h-full"
+        >
+          <CardHeader class="p-6 sm:p-8">
+            <div class="flex items-center justify-between gap-4">
+              <p class="inline-flex items-center gap-2 rounded-md bg-background/15 px-3 py-2 text-xs font-semibold uppercase">
+                <ShoppingBag class="size-4" />
+                Merch
+              </p>
+              <Package class="size-6" />
+            </div>
+            <CardTitle class="pt-8 text-4xl leading-tight sm:text-5xl">
+              Merch oficial.
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent class="flex h-full flex-col justify-between gap-6 p-6 pt-0 sm:p-8 sm:pt-0">
+            <div class="grid gap-3">
+              <div class="rounded-xl bg-background/90 p-5 text-foreground">
+                <div class="mx-auto aspect-[3/4] max-w-40 rounded-t-3xl rounded-b-lg bg-primary shadow-lg">
+                  <div class="mx-auto h-10 w-16 rounded-b-full bg-[#86a0d5]" />
+                  <p class="px-5 pt-12 text-center text-2xl font-semibold text-primary-foreground">ESCLAT</p>
+                </div>
+              </div>
+
+              <div class="grid gap-2">
+                <p v-for="item in merchItems" :key="item" class="flex items-center gap-2 text-sm font-semibold">
+                  <CheckCircle2 class="size-4" />
+                  {{ item }}
+                </p>
+              </div>
+            </div>
+
+            <Button as-child variant="secondary" size="lg" class="w-fit">
+              <RouterLink :to="{ path: '/tienda', hash: '#contacto' }">
+                Consultar merch
+                <ArrowUpRight class="size-4" />
+              </RouterLink>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div class="mt-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+        <section data-reveal class="rounded-md border border-border bg-background p-6">
+          <div class="mb-6 flex items-center gap-3 text-primary">
+            <ClipboardList class="size-5" />
+            <h3 class="text-2xl font-semibold text-foreground">Cómo asistir.</h3>
+          </div>
+
+          <div class="grid gap-4">
+            <article
+              v-for="(step, index) in accessSteps"
+              :key="step.id"
+              class="grid grid-cols-[2.5rem_1fr] gap-3"
+            >
+              <span class="flex size-10 items-center justify-center rounded-md bg-primary text-sm font-semibold text-primary-foreground">
+                {{ index + 1 }}
+              </span>
+              <div>
+                <h4 class="font-semibold text-foreground">{{ step.title }}</h4>
+                <p class="mt-1 text-sm leading-relaxed text-muted-foreground">{{ step.summary }}</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section data-reveal style="--reveal-delay: 120ms" class="rounded-md border border-border bg-secondary p-6">
+          <div class="mb-6 flex items-center gap-3 text-primary">
+            <ShieldCheck class="size-5" />
+            <h3 class="text-2xl font-semibold text-foreground">Normas básicas.</h3>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <article
+              v-for="rule in safetyRules"
+              :key="rule.id"
+              class="rounded-md bg-background p-4"
+            >
+              <h4 class="font-semibold text-foreground">{{ rule.title }}</h4>
+              <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{{ rule.summary }}</p>
+            </article>
+          </div>
+        </section>
       </div>
     </div>
   </section>
