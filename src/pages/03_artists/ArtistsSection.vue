@@ -1,23 +1,37 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed, onBeforeUnmount, onMounted, ref } from "vue"
 import { RouterLink } from "vue-router"
-import { ArrowLeft, ArrowRight } from "lucide-vue-next"
-import { Button } from "@/components/ui/button"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 import { artistsCarouselItems } from "@/data/festival"
 
-const pageSize = 6
-const pageStep = 4
-const currentStart = ref(0)
+const visibleCount = ref<6 | 8 | 10>(6)
 
-const pageStarts = computed(() => {
-  const starts: number[] = []
-  const lastFullPageStart = Math.max(artistsCarouselItems.length - pageSize, 0)
+let mediumQuery: MediaQueryList | undefined
+let extraLargeQuery: MediaQueryList | undefined
 
-  for (let start = 0; start < artistsCarouselItems.length; start += pageStep) {
-    starts.push(Math.min(start, lastFullPageStart))
+const carouselOptions = {
+  align: "start",
+  loop: true,
+  slidesToScroll: 1,
+} as const
+
+const visibleColumnCount = computed(() => visibleCount.value / 2)
+const columnBasisClass = computed(() => {
+  if (visibleCount.value === 10) {
+    return "basis-1/5"
   }
 
-  return [...new Set(starts)]
+  if (visibleCount.value === 8) {
+    return "basis-1/4"
+  }
+
+  return "basis-1/3"
 })
 
 const carouselItems = computed(() =>
@@ -27,123 +41,158 @@ const carouselItems = computed(() =>
   })),
 )
 
-const visibleArtists = computed(() => carouselItems.value.slice(currentStart.value, currentStart.value + pageSize))
-const currentPage = computed(() => pageStarts.value.indexOf(currentStart.value) + 1)
-const visualOrderClasses = [
-  "order-1",
-  "order-4",
-  "order-2",
-  "order-5",
-  "order-3",
-  "order-6",
-] as const
+const artistColumns = computed(() => {
+  const columns = []
 
-function moveCarousel(direction: "next" | "previous") {
-  const currentIndex = pageStarts.value.indexOf(currentStart.value)
-  const nextIndex =
-    direction === "next"
-      ? (currentIndex + 1) % pageStarts.value.length
-      : (currentIndex - 1 + pageStarts.value.length) % pageStarts.value.length
+  for (let index = 0; index < carouselItems.value.length; index += 2) {
+    columns.push(carouselItems.value.slice(index, index + 2))
+  }
 
-  currentStart.value = pageStarts.value[nextIndex] ?? 0
+  return columns
+})
+
+function updateLayout() {
+  if (extraLargeQuery?.matches) {
+    visibleCount.value = 10
+    return
+  }
+
+  if (mediumQuery?.matches) {
+    visibleCount.value = 8
+    return
+  }
+
+  visibleCount.value = 6
 }
+
+function artistOriginClass(columnIndex: number, rowIndex: number) {
+  const visibleLastColumn = visibleColumnCount.value - 1
+  const visibleColumn = columnIndex % visibleColumnCount.value
+  const isTopRow = rowIndex === 0
+  const isFirstColumn = visibleColumn === 0
+  const isLastColumn = visibleColumn === visibleLastColumn
+
+  if (isTopRow && isFirstColumn) {
+    return "origin-top-left"
+  }
+
+  if (isTopRow && isLastColumn) {
+    return "origin-top-right"
+  }
+
+  if (!isTopRow && isFirstColumn) {
+    return "origin-bottom-left"
+  }
+
+  if (!isTopRow && isLastColumn) {
+    return "origin-bottom-right"
+  }
+
+  return isTopRow ? "origin-top" : "origin-bottom"
+}
+
+onMounted(() => {
+  mediumQuery = window.matchMedia("(min-width: 640px)")
+  extraLargeQuery = window.matchMedia("(min-width: 1280px)")
+  updateLayout()
+  mediumQuery.addEventListener("change", updateLayout)
+  extraLargeQuery.addEventListener("change", updateLayout)
+})
+
+onBeforeUnmount(() => {
+  mediumQuery?.removeEventListener("change", updateLayout)
+  extraLargeQuery?.removeEventListener("change", updateLayout)
+})
 </script>
 
 <template>
   <section class="border-b border-foreground bg-background">
-    <div data-reveal class="flex items-end justify-between border-b border-foreground px-5 py-4 sm:px-6 lg:px-8">
+    <div data-reveal class="border-b border-foreground px-5 py-4 sm:px-6 lg:px-8">
       <h2 class="text-4xl font-normal leading-none text-foreground sm:text-5xl">Artistas.</h2>
-      <p class="text-sm font-medium text-foreground">
-        {{ currentPage }}/{{ pageStarts.length }}
-      </p>
     </div>
 
-    <div data-reveal style="--reveal-delay: 120ms" class="relative px-10 py-4 sm:px-16 lg:px-20">
-      <Button
-        variant="ghost"
-        size="icon-lg"
-        aria-label="Artistas anteriores"
-        class="absolute left-1 top-1/2 z-10 size-8 -translate-y-1/2 rounded-none bg-transparent text-foreground shadow-none hover:bg-secondary sm:left-4 sm:size-10 lg:left-8"
-        @click="moveCarousel('previous')"
+    <div data-reveal style="--reveal-delay: 120ms" class="px-5 py-4 sm:px-6 lg:px-8">
+      <Carousel
+        :opts="carouselOptions"
+        class="artists-carousel relative mx-auto max-w-[36rem] px-8 sm:max-w-[54rem] sm:px-12 lg:max-w-[72rem] xl:max-w-[114rem]"
+        aria-label="Carrusel de artistas"
       >
-        <ArrowLeft class="size-6 sm:size-8" />
-      </Button>
-
-      <Transition name="artists-page" mode="out-in">
-        <div :key="currentStart" class="grid grid-cols-3 gap-2 sm:gap-3">
-          <component
-            :is="artist.isPlaceholder ? 'div' : RouterLink"
-            v-for="(artist, index) in visibleArtists"
-            :key="artist.id"
-            :to="artist.isPlaceholder ? undefined : { name: 'artist-detail', params: { id: artist.id } }"
-            class="group relative block aspect-square overflow-hidden border border-foreground bg-primary outline-none transition duration-300 hover:z-20 hover:scale-[1.08] hover:shadow-lg focus-visible:z-20 focus-visible:scale-[1.08] focus-visible:ring-2 focus-visible:ring-ring"
-            :class="visualOrderClasses[index]"
+        <CarouselContent class="-ml-2 sm:-ml-3">
+          <CarouselItem
+            v-for="(column, columnIndex) in artistColumns"
+            :key="column.map((artist) => artist.id).join('-')"
+            class="pl-2 sm:pl-3"
+            :class="columnBasisClass"
           >
-            <template v-if="artist.image">
-              <img
-                :src="artist.image"
-                :alt="artist.name"
-                class="absolute inset-0 h-full w-full scale-110 object-cover transition duration-300 group-hover:scale-100 group-focus-visible:scale-100"
-                loading="lazy"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-background/75 via-transparent to-transparent" />
-              <span class="absolute right-1 top-1 bg-background px-1 py-0.5 text-xs leading-none text-foreground sm:right-2 sm:top-2 sm:text-base">
-                {{ artist.date }}
-              </span>
-              <h3 class="absolute bottom-1 left-1 max-w-[calc(100%-0.5rem)] text-base font-normal uppercase leading-none text-foreground sm:bottom-2 sm:left-2 sm:max-w-[calc(100%-1rem)] sm:text-xl lg:text-2xl">
-                {{ artist.name }}
-              </h3>
-            </template>
+            <div class="grid gap-2 sm:gap-3">
+              <div
+                v-for="(artist, rowIndex) in column"
+                :key="artist.id"
+                class="relative aspect-square overflow-visible p-1"
+              >
+                <component
+                  :is="artist.isPlaceholder ? 'div' : RouterLink"
+                  :to="artist.isPlaceholder ? undefined : { name: 'artist-detail', params: { id: artist.id } }"
+                  class="group isolate relative block h-full w-full overflow-hidden bg-primary outline-none transition duration-300 z-10 hover:z-20 hover:scale-[1.015] focus-visible:z-20 focus-visible:scale-[1.015]"
+                  :class="artistOriginClass(columnIndex, rowIndex)"
+                >
+                  <template v-if="artist.image">
+                    <img
+                      :src="artist.image"
+                      :alt="artist.name"
+                      class="absolute inset-0 h-full w-full scale-110 object-cover transition duration-300 group-hover:scale-100 group-focus-visible:scale-100"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/75 via-transparent to-transparent" />
+                    <span class="absolute right-1 top-1 bg-background px-1 py-0.5 text-xs leading-none text-foreground z-30 sm:right-2 sm:top-2 sm:text-base">
+                      {{ artist.date }}
+                    </span>
+                    <h3 class="absolute bottom-3 left-1 max-w-[calc(100%-0.5rem)] text-base font-normal uppercase leading-none text-foreground z-30 sm:bottom-3 sm:left-2 sm:max-w-[calc(100%-1rem)] sm:text-xl lg:text-2xl">
+                      {{ artist.name }}
+                    </h3>
+                  </template>
 
-            <template v-else>
-              <div class="flex h-full flex-col justify-between p-2 text-primary-foreground sm:p-4">
-                <span class="self-end bg-background px-1 py-0.5 text-xs leading-none text-foreground sm:text-base">
-                  {{ artist.date }}
-                </span>
-                <h3 class="text-base font-normal uppercase leading-none sm:text-xl lg:text-2xl">{{ artist.name }}</h3>
+                  <template v-else>
+                    <div class="flex h-full flex-col justify-between p-2 pb-3 text-primary-foreground sm:p-4 sm:pb-4">
+                      <span class="self-end bg-background px-1 py-0.5 text-xs leading-none text-foreground z-30 sm:text-base">
+                        {{ artist.date }}
+                      </span>
+                      <h3 class="text-base font-normal uppercase leading-none z-30 sm:text-xl lg:text-2xl">{{ artist.name }}</h3>
+                    </div>
+                  </template>
+
+                  <span
+                    aria-hidden="true"
+                    class="pointer-events-none absolute inset-0 z-20 shadow-[inset_0_0_0_1px_var(--foreground)] transition group-hover:shadow-[inset_0_0_0_2px_var(--foreground)] group-focus-visible:shadow-[inset_0_0_0_2px_var(--foreground)]"
+                  />
+                </component>
               </div>
-            </template>
-          </component>
-        </div>
-      </Transition>
+            </div>
+          </CarouselItem>
+        </CarouselContent>
 
-      <Button
-        variant="ghost"
-        size="icon-lg"
-        aria-label="Artistas siguientes"
-        class="absolute right-1 top-1/2 z-10 size-8 -translate-y-1/2 rounded-none bg-transparent text-foreground shadow-none hover:bg-secondary sm:right-4 sm:size-10 lg:right-8"
-        @click="moveCarousel('next')"
-      >
-        <ArrowRight class="size-6 sm:size-8" />
-      </Button>
+        <CarouselPrevious
+          variant="ghost"
+          size="icon-lg"
+          class="left-0 size-8 rounded-none bg-background/80 text-foreground shadow-none hover:bg-secondary disabled:opacity-40 sm:size-10"
+        />
+        <CarouselNext
+          variant="ghost"
+          size="icon-lg"
+          class="right-0 size-8 rounded-none bg-background/80 text-foreground shadow-none hover:bg-secondary disabled:opacity-40 sm:size-10"
+        />
+      </Carousel>
     </div>
   </section>
 </template>
 
 <style scoped>
-.artists-page-enter-active,
-.artists-page-leave-active {
-  transition:
-    opacity 240ms ease,
-    transform 240ms ease;
+/* Allow this carousel's inner content to overflow so shadows and labels aren't clipped */
+.artists-carousel [data-slot="carousel-content"] {
+  overflow: visible !important;
 }
 
-.artists-page-enter-from,
-.artists-page-leave-to {
-  opacity: 0;
-  transform: translate3d(0, 0.75rem, 0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .artists-page-enter-active,
-  .artists-page-leave-active {
-    transition: none;
-  }
-
-  .artists-page-enter-from,
-  .artists-page-leave-to {
-    opacity: 1;
-    transform: none;
-  }
+.artists-carousel [data-slot="carousel-item"] {
+  overflow: visible !important;
 }
 </style>
