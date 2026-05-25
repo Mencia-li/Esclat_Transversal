@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue"
+import { RouterLink } from "vue-router"
 import type { Artist } from "@/data/festival"
 import {
   Carousel,
@@ -8,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { artistsCarouselItems } from "@/data/festival"
+import { artistDetails, artistsCarouselItems } from "@/data/festival"
 
 const tabItems = [
   { id: "artistas", label: "Artistas." },
@@ -128,6 +129,14 @@ function artistOriginClass(columnIndex: number, rowIndex: number) {
   return isTopRow ? "origin-top" : "origin-bottom"
 }
 
+function artistDetailRoute(artist: CarouselArtist) {
+  if (artist.isPlaceholder || !artistDetails[artist.id]) {
+    return undefined
+  }
+
+  return { name: "artist-detail", params: { id: artist.id } }
+}
+
 onMounted(() => {
   mediumQuery = window.matchMedia("(min-width: 640px)")
   largeQuery = window.matchMedia("(min-width: 1024px)")
@@ -196,9 +205,12 @@ onBeforeUnmount(() => {
                 :key="artist.id"
                 class="relative aspect-square overflow-visible p-1"
               >
-                <div
+                <component
+                  :is="artistDetailRoute(artist) ? RouterLink : 'div'"
+                  :to="artistDetailRoute(artist)"
                   class="group isolate relative block h-full w-full overflow-hidden bg-primary outline-none transition duration-300 z-10 hover:z-20 hover:scale-[1.015] focus-visible:z-20 focus-visible:scale-[1.015]"
                   :class="artistOriginClass(columnIndex - sourceColumnCount, rowIndex)"
+                  :aria-label="artistDetailRoute(artist) ? `Ver biografía de ${artist.name}` : undefined"
                 >
                   <template v-if="artist.image">
                     <img
@@ -229,7 +241,7 @@ onBeforeUnmount(() => {
                     aria-hidden="true"
                     class="pointer-events-none absolute inset-0 z-20 shadow-[inset_0_0_0_1px_var(--foreground)] transition group-hover:shadow-[inset_0_0_0_2px_var(--foreground)] group-focus-visible:shadow-[inset_0_0_0_2px_var(--foreground)]"
                   />
-                </div>
+                </component>
               </div>
             </div>
           </CarouselItem>

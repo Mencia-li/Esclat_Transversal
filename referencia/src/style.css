@@ -1,0 +1,161 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* 1. CONFIGURACIÓN DEL TEMA */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+}
+
+/* 2. DEFINICIÓN DE COLORES Y PALETAS */
+:root {
+  --radius: 0.625rem;
+
+  /* PALETA 1 (Matcha - Predeterminada) */
+  --background: #828f59;
+  --foreground: #F0EFE4;
+
+  /* 🎨 MAPEO SHADCN -> TUS PALETAS DINÁMICAS */
+  
+  /* Elementos destacados (ej. botón principal) */
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  
+  /* Bordes e inputs generales */
+  --border: color-mix(in srgb, var(--foreground) 30%, transparent);
+  --input: color-mix(in srgb, var(--foreground) 30%, transparent);
+  --ring: var(--foreground);
+  
+  /* Textos secundarios (ej. placeholders) */
+  --muted: color-mix(in srgb, var(--foreground) 15%, transparent);
+  --muted-foreground: color-mix(in srgb, var(--foreground) 65%, transparent);
+  
+  /* Popovers y Selects (Por defecto invertidos para que resalten) */
+  --popover: var(--foreground);
+  --popover-foreground: var(--background);
+  
+  /* Estados Hover/Focus globales */
+  --accent: color-mix(in srgb, var(--foreground) 15%, transparent);
+  --accent-foreground: var(--foreground);
+}
+
+/* 🪄 REGLA MÁGICA: Invertir sub-variables internas en Popovers y menús 
+   para que mantengan el contraste sin importar la paleta activa */
+.theme-invert,
+[data-slot="popover-content"],
+[data-slot="select-content"],
+[data-slot="dropdown-menu-content"] {
+  --primary: var(--background);
+  --primary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--background) 15%, transparent);
+  --muted-foreground: color-mix(in srgb, var(--background) 65%, transparent);
+  --accent: color-mix(in srgb, var(--background) 15%, transparent);
+  --accent-foreground: var(--background);
+  --border: color-mix(in srgb, var(--background) 30%, transparent);
+  --input: color-mix(in srgb, var(--background) 30%, transparent);
+  --ring: var(--background);
+}
+
+[data-theme="palette-2"] {
+  --background: #78A2D2;
+  --foreground: #FFF4BB;
+}
+
+[data-theme="palette-3"] {
+  --background: #BCA1DB;
+  --foreground: #F7F2ED;
+}
+
+/* 3. CAPA BASE */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  * {
+    @apply border-border outline-ring/50;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* 4. UTILIDADES REUTILIZABLES */
+@layer utilities {
+  /* Atajos de tema (SIN @apply para evitar "unknown utility class") */
+  .theme-base {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  .theme-invert {
+    background-color: var(--foreground);
+    color: var(--background);
+  }
+
+  .section-container {
+    @apply max-w-6xl mx-auto px-6 py-20;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-12 text-center uppercase tracking-widest;
+  }
+
+  .hero-title {
+    @apply text-4xl md:text-5xl font-bold;
+  }
+
+  .hero-text {
+    @apply text-lg leading-relaxed max-w-md mx-auto md:mx-0;
+  }
+
+  /* Botón: solo "forma" (sin colores) */
+  .btn-primary {
+    @apply px-6 py-3 rounded-md font-semibold hover:opacity-90 transition-all cursor-pointer active:scale-95;
+  }
+
+  .modal-overlay {
+    @apply fixed inset-0 z-50 bg-background/90 backdrop-blur-md flex items-center justify-center p-4;
+  }
+
+  /* Botón tipo “volver / ghost” */
+  .btn-ghost {
+    @apply px-4 py-2 rounded-md hover:opacity-80 transition-all cursor-pointer active:scale-95;
+  }
+
+  /* Cards del accordion */
+  .accordion-trigger-card {
+    @apply w-full p-6 rounded-md font-medium shadow-md hover:opacity-90 transition-all no-underline hover:no-underline flex justify-center text-center leading-tight uppercase tracking-wide;
+  }
+
+  /* Skills bar */
+  .skill-track {
+    @apply w-full bg-background/20 h-1.5 rounded-full overflow-hidden;
+  }
+  .skill-fill {
+    @apply bg-background h-full transition-all duration-1000 ease-out;
+  }
+
+  /* Texto largo consistente */
+  .prose-about {
+    @apply space-y-6 text-base md:text-lg leading-relaxed text-justify;
+  }
+}

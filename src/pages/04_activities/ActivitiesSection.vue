@@ -221,7 +221,7 @@ const activityBlocks = [
         :key="block.id"
         :to="block.to"
         :class="[
-          'block min-h-44 border-b border-foreground p-4 outline-none transition odd:border-r [&:nth-last-child(-n+2)]:border-b-0 sm:min-h-52 sm:p-6 lg:min-h-60 lg:p-8',
+          'block min-h-44 border-b border-foreground p-4 outline-none transition odd:border-r nth-last-[-n+2]:border-b-0 sm:min-h-52 sm:p-6 lg:min-h-60 lg:p-8',
           block.to ? 'hover:brightness-95 focus-visible:ring-2 focus-visible:ring-ring' : '',
           block.className,
         ]"
