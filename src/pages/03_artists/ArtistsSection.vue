@@ -19,6 +19,7 @@ const carouselOptions = {
   align: "start",
   loop: true,
   slidesToScroll: 1,
+  startIndex: 1,
 } as const
 
 const visibleColumnCount = computed(() => visibleCount.value / 2)
@@ -34,12 +35,14 @@ const columnBasisClass = computed(() => {
   return "basis-1/3"
 })
 
-const carouselItems = computed(() =>
-  artistsCarouselItems.map((artist, index) => ({
+const carouselItems = computed(() => {
+  const itemsWithImages = artistsCarouselItems.map((artist, index) => ({
     ...artist,
     image: artist.isPlaceholder ? undefined : `/img/artists/artist${index + 1}.jpg`,
-  })),
-)
+  }))
+
+  return [...itemsWithImages.slice(-2), ...itemsWithImages.slice(0, -2)]
+})
 
 const artistColumns = computed(() => {
   const columns = []
@@ -107,8 +110,8 @@ onBeforeUnmount(() => {
 
 <template>
   <section class="border-b border-foreground bg-background">
-    <div data-reveal class="border-b border-foreground px-5 py-4 sm:px-6 lg:px-8">
-      <h2 class="text-4xl font-normal leading-none text-foreground sm:text-5xl">Artistas.</h2>
+    <div data-reveal class="border-b border-foreground bg-[#A9FCE6] px-5 py-4 sm:px-6 lg:px-8">
+      <h2 class="text-4xl font-normal leading-none text-foreground sm:text-5xl lg:text-6xl">Artistas.</h2>
     </div>
 
     <div data-reveal style="--reveal-delay: 120ms" class="px-5 py-4 sm:px-6 lg:px-8">
@@ -188,8 +191,25 @@ onBeforeUnmount(() => {
 
 <style scoped>
 /* Allow this carousel's inner content to overflow so shadows and labels aren't clipped */
+.artists-carousel {
+  --carousel-peek: 1.75rem;
+}
+
+@media (min-width: 640px) {
+  .artists-carousel {
+    --carousel-peek: 2.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .artists-carousel {
+    --carousel-peek: 2.75rem;
+  }
+}
+
 .artists-carousel [data-slot="carousel-content"] {
   overflow: visible !important;
+  padding-inline: var(--carousel-peek);
 }
 
 .artists-carousel [data-slot="carousel-item"] {

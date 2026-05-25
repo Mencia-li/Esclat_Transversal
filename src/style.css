@@ -123,6 +123,13 @@
     font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   }
 
+  html,
+  body,
+  #app {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
   #app {
     min-height: 100svh;
   }
