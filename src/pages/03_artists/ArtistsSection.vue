@@ -10,9 +10,19 @@ import {
 } from "@/components/ui/carousel"
 import { artistsCarouselItems } from "@/data/festival"
 
+const tabItems = [
+  { id: "artistas", label: "Artistas." },
+  { id: "cartel", label: "Cartel." },
+] as const
+
+type TabId = (typeof tabItems)[number]["id"]
+
+const activeTab = ref<TabId>("artistas")
+
 const visibleCount = ref<4 | 6 | 8 | 10>(4)
 
 let mediumQuery: MediaQueryList | undefined
+let largeQuery: MediaQueryList | undefined
 let extraLargeQuery: MediaQueryList | undefined
 
 const carouselOptions = {
@@ -26,14 +36,14 @@ const visibleColumnCount = computed(() => Math.max(1, Math.floor(visibleCount.va
 const columnBasisClass = computed(() => {
   switch (visibleCount.value) {
     case 10:
-      return "basis-1/5"
+      return "basis-[calc((100%-2.25rem)/5)]"
     case 8:
-      return "basis-1/4"
+      return "basis-[calc((100%-1.75rem)/4)]"
     case 6:
-      return "basis-1/3"
+      return "basis-[calc((100%-1.25rem)/3)]"
     case 4:
     default:
-      return "basis-1/2"
+      return "basis-[calc((100%-0.75rem)/2)]"
   }
 })
 
@@ -43,7 +53,7 @@ const carouselItems = computed(() => {
     image: artist.isPlaceholder ? undefined : `/img/artists/artist${index + 1}.jpg`,
   }))
 
-  return [...itemsWithImages.slice(-2), ...itemsWithImages.slice(0, -2)]
+  return [...itemsWithImages, ...itemsWithImages]
 })
 
 const artistColumns = computed(() => {
@@ -62,12 +72,17 @@ function updateLayout() {
     return
   }
 
-  if (mediumQuery?.matches) {
+  if (largeQuery?.matches) {
     visibleCount.value = 8
     return
   }
 
-  // small screens: show 4 columns (2 visible columns per carousel item)
+  if (mediumQuery?.matches) {
+    visibleCount.value = 6
+    return
+  }
+
+  // small screens: show 2 columns (1 carousel item = 1 column with 2 rows)
   visibleCount.value = 4
 }
 
@@ -99,28 +114,57 @@ function artistOriginClass(columnIndex: number, rowIndex: number) {
 
 onMounted(() => {
   mediumQuery = window.matchMedia("(min-width: 640px)")
+  largeQuery = window.matchMedia("(min-width: 1024px)")
   extraLargeQuery = window.matchMedia("(min-width: 1280px)")
   updateLayout()
   mediumQuery.addEventListener("change", updateLayout)
+  largeQuery.addEventListener("change", updateLayout)
   extraLargeQuery.addEventListener("change", updateLayout)
 })
 
 onBeforeUnmount(() => {
   mediumQuery?.removeEventListener("change", updateLayout)
+  largeQuery?.removeEventListener("change", updateLayout)
   extraLargeQuery?.removeEventListener("change", updateLayout)
 })
 </script>
 
 <template>
   <section class="border-b border-foreground bg-background">
-    <div data-reveal class="border-b border-foreground bg-[#A9FCE6] px-5 py-4 sm:px-6 lg:px-8">
-      <h2 class="text-4xl font-normal leading-none text-foreground sm:text-5xl lg:text-6xl">Artistas.</h2>
+    <div data-reveal role="tablist" class="grid grid-cols-2 border-b border-foreground">
+      <button
+        v-for="tab in tabItems"
+        :key="tab.id"
+        :id="`artistas-tab-${tab.id}`"
+        type="button"
+        role="tab"
+        :aria-controls="`artistas-panel-${tab.id}`"
+        :aria-selected="activeTab === tab.id"
+        :tabindex="activeTab === tab.id ? 0 : -1"
+        :class="[
+          'flex min-h-16 items-center px-5 py-4 text-left text-3xl font-normal leading-none transition-colors sm:min-h-20 sm:px-6 sm:text-4xl lg:px-8 lg:text-5xl',
+          activeTab === tab.id
+            ? 'bg-[#A9FCE6] text-foreground hover:bg-background'
+            : 'bg-background text-foreground hover:bg-[#A9FCE6]',
+        ]"
+        @click="activeTab = tab.id"
+      >
+        {{ tab.label }}
+      </button>
     </div>
 
-    <div data-reveal style="--reveal-delay: 120ms" class="px-4 py-4 sm:px-6 lg:px-8">
+    <div
+      v-if="activeTab === 'artistas'"
+      id="artistas-panel-artistas"
+      role="tabpanel"
+      aria-labelledby="artistas-tab-artistas"
+      data-reveal
+      style="--reveal-delay: 120ms"
+      class="px-4 py-4 sm:px-6 lg:px-8"
+    >
       <Carousel
         :opts="carouselOptions"
-        class="artists-carousel relative mx-auto w-full max-w-full px-4 sm:max-w-[54rem] sm:px-6 lg:max-w-[72rem] xl:max-w-[114rem]"
+        class="artists-carousel relative mx-auto w-full max-w-full px-4 sm:max-w-216 sm:px-6 lg:max-w-6xl xl:max-w-456"
         aria-label="Carrusel de artistas"
       >
         <CarouselContent class="-ml-2 sm:ml-0">
@@ -149,7 +193,7 @@ onBeforeUnmount(() => {
                       class="absolute inset-0 h-full w-full scale-110 object-cover transition duration-300 group-hover:scale-100 group-focus-visible:scale-100"
                       loading="lazy"
                     />
-                    <div class="absolute inset-0 bg-gradient-to-t from-background/75 via-transparent to-transparent" />
+                    <div class="absolute inset-0 bg-linear-to-t from-background/75 via-transparent to-transparent" />
                     <span class="absolute right-1 top-1 bg-background px-1 py-0.5 text-xs leading-none text-foreground z-30 sm:right-2 sm:top-2 sm:text-base">
                       {{ artist.date }}
                     </span>
@@ -189,18 +233,45 @@ onBeforeUnmount(() => {
         />
       </Carousel>
     </div>
+
+    <div
+      v-else
+      id="artistas-panel-cartel"
+      role="tabpanel"
+      aria-labelledby="artistas-tab-cartel"
+      data-reveal
+      style="--reveal-delay: 120ms"
+      class="px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10"
+    >
+      <div class="mx-auto flex w-full max-w-6xl justify-center">
+        <div class="w-full max-w-152 overflow-hidden border border-foreground bg-[#F4F4F4] shadow-[0_1rem_2.5rem_rgba(0,0,0,0.08)] sm:max-w-2xl lg:max-w-184">
+          <img
+            src="/img/artists/cartel.png"
+            alt="Cartel de artistas del festival Esclat"
+            class="block h-auto w-full"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
 <style scoped>
 /* Allow this carousel's inner content to overflow so shadows and labels aren't clipped */
 .artists-carousel {
-  --carousel-peek: 1.75rem;
+  --carousel-peek: 1rem;
 }
 
 @media (min-width: 640px) {
   .artists-carousel {
-    --carousel-peek: 2.25rem;
+    --carousel-peek: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .artists-carousel {
+    --carousel-peek: 2rem;
   }
 }
 

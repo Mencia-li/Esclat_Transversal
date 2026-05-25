@@ -195,7 +195,7 @@ const activityBlocks = [
         :aria-selected="activeTab === tab.id"
         :tabindex="activeTab === tab.id ? 0 : -1"
         :class="[
-          'flex min-h-16 items-center px-5 py-4 text-left text-4xl font-normal leading-none transition-colors sm:min-h-20 sm:px-6 sm:text-5xl lg:px-8 lg:text-6xl',
+          'flex min-h-16 items-center px-5 py-4 text-left text-3xl font-normal leading-none transition-colors sm:min-h-20 sm:px-6 sm:text-4xl lg:px-8 lg:text-5xl',
           index === 0 ? 'border-r border-foreground' : '',
           activeTab === tab.id
             ? 'bg-[#A9FCE6] text-foreground hover:bg-background'
@@ -226,7 +226,7 @@ const activityBlocks = [
           block.className,
         ]"
       >
-        <h3 class="text-2xl font-normal leading-none sm:text-4xl lg:text-5xl">{{ block.title }}</h3>
+        <h3 class="text-xl font-normal leading-none sm:text-2xl lg:text-3xl">{{ block.title }}</h3>
         <p class="mt-5 max-w-2xl text-xs leading-relaxed sm:mt-8 sm:text-sm lg:text-base">
           {{ block.summary }}
         </p>

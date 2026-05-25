@@ -11,7 +11,7 @@ import { faqs } from "@/data/festival"
 <template>
   <section class="mt-6 border-y border-foreground bg-background sm:mt-8 lg:mt-10">
     <div data-reveal class="border-b border-foreground bg-[#A9FCE6] px-5 py-4 sm:px-6 lg:px-8">
-      <h2 class="text-4xl font-normal leading-none text-foreground sm:text-5xl lg:text-6xl">FAQs.</h2>
+      <h2 class="text-3xl font-normal leading-none text-foreground sm:text-4xl lg:text-5xl">FAQs.</h2>
     </div>
 
     <Accordion
