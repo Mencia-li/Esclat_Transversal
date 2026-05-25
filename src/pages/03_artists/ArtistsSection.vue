@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/carousel"
 import { artistsCarouselItems } from "@/data/festival"
 
-const visibleCount = ref<6 | 8 | 10>(6)
+const visibleCount = ref<4 | 6 | 8 | 10>(4)
 
 let mediumQuery: MediaQueryList | undefined
 let extraLargeQuery: MediaQueryList | undefined
@@ -22,17 +22,19 @@ const carouselOptions = {
   startIndex: 1,
 } as const
 
-const visibleColumnCount = computed(() => visibleCount.value / 2)
+const visibleColumnCount = computed(() => Math.max(1, Math.floor(visibleCount.value / 2)))
 const columnBasisClass = computed(() => {
-  if (visibleCount.value === 10) {
-    return "basis-1/5"
+  switch (visibleCount.value) {
+    case 10:
+      return "basis-1/5"
+    case 8:
+      return "basis-1/4"
+    case 6:
+      return "basis-1/3"
+    case 4:
+    default:
+      return "basis-1/2"
   }
-
-  if (visibleCount.value === 8) {
-    return "basis-1/4"
-  }
-
-  return "basis-1/3"
 })
 
 const carouselItems = computed(() => {
@@ -65,7 +67,8 @@ function updateLayout() {
     return
   }
 
-  visibleCount.value = 6
+  // small screens: show 4 columns (2 visible columns per carousel item)
+  visibleCount.value = 4
 }
 
 function artistOriginClass(columnIndex: number, rowIndex: number) {
@@ -114,20 +117,20 @@ onBeforeUnmount(() => {
       <h2 class="text-4xl font-normal leading-none text-foreground sm:text-5xl lg:text-6xl">Artistas.</h2>
     </div>
 
-    <div data-reveal style="--reveal-delay: 120ms" class="px-5 py-4 sm:px-6 lg:px-8">
+    <div data-reveal style="--reveal-delay: 120ms" class="px-4 py-4 sm:px-6 lg:px-8">
       <Carousel
         :opts="carouselOptions"
-        class="artists-carousel relative mx-auto max-w-[36rem] px-8 sm:max-w-[54rem] sm:px-12 lg:max-w-[72rem] xl:max-w-[114rem]"
+        class="artists-carousel relative mx-auto w-full max-w-full px-4 sm:max-w-[54rem] sm:px-6 lg:max-w-[72rem] xl:max-w-[114rem]"
         aria-label="Carrusel de artistas"
       >
-        <CarouselContent class="-ml-2 sm:-ml-3">
+        <CarouselContent class="-ml-2 sm:ml-0">
           <CarouselItem
             v-for="(column, columnIndex) in artistColumns"
             :key="column.map((artist) => artist.id).join('-')"
-            class="pl-2 sm:pl-3"
+            class="pl-1 sm:pl-3"
             :class="columnBasisClass"
           >
-            <div class="grid gap-2 sm:gap-3">
+            <div class="grid grid-cols-1 gap-2 sm:gap-3">
               <div
                 v-for="(artist, rowIndex) in column"
                 :key="artist.id"
