@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue"
-import { RouterLink } from "vue-router"
+import type { Artist } from "@/data/festival"
 import {
   Carousel,
   CarouselContent,
@@ -19,7 +19,9 @@ type TabId = (typeof tabItems)[number]["id"]
 
 const activeTab = ref<TabId>("artistas")
 
-const visibleCount = ref<4 | 6 | 8 | 10>(4)
+const visibleCount = ref<6 | 8 | 10>(6)
+const carouselRepeatCount = 3
+const sourceColumnCount = Math.ceil(artistsCarouselItems.length / 2)
 
 let mediumQuery: MediaQueryList | undefined
 let largeQuery: MediaQueryList | undefined
@@ -29,8 +31,17 @@ const carouselOptions = {
   align: "start",
   loop: true,
   slidesToScroll: 1,
-  startIndex: 1,
+  startIndex: sourceColumnCount,
 } as const
+
+type CarouselArtist = Artist & {
+  image?: string
+}
+
+type ArtistColumn = {
+  key: string
+  artists: CarouselArtist[]
+}
 
 const visibleColumnCount = computed(() => Math.max(1, Math.floor(visibleCount.value / 2)))
 const columnBasisClass = computed(() => {
@@ -40,30 +51,35 @@ const columnBasisClass = computed(() => {
     case 8:
       return "basis-[calc((100%-1.75rem)/4)]"
     case 6:
-      return "basis-[calc((100%-1.25rem)/3)]"
-    case 4:
     default:
-      return "basis-[calc((100%-0.75rem)/2)]"
+      return "basis-[calc((100%-1rem)/3)]"
   }
 })
 
-const carouselItems = computed(() => {
-  const itemsWithImages = artistsCarouselItems.map((artist, index) => ({
+const carouselItems = computed<CarouselArtist[]>(() => {
+  return artistsCarouselItems.map((artist, index) => ({
     ...artist,
     image: artist.isPlaceholder ? undefined : `/img/artists/artist${index + 1}.jpg`,
   }))
-
-  return [...itemsWithImages, ...itemsWithImages]
 })
 
-const artistColumns = computed(() => {
-  const columns = []
+const sourceArtistColumns = computed<CarouselArtist[][]>(() => {
+  const columns: CarouselArtist[][] = []
 
   for (let index = 0; index < carouselItems.value.length; index += 2) {
     columns.push(carouselItems.value.slice(index, index + 2))
   }
 
   return columns
+})
+
+const artistColumns = computed<ArtistColumn[]>(() => {
+  return Array.from({ length: carouselRepeatCount }, (_, repeatIndex) =>
+    sourceArtistColumns.value.map((artists, columnIndex) => ({
+      key: `${repeatIndex}-${columnIndex}-${artists.map((artist) => artist.id).join("-")}`,
+      artists,
+    })),
+  ).flat()
 })
 
 function updateLayout() {
@@ -82,13 +98,13 @@ function updateLayout() {
     return
   }
 
-  // small screens: show 2 columns (1 carousel item = 1 column with 2 rows)
-  visibleCount.value = 4
+  // small screens: show 3 columns (1 carousel item = 1 column with 2 rows)
+  visibleCount.value = 6
 }
 
 function artistOriginClass(columnIndex: number, rowIndex: number) {
   const visibleLastColumn = visibleColumnCount.value - 1
-  const visibleColumn = columnIndex % visibleColumnCount.value
+  const visibleColumn = ((columnIndex % visibleColumnCount.value) + visibleColumnCount.value) % visibleColumnCount.value
   const isTopRow = rowIndex === 0
   const isFirstColumn = visibleColumn === 0
   const isLastColumn = visibleColumn === visibleLastColumn
@@ -144,8 +160,8 @@ onBeforeUnmount(() => {
         :class="[
           'flex min-h-16 items-center px-5 py-4 text-left text-3xl font-normal leading-none transition-colors sm:min-h-20 sm:px-6 sm:text-4xl lg:px-8 lg:text-5xl',
           activeTab === tab.id
-            ? 'bg-[#A9FCE6] text-foreground hover:bg-background'
-            : 'bg-background text-foreground hover:bg-[#A9FCE6]',
+            ? 'bg-[#A9FCE6] text-foreground'
+            : 'bg-background text-foreground',
         ]"
         @click="activeTab = tab.id"
       >
@@ -170,21 +186,19 @@ onBeforeUnmount(() => {
         <CarouselContent class="-ml-2 sm:ml-0">
           <CarouselItem
             v-for="(column, columnIndex) in artistColumns"
-            :key="column.map((artist) => artist.id).join('-')"
+            :key="column.key"
             class="pl-1 sm:pl-3"
             :class="columnBasisClass"
           >
             <div class="grid grid-cols-1 gap-2 sm:gap-3">
               <div
-                v-for="(artist, rowIndex) in column"
+                v-for="(artist, rowIndex) in column.artists"
                 :key="artist.id"
                 class="relative aspect-square overflow-visible p-1"
               >
-                <component
-                  :is="artist.isPlaceholder ? 'div' : RouterLink"
-                  :to="artist.isPlaceholder ? undefined : { name: 'artist-detail', params: { id: artist.id } }"
+                <div
                   class="group isolate relative block h-full w-full overflow-hidden bg-primary outline-none transition duration-300 z-10 hover:z-20 hover:scale-[1.015] focus-visible:z-20 focus-visible:scale-[1.015]"
-                  :class="artistOriginClass(columnIndex, rowIndex)"
+                  :class="artistOriginClass(columnIndex - sourceColumnCount, rowIndex)"
                 >
                   <template v-if="artist.image">
                     <img
@@ -215,7 +229,7 @@ onBeforeUnmount(() => {
                     aria-hidden="true"
                     class="pointer-events-none absolute inset-0 z-20 shadow-[inset_0_0_0_1px_var(--foreground)] transition group-hover:shadow-[inset_0_0_0_2px_var(--foreground)] group-focus-visible:shadow-[inset_0_0_0_2px_var(--foreground)]"
                   />
-                </component>
+                </div>
               </div>
             </div>
           </CarouselItem>

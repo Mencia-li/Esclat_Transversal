@@ -1,5 +1,4 @@
 import Home from "@/pages/01_home/Home.vue"
-import ArtistDetail from "@/pages/03_artists/ArtistDetail.vue"
 import RouteShell from "@/pages/detail/RouteShell.vue"
 import ProgramDetail from "@/pages/02_program/ProgramDetail.vue"
 import ShopSection from "@/pages/05_shop/ShopSection.vue"
@@ -39,15 +38,7 @@ export const router = createRouter({
     },
     {
       path: "/artistas",
-      component: RouteShell,
       redirect: { path: "/", hash: "#artistas" },
-      children: [
-        {
-          path: ":id",
-          name: "artist-detail",
-          component: ArtistDetail,
-        },
-      ],
     },
     {
       path: "/tienda",

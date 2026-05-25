@@ -198,8 +198,8 @@ const activityBlocks = [
           'flex min-h-16 items-center px-5 py-4 text-left text-3xl font-normal leading-none transition-colors sm:min-h-20 sm:px-6 sm:text-4xl lg:px-8 lg:text-5xl',
           index === 0 ? 'border-r border-foreground' : '',
           activeTab === tab.id
-            ? 'bg-[#A9FCE6] text-foreground hover:bg-background'
-            : 'bg-background text-foreground hover:bg-[#A9FCE6]',
+            ? 'bg-[#A9FCE6] text-foreground'
+            : 'bg-background text-foreground',
         ]"
         @click="activeTab = tab.id"
       >

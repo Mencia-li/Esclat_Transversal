@@ -382,6 +382,7 @@ export const artists: Artist[] = [
     stage: "Escenario principal",
     summary:
       "Su repertorio conecta salud mental, ansiedad y amor propio con una escala emocional capaz de cerrar el primer capítulo del festival.",
+    bio: "BTS es un grupo surcoreano formado por RM, Jin, SUGA, j-hope, Jimin, V y Jung Kook. Desde su debut en 2013, el grupo ha construido una carrera internacional marcada por la mezcla de pop, hip-hop y mensajes emocionales dirigidos especialmente a la juventud. A través de álbumes como The Most Beautiful Moment in Life, Wings, Love Yourself y Map of the Soul, BTS ha tratado temas como la presión social, el miedo al fracaso, la ansiedad, la identidad y la necesidad de aprender a quererse.",
   },
   {
     id: "olivia-rodrigo",
@@ -391,6 +392,7 @@ export const artists: Artist[] = [
     stage: "Escenario principal",
     summary:
       "Canciones sobre presión, fragilidad y rabia adolescente que encajan con la pregunta del primer día: cómo nos sentimos por dentro.",
+    bio: "Olivia Rodrigo es una artista estadounidense que se convirtió en una de las voces más representativas de su generación tras el lanzamiento de drivers license en 2021. Su primer álbum, SOUR, conectó con millones de jóvenes por su forma directa de hablar del desamor, la inseguridad, los celos y la confusión emocional. Más tarde, con GUTS (2023), reforzó una identidad musical más cercana al pop-rock, abordando con ironía y rabia la presión de madurar, la exposición pública y la sensación de no estar a la altura de lo que se espera de una misma.",
   },
   {
     id: "aurora",
@@ -400,6 +402,7 @@ export const artists: Artist[] = [
     stage: "La Polivalent",
     summary:
       "Una propuesta íntima y expansiva para pensar el cuerpo, la emoción y la vulnerabilidad como lugares de escucha.",
+    bio: "AURORA es una artista noruega conocida por su voz delicada, su imaginario casi mágico y una forma de componer muy vinculada a la introspección emocional. Su música combina elementos de folk, pop alternativo y electrónica suave, creando un universo sonoro íntimo y envolvente. Alcanzó reconocimiento internacional con canciones como Runaway y con su primer álbum, All My Demons Greeting Me as a Friend (2016). En 2024 publicó What Happened to the Heart?, un trabajo centrado en la conexión emocional, la empatía y la vulnerabilidad.",
   },
   {
     id: "laufey",
@@ -409,6 +412,7 @@ export const artists: Artist[] = [
     stage: "La Polivalent",
     summary:
       "Su sensibilidad jazz-pop abre un espacio tranquilo para hablar de expectativas, amor propio y relatos personales.",
+    bio: "Laufey es una artista islandesa-china que ha renovado el interés del público joven por el jazz y los sonidos clásicos. Formada en piano y violonchelo, combina referencias del jazz tradicional con letras cercanas a la experiencia adolescente y juvenil. Su música habla de enamoramientos idealizados, inseguridades, nostalgia y soledad desde una sensibilidad íntima y elegante. Con álbumes como Everything I Know About Love (2022), Bewitched (2023) y A Matter of Time (2025), ha construido una identidad artística reconocible basada en la delicadeza, la melancolía y la honestidad emocional.",
   },
   {
     id: "amaia",
@@ -418,6 +422,7 @@ export const artists: Artist[] = [
     stage: "Escenario patio",
     summary:
       "Una voz cercana al contexto hispanohablante para cerrar la parte más íntima y cotidiana del primer día.",
+    bio: "Amaia es una artista española que se dio a conocer al gran público tras su paso por Operación Triunfo 2017, donde destacó por su naturalidad, sensibilidad musical y personalidad propia. Desde entonces ha construido una carrera alejada del pop prefabricado, apostando por una propuesta más íntima, honesta y cercana al indie-pop. En trabajos como Pero no pasa nada (2019), Cuando no sé quién soy (2022) y Si abro los ojos no es real (2025), Amaia explora dudas, contradicciones, vínculos afectivos y procesos de madurez desde una mirada sencilla pero emocionalmente precisa.",
   },
   {
     id: "meghan-trainor",
@@ -427,6 +432,7 @@ export const artists: Artist[] = [
     stage: "Escenario patio",
     summary:
       "Su pop celebra el cuerpo desde un lugar directo y accesible, perfecto para abrir la conversación sobre belleza.",
+    bio: "Meghan Trainor es una artista estadounidense que alcanzó reconocimiento internacional con All About That Bass en 2014, una canción que la posicionó dentro del pop mainstream con un mensaje centrado en la aceptación corporal y la confianza en una misma. Su música se caracteriza por melodías pegadizas, estética colorida y letras directas que suelen reivindicar la autoestima, la seguridad personal y el rechazo a ciertos ideales de perfección física. A lo largo de su carrera, ha mantenido una propuesta accesible y festiva, orientada a transformar la inseguridad en energía positiva.",
   },
   {
     id: "hwasa",
@@ -436,6 +442,7 @@ export const artists: Artist[] = [
     stage: "La Polivalent",
     summary:
       "Una artista que tensiona los mandatos de género e imagen dentro de una industria altamente normativizada.",
+    bio: "Hwasa es una artista surcoreana conocida tanto por su carrera en solitario como por formar parte del grupo MAMAMOO. Desde su debut, ha destacado por una presencia escénica poderosa y una imagen pública que desafía los cánones de belleza más rígidos de la industria del K-pop. Su propuesta mezcla pop, R&B y hip-hop con una actitud desafiante, sensual y segura de sí misma. A lo largo de su carrera, Hwasa se ha convertido en una figura especialmente significativa por defender una feminidad libre, no complaciente y alejada de la perfección impuesta.",
   },
   {
     id: "rigoberta-bandini",
@@ -445,6 +452,7 @@ export const artists: Artist[] = [
     stage: "La Polivalent",
     summary:
       "Su ironía y mirada política conectan feminismo, cultura pop y crítica de los discursos sobre el cuerpo.",
+    bio: "Olivia Dean es una cantante y compositora británica nacida en Londres. Su música combina soul, pop y R&B con una sensibilidad cálida, elegante y profundamente emocional. Formada en la BRIT School, comenzó a ganar reconocimiento con canciones como The Hardest Part, Dive y Slowly, y consolidó su identidad artística con su álbum Messy, nominado al Mercury Prize. Más adelante, su segundo álbum, The Art of Loving, reforzó su imagen como una de las voces más destacadas del soul pop contemporáneo, centrada en explorar el amor, la vulnerabilidad y las relaciones humanas desde una mirada íntima y honesta.",
   },
   {
     id: "raye",
@@ -454,6 +462,7 @@ export const artists: Artist[] = [
     stage: "Escenario principal",
     summary:
       "Una voz clave para hablar de dismorfia, industria musical y heridas que se esconden detrás del éxito.",
+    bio: "RAYE es una artista británica que ha construido una carrera marcada por la honestidad emocional y la denuncia de las dinámicas abusivas dentro de la industria musical. Tras años escribiendo para otros artistas y enfrentarse a limitaciones por parte de su antigua discográfica, logró publicar de forma independiente su álbum My 21st Century Blues (2023), un trabajo profundamente personal en el que aborda temas como el abuso, la adicción, la explotación, la imagen corporal y la recuperación de la propia voz. Su música combina R&B, pop, soul y jazz con letras directas, vulnerables y muy críticas.",
   },
   {
     id: "gidle",
@@ -463,6 +472,7 @@ export const artists: Artist[] = [
     stage: "Escenario principal",
     summary:
       "El cierre explosivo del segundo día: identidad, rechazo del molde y una energía colectiva de ruptura.",
+    bio: "(G)I-DLE es un grupo femenino surcoreano formado por Miyeon, Minnie, Soyeon, Yuqi y Shuhua. Desde su debut en 2018, el grupo ha destacado dentro del K-pop por su fuerte implicación creativa, especialmente a través de Soyeon, líder y principal productora de muchas de sus canciones. Su propuesta combina pop, hip-hop, electrónica y teatralidad visual, con conceptos que suelen cuestionar la feminidad normativa, la sexualización y las expectativas impuestas sobre las mujeres. Canciones como TOMBOY, Nxde o Queencard han consolidado al grupo como una voz crítica y explosiva dentro del pop coreano.",
   },
   {
     id: "iu",
@@ -472,6 +482,7 @@ export const artists: Artist[] = [
     stage: "Escenario patio",
     summary:
       "Su trayectoria permite hablar desde dentro de la fama, la exposición pública y la relación entre artista e industria.",
+    bio: "IU es una artista surcoreana considerada una de las figuras más influyentes y respetadas de la industria musical coreana. Debutó siendo adolescente y ha desarrollado una carrera amplia como cantante, compositora y actriz, combinando popularidad masiva con una fuerte identidad artística. Su obra suele explorar la vulnerabilidad, el paso del tiempo, la soledad y la relación entre la persona real y la figura pública. Al haber crecido dentro de una industria altamente exigente y expuesta, IU representa de forma clara el impacto emocional de ser observada, juzgada y reinterpretada constantemente por el público y los medios.",
   },
   {
     id: "pablo-alboran",
@@ -481,6 +492,7 @@ export const artists: Artist[] = [
     stage: "La Polivalent",
     summary:
       "Aporta una presencia cercana al público local para pensar vulnerabilidad, masculinidad y expectativas mediáticas.",
+    bio: "Pablo Alborán es uno de los artistas más reconocidos del pop español contemporáneo. Se dio a conocer a comienzos de la década de 2010 gracias a canciones íntimas y emotivas como Solamente tú, construyendo una carrera basada en la sensibilidad vocal, la composición romántica y una relación cercana con el público. A lo largo de los años, su figura pública ha estado marcada por la exposición mediática, la expectativa constante y la gestión de una identidad personal observada por millones de personas. Su música, aunque muchas veces vinculada al amor y al desamor, también permite leer la vulnerabilidad de quien vive bajo una mirada pública continua.",
   },
   {
     id: "benson-boone",
@@ -490,6 +502,7 @@ export const artists: Artist[] = [
     stage: "La Polivalent",
     summary:
       "Una propuesta pop emocional para observar cómo se construyen nuevos ídolos en tiempo de redes y viralidad.",
+    bio: "Benson Boone es un artista estadounidense que alcanzó gran visibilidad a través de las redes sociales y plataformas digitales, convirtiéndose en una de las voces emergentes del pop-rock contemporáneo. Su música combina grandes melodías emocionales, baladas intensas y una interpretación vocal muy expresiva. Con canciones como Ghost Town, In the Stars y Beautiful Things, ha conectado con un público joven que consume música de forma inmediata, viral y profundamente emocional. Su trayectoria representa una nueva forma de fama: rápida, global y muy ligada a la exposición constante en internet.",
   },
   {
     id: "the-marias",
@@ -499,6 +512,7 @@ export const artists: Artist[] = [
     stage: "Escenario principal",
     summary:
       "Su imaginario sonoro y visual conecta con la fabricación de atmósferas, deseo e imagen en la cultura pop.",
+    bio: "The Marías es una banda estadounidense liderada por María Zardoya y Josh Conway, reconocida por su sonido elegante, atmosférico y cinematográfico. Su música mezcla dream-pop, soul psicodélico, indie y elementos latinos, creando una estética sofisticada donde el glamour aparece siempre acompañado de una sensación de distancia, misterio y vulnerabilidad. A través de álbumes como Cinema (2021) y Submarine (2024), el grupo ha construido un universo visual y sonoro muy marcado, en el que la belleza funciona tanto como refugio como máscara.",
   },
   {
     id: "lana-del-rey",
@@ -508,8 +522,8 @@ export const artists: Artist[] = [
     stage: "Escenario principal",
     summary:
       "Cierra el relato del festival mirando el glamour vacío de la fama y preguntando si el sistema nos ve como personas.",
+    bio: "Lana Del Rey es una artista estadounidense reconocida por haber construido un universo musical y visual profundamente cinematográfico, melancólico y crítico con los imaginarios de la fama. Desde el impacto de Born to Die (2012), su obra ha explorado el glamour decadente, el deseo, la tristeza, la idealización romántica y la relación entre belleza y destrucción. A través de álbumes como Ultraviolence, Norman Fucking Rockwell! y Did you know that there’s a tunnel under Ocean Blvd, Lana ha convertido la estética de la celebridad, el sueño americano y la feminidad idealizada en materia artística compleja y ambigua.",
   },
-]
 export const artistsCarouselItems: Artist[] = [
   ...artists,
   {
