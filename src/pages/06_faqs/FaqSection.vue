@@ -30,7 +30,7 @@ import { faqs } from "@/data/festival"
             {{ faq.question }}
           </span>
         </AccordionTrigger>
-        <AccordionContent class="px-5 pb-4 text-sm leading-relaxed text-foreground/80 sm:px-6 lg:px-8">
+        <AccordionContent class="px-5 pb-5 text-base leading-relaxed text-foreground/80 sm:px-6 sm:text-lg lg:px-8 lg:pb-6 lg:text-xl lg:leading-relaxed">
           {{ faq.answer }}
         </AccordionContent>
       </AccordionItem>

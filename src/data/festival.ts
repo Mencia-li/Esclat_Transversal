@@ -759,13 +759,15 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
         description: "La soledad y la necesidad de conexión real en un mundo hiperconectado.",
       },
       {
-        title: "La Canción Que No Quiero Escribirte",
+        title: "La Canción Que No Quiero Cantarte",
         description: "La autodefensa emocional como acto de cuidado propio.",
       },
     ],
     festivalReason:
       "Amaia aporta al festival una perspectiva cercana y generacional sobre la búsqueda de identidad. Su presencia conecta especialmente con el público joven español, al representar el tránsito entre la adolescencia, la exposición pública y la construcción de una voz propia. Dentro del Día 1, funciona como una artista puente entre la vulnerabilidad íntima y el reconocimiento de que crecer también implica perderse.",
     spotifyUrl: "https://open.spotify.com/search/Amaia",
+    videoEmbedUrl: "https://www.youtube.com/embed/TtZdKaMecHY",
+    videoTitle: "Amaia, Aitana - La Canción Que No Quiero Cantarte",
   },
   "meghan-trainor": {
     artisticName: "Meghan Trainor",
@@ -799,6 +801,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "Meghan Trainor abre el Día 2 porque representa una primera respuesta a la presión estética: recuperar la confianza. Su propuesta conecta con un público amplio y permite iniciar la conversación sobre el cuerpo de forma accesible, pop y directa. Dentro de ESCLAT, aporta una energía positiva que prepara el terreno para discursos más críticos y combativos sobre la imagen, la belleza y los moldes que la sociedad impone.",
     spotifyUrl: "https://open.spotify.com/search/Meghan%20Trainor",
+    videoEmbedUrl: "https://www.youtube.com/embed/7PCkvCPvDXk",
+    videoTitle: "Meghan Trainor - All About That Bass",
   },
   hwasa: {
     artisticName: "Hwasa",
@@ -832,6 +836,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "Hwasa forma parte de ESCLAT porque convierte el cuerpo en un espacio de resistencia frente a la mirada ajena. Su presencia amplía la conversación del festival hacia una dimensión cultural e industrial, mostrando cómo los estándares de belleza también son mecanismos de control. Dentro del Día 2, aporta fuerza, provocación y libertad, defendiendo la idea de que romper el molde no solo es posible, sino necesario.",
     spotifyUrl: "https://open.spotify.com/search/Hwasa",
+    videoEmbedUrl: "https://www.youtube.com/embed/brZRDjFIFJs",
+    videoTitle: "Hwasa - Maria",
   },
   "olivia-dean": {
     artisticName: "Olivia Dean",
@@ -865,6 +871,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "Olivia Dean aporta al Día 2 una perspectiva íntima, emocional y contemporánea sobre los estándares de belleza. Su presencia permite ampliar el discurso del festival más allá de la crítica directa al cuerpo femenino, incorporando también la presión emocional que existe sobre las mujeres: ser deseables, estar bien, amar correctamente y mostrarse siempre completas. Dentro de ESCLAT, Olivia Dean funciona como una voz que defiende la belleza de lo imperfecto, lo sensible y lo real, conectando con una generación que busca referentes más honestos y menos idealizados.",
     spotifyUrl: "https://open.spotify.com/search/Olivia%20Dean",
+    videoEmbedUrl: "https://www.youtube.com/embed/NM4e606yFJg",
+    videoTitle: "Olivia Dean - Dive",
   },
   raye: {
     artisticName: "RAYE",
@@ -922,6 +930,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "RAYE forma parte de ESCLAT porque representa el momento en el que la aceptación corporal deja de ser solo una cuestión de confianza personal y se convierte en una denuncia. Su presencia conecta el Día 2 con el Día 3, ya que señala directamente a la industria y a sus mecanismos de control. Dentro del festival, aporta una voz cruda y necesaria: la de una artista que no solo habla de dolor, sino también de recuperar el poder sobre su cuerpo, su relato y su identidad.",
     spotifyUrl: "https://open.spotify.com/search/RAYE",
+    videoEmbedUrl: "https://www.youtube.com/embed/Dll6VJ2C7wo",
+    videoTitle: "RAYE, 070 Shake - Escapism.",
   },
   gidle: {
     artisticName: "(G)I-DLE",
@@ -980,6 +990,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "(G)I-DLE cierra el segundo día porque representa la ruptura definitiva del molde. Después de pasar por la aceptación, la confianza, la crítica feminista y la denuncia de la industria, su propuesta lleva el discurso a una explosión colectiva: no se trata solo de aprender a quererse dentro del sistema, sino de cuestionar por qué ese sistema existe. Dentro de ESCLAT, (G)I-DLE aporta rabia, ironía y poder escénico, cerrando el Día 2 con una idea clara: los estándares impuestos no se negocian, se rompen.",
     spotifyUrl: "https://open.spotify.com/search/%28G%29I-DLE",
+    videoEmbedUrl: "https://www.youtube.com/embed/Jh4QFaPmdss",
+    videoTitle: "(G)I-DLE - TOMBOY",
   },
   iu: {
     artisticName: "IU",
@@ -1037,6 +1049,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "IU forma parte de ESCLAT porque encarna una de las preguntas centrales del tercer día: quién tiene derecho a definir la identidad de una persona pública. Su música y su trayectoria permiten reflexionar sobre el odio en internet, la presión de mantener una imagen perfecta y el desgaste de vivir bajo interpretación constante. Dentro del festival, IU aporta una mirada sensible y madura sobre la fama, recordando que detrás de cada celebridad hay una persona cuya identidad no debería ser fabricada únicamente desde fuera.",
     spotifyUrl: "https://open.spotify.com/search/IU",
+    videoEmbedUrl: "https://www.youtube.com/embed/0-q1KafFCLU",
+    videoTitle: "IU - Celebrity",
   },
   "pablo-alboran": {
     artisticName: "Pablo Alborán",
@@ -1070,6 +1084,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "Pablo Alborán abre el Día 3 porque conecta el discurso sobre la industria con un referente cercano y reconocible. Su presencia permite iniciar la jornada desde una emoción accesible antes de avanzar hacia críticas más explícitas al sistema mediático y al consumo de celebridades. Dentro de ESCLAT, representa la idea de que detrás de una imagen pública hay una persona que también carga con expectativas, silencios y desgaste emocional.",
     spotifyUrl: "https://open.spotify.com/search/Pablo%20Albor%C3%A1n",
+    videoEmbedUrl: "https://www.youtube.com/embed/yBAx5nBdJqU",
+    videoTitle: "Pablo Alborán - Saturno",
   },
   "benson-boone": {
     artisticName: "Benson Boone",
@@ -1103,6 +1119,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "Benson Boone forma parte del Día 3 porque representa la presión de convertirse en figura pública en muy poco tiempo. Su presencia introduce una dimensión generacional al debate sobre la fama: la exposición ya no llega solo a través de entrevistas o televisión, sino también mediante vídeos virales, comentarios, cifras y tendencias. Dentro de ESCLAT, aporta una mirada sobre el coste de crecer como artista cuando la identidad se construye bajo los focos desde el primer momento.",
     spotifyUrl: "https://open.spotify.com/search/Benson%20Boone",
+    videoEmbedUrl: "https://www.youtube.com/embed/Oa_RSwwpPaA",
+    videoTitle: "Benson Boone - Beautiful Things",
   },
   "the-marias": {
     artisticName: "The Marías",
@@ -1137,6 +1155,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "The Marías forman parte de ESCLAT porque aportan una lectura más estética y sensorial del sistema de la fama. Su música permite observar cómo la industria construye imágenes deseables, sofisticadas y aparentemente perfectas, mientras la experiencia emocional que las sostiene puede ser mucho más ambigua. Dentro del Día 3, funcionan como un puente entre la exposición mediática y la crítica final al glamour vacío que cerrará la jornada.",
     spotifyUrl: "https://open.spotify.com/search/The%20Mar%C3%ADas",
+    videoEmbedUrl: "https://www.youtube.com/embed/3moMHMhiq7c",
+    videoTitle: "The Marías - Ruthless",
   },
   "lana-del-rey": {
     artisticName: "Lana Del Rey",
@@ -1194,6 +1214,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "Lana Del Rey cierra ESCLAT porque representa el punto final del recorrido: después de mirar hacia dentro, hacia el cuerpo y hacia la industria, su propuesta muestra el resultado emocional de un sistema que convierte la belleza, el deseo y la fama en productos. Su presencia permite cerrar el festival con una pregunta incómoda: si la industria construye imágenes perfectas para consumirlas, en qué momento deja de ver a las personas que hay detrás? Dentro de ESCLAT, Lana aporta una conclusión melancólica y crítica: el glamour puede brillar mucho, pero también puede estar profundamente vacío.",
     spotifyUrl: "https://open.spotify.com/search/Lana%20Del%20Rey",
+    videoEmbedUrl: "https://www.youtube.com/embed/cE6wxDqdOV0",
+    videoTitle: "Lana Del Rey - Video Games",
   },
 }
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue"
 import { RouterLink, useRoute } from "vue-router"
-import { ArrowLeft, CirclePlay, Music2 } from "lucide-vue-next"
+import { ArrowLeft, CirclePlay } from "lucide-vue-next"
 import { artistDetails, artists } from "@/data/festival"
 
 const route = useRoute()
@@ -36,6 +36,116 @@ const factRows = computed(() => {
     { label: "Eje temático en ESCLAT", value: detail.value.themeAxis },
   ]
 })
+
+const songsScrollRef = ref<HTMLOListElement | null>(null)
+const songsThumbStyle = ref<Record<string, string>>({})
+const isSongsScrollable = ref(false)
+
+let dragStartY = 0
+let dragStartScrollTop = 0
+
+function updateSongsScrollbar() {
+  const element = songsScrollRef.value
+
+  if (!element) {
+    isSongsScrollable.value = false
+    songsThumbStyle.value = {}
+    return
+  }
+
+  const { clientHeight, scrollHeight, scrollTop } = element
+  const scrollableDistance = scrollHeight - clientHeight
+
+  if (scrollableDistance <= 1) {
+    isSongsScrollable.value = false
+    songsThumbStyle.value = {}
+    return
+  }
+
+  isSongsScrollable.value = true
+
+  const thumbHeight = Math.max((clientHeight / scrollHeight) * clientHeight, 44)
+  const thumbTravel = Math.max(clientHeight - thumbHeight, 0)
+  const thumbTop = (scrollTop / scrollableDistance) * thumbTravel
+
+  songsThumbStyle.value = {
+    height: `${thumbHeight}px`,
+    transform: `translateX(-50%) translateY(${thumbTop}px)`,
+  }
+}
+
+function scrollSongsFromDrag(clientY: number) {
+  const element = songsScrollRef.value
+
+  if (!element) {
+    return
+  }
+
+  const thumbHeight = Number.parseFloat(songsThumbStyle.value.height ?? "0")
+  const thumbTravel = Math.max(element.clientHeight - thumbHeight, 1)
+  const scrollableDistance = element.scrollHeight - element.clientHeight
+  const dragDistance = clientY - dragStartY
+
+  element.scrollTop = dragStartScrollTop + (dragDistance / thumbTravel) * scrollableDistance
+}
+
+function onSongsThumbPointerMove(event: PointerEvent) {
+  scrollSongsFromDrag(event.clientY)
+}
+
+function stopSongsThumbDrag() {
+  window.removeEventListener("pointermove", onSongsThumbPointerMove)
+  window.removeEventListener("pointerup", stopSongsThumbDrag)
+}
+
+function startSongsThumbDrag(event: PointerEvent) {
+  const element = songsScrollRef.value
+
+  if (!element) {
+    return
+  }
+
+  event.preventDefault()
+  dragStartY = event.clientY
+  dragStartScrollTop = element.scrollTop
+  window.addEventListener("pointermove", onSongsThumbPointerMove)
+  window.addEventListener("pointerup", stopSongsThumbDrag)
+}
+
+function onSongsRailPointerDown(event: PointerEvent) {
+  const element = songsScrollRef.value
+  const target = event.target as HTMLElement
+
+  if (!element || target.closest(".artist-songs-thumb")) {
+    return
+  }
+
+  const rect = (event.currentTarget as HTMLElement).getBoundingClientRect()
+  const thumbHeight = Number.parseFloat(songsThumbStyle.value.height ?? "0")
+  const clickPosition = event.clientY - rect.top - thumbHeight / 2
+  const thumbTravel = Math.max(element.clientHeight - thumbHeight, 1)
+  const scrollableDistance = element.scrollHeight - element.clientHeight
+
+  element.scrollTop = (clickPosition / thumbTravel) * scrollableDistance
+}
+
+onMounted(() => {
+  nextTick(updateSongsScrollbar)
+  window.addEventListener("resize", updateSongsScrollbar)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateSongsScrollbar)
+  stopSongsThumbDrag()
+})
+
+watch(
+  () => [artistId.value, detail.value?.recommendedSongs.length],
+  async () => {
+    await nextTick()
+    updateSongsScrollbar()
+  },
+)
 </script>
 
 <template>
@@ -117,7 +227,7 @@ const factRows = computed(() => {
         </div>
 
         <div class="border-t border-foreground p-4 sm:p-6 lg:p-8">
-          <div class="grid gap-8 lg:grid-cols-[1fr_24rem]">
+          <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_24rem]">
             <div class="space-y-8">
               <section>
                 <h3 class="text-2xl font-normal uppercase leading-none text-foreground sm:text-3xl">Biografía:</h3>
@@ -141,18 +251,36 @@ const factRows = computed(() => {
               </section>
             </div>
 
-            <aside class="border-t border-foreground pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
-              <h3 class="flex items-center gap-2 text-2xl font-normal uppercase leading-none text-foreground sm:text-3xl">
-                <Music2 class="size-6" />
+            <aside class="border-t border-foreground pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0" aria-label="Canciones para el festival">
+              <h3 class="text-2xl font-normal uppercase leading-none text-foreground sm:text-3xl">
                 Canciones para el festival:
               </h3>
 
-              <ol class="mt-5 space-y-4">
-                <li v-for="song in detail.recommendedSongs" :key="song.title" class="border-b border-foreground pb-4 last:border-b-0">
-                  <p class="text-base font-medium uppercase leading-tight text-foreground">{{ song.title }}</p>
-                  <p class="mt-1 text-sm leading-snug text-muted-foreground">{{ song.description }}</p>
-                </li>
-              </ol>
+              <div class="relative mt-5">
+                <ol
+                  ref="songsScrollRef"
+                  class="artist-songs-scroll max-h-[28rem] space-y-4 overflow-y-auto pr-7 lg:max-h-[32rem]"
+                  @scroll="updateSongsScrollbar"
+                >
+                  <li v-for="song in detail.recommendedSongs" :key="song.title" class="border-b border-foreground pb-4 last:border-b-0">
+                    <p class="text-base font-medium uppercase leading-tight text-foreground">{{ song.title }}</p>
+                    <p class="mt-1 text-sm leading-snug text-muted-foreground">{{ song.description }}</p>
+                  </li>
+                </ol>
+
+                <div
+                  v-if="isSongsScrollable"
+                  class="artist-songs-rail"
+                  aria-hidden="true"
+                  @pointerdown="onSongsRailPointerDown"
+                >
+                  <span
+                    class="artist-songs-thumb"
+                    :style="songsThumbStyle"
+                    @pointerdown="startSongsThumbDrag"
+                  />
+                </div>
+              </div>
             </aside>
           </div>
         </div>
@@ -180,3 +308,39 @@ const factRows = computed(() => {
     </div>
   </section>
 </template>
+
+<style scoped>
+.artist-songs-scroll {
+  scrollbar-width: none;
+}
+
+.artist-songs-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.artist-songs-rail {
+  position: absolute;
+  bottom: 0;
+  right: 0.15rem;
+  top: 0;
+  width: 0.8rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.artist-songs-thumb {
+  position: absolute;
+  left: 50%;
+  top: 2px;
+  width: 0.45rem;
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--foreground) 88%, transparent);
+  cursor: grab;
+  transform: translateX(-50%);
+  touch-action: none;
+}
+
+.artist-songs-thumb:active {
+  cursor: grabbing;
+}
+</style>
