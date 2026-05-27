@@ -150,32 +150,32 @@ const activityBlocks = [
   {
     id: "talleres",
     title: "Talleres.",
-    summary:
-      "Producción musical, collage, maquillaje, movimiento y creación de objetos para transformar los temas del festival en práctica.",
+    space: "ESPACIO NO SE QUE",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     className: "bg-background text-foreground",
     to: undefined,
   },
   {
     id: "charlas",
     title: "Charlas.",
-    summary:
-      "Conversaciones en La Polivalent con formato abierto, preguntas del público y enfoque accesible.",
+    space: "ESPACIO NO SE QUE",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     className: "bg-[#A9FCE6] text-foreground",
     to: undefined,
   },
   {
     id: "exposiciones",
     title: "Exposiciones.",
-    summary:
-      "Tres exposiciones fotográficas sobre salud mental, cuerpo, fama, privacidad e industria musical.",
+    space: "ESPACIO NO SE QUE",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     className: "bg-[#A9FCE6] text-foreground",
     to: undefined,
   },
   {
     id: "stands-merch",
-    title: "Tienda.",
-    summary:
-      "Food trucks, bebidas, merchandising oficial y espacios comunes abiertos durante todo el horario del festival.",
+    title: "Stands&Merch.",
+    space: "ESPACIO NO SE QUE",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     className: "bg-background text-foreground",
     to: { path: "/tienda" },
   },
@@ -213,24 +213,44 @@ const activityBlocks = [
       role="tabpanel"
       :aria-labelledby="'actividades-tab-experiencia'"
       data-reveal
-      class="grid grid-cols-2"
+      class="grid grid-cols-1 md:grid-cols-2"
     >
-      <component
-        :is="block.to ? RouterLink : 'article'"
-        v-for="block in activityBlocks"
+      <article
+        v-for="(block, index) in activityBlocks"
         :key="block.id"
-        :to="block.to"
         :class="[
-          'block min-h-44 border-b border-foreground p-4 outline-none transition odd:border-r nth-last-[-n+2]:border-b-0 sm:min-h-52 sm:p-6 lg:min-h-60 lg:p-8',
-          block.to ? 'hover:brightness-95 focus-visible:ring-2 focus-visible:ring-ring' : '',
+          'flex min-h-44 flex-col border-b border-foreground p-4 sm:min-h-52 sm:p-6 lg:min-h-60 lg:p-8',
+          index % 2 === 0 ? 'md:border-r' : '',
+          index >= activityBlocks.length - 2 ? 'md:border-b-0' : '',
+          index === activityBlocks.length - 1 ? 'border-b-0' : '',
           block.className,
         ]"
       >
         <h3 class="text-xl font-normal leading-none sm:text-2xl lg:text-3xl">{{ block.title }}</h3>
-        <p class="mt-5 max-w-2xl text-xs leading-relaxed sm:mt-8 sm:text-sm lg:text-base">
+        <p class="mt-5 text-sm font-normal uppercase leading-tight sm:mt-6 sm:text-base lg:text-lg">
+          {{ block.space }}
+        </p>
+        <p class="mt-4 max-w-3xl text-xs leading-relaxed sm:text-sm lg:text-base">
           {{ block.summary }}
         </p>
-      </component>
+
+        <div class="mt-auto flex justify-end pt-6">
+          <RouterLink
+            v-if="block.to"
+            :to="block.to"
+            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-[#A9FCE6] sm:text-base"
+          >
+            VER MÁS &gt;
+          </RouterLink>
+          <button
+            v-else
+            type="button"
+            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-[#A9FCE6] sm:text-base"
+          >
+            VER MÁS &gt;
+          </button>
+        </div>
+      </article>
     </div>
 
     <div

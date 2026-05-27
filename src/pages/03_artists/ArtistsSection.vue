@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue"
-import { CirclePlus, MoreHorizontal, Play, SkipBack, SkipForward } from "lucide-vue-next"
+import { CirclePlus } from "lucide-vue-next"
 import { RouterLink } from "vue-router"
 import type { Artist } from "@/data/festival"
 import {
@@ -143,21 +143,21 @@ type PlaylistColumn = PlaylistTheme & {
 
 const playlistThemes: Record<ArtistDateFilter, PlaylistTheme> = {
   "23/10": {
-    title: "ESCLAT DAY 23",
+    title: "DAY 23",
     subtitle: "Amor propio y salud mental",
     color: "#6D2E8F",
     listColor: "#54206F",
     coverColor: "#8B45B3",
   },
   "24/10": {
-    title: "ESCLAT DAY 24",
+    title: "DAY 24",
     subtitle: "Cuerpo, identidad y belleza",
     color: "#006094",
     listColor: "#004C78",
     coverColor: "#0088BF",
   },
   "25/10": {
-    title: "ESCLAT DAY 25",
+    title: "DAY 25",
     subtitle: "Fama, industria e imagen pública",
     color: "#41A9D6",
     listColor: "#1F82AE",
@@ -635,19 +635,6 @@ onBeforeUnmount(() => {
                           <CirclePlus class="size-5" aria-hidden="true" />
                           Guardar en Spotify
                         </button>
-
-                        <div class="flex items-center gap-3 text-white/85">
-                          <SkipBack class="size-5" aria-hidden="true" />
-                          <SkipForward class="size-5" aria-hidden="true" />
-                          <MoreHorizontal class="size-5" aria-hidden="true" />
-                          <button
-                            type="button"
-                            class="grid size-12 place-items-center rounded-full bg-white text-[var(--playlist-color)] shadow-[0_0.5rem_1.5rem_rgba(0,0,0,0.18)] transition-transform hover:scale-105"
-                            :aria-label="`Reproducir playlist ${playlist.date}`"
-                          >
-                            <Play class="ml-0.5 size-6 fill-current" aria-hidden="true" />
-                          </button>
-                        </div>
                       </div>
                     </div>
                   </div>
