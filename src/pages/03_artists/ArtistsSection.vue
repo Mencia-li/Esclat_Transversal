@@ -187,7 +187,7 @@ const columnBasisClass = computed(() => {
 const carouselItems = computed<CarouselArtist[]>(() => {
   return artistsCarouselItems.map((artist, index) => ({
     ...artist,
-    image: artist.isPlaceholder ? undefined : `/img/artists/artist${index + 1}.jpg`,
+    image: `/img/artists/artist${index + 1}.jpg`,
   }))
 })
 
