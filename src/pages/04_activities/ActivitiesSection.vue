@@ -160,7 +160,7 @@ const activityBlocks = [
     title: "Charlas.",
     space: "ESPACIO NO SE QUE",
     summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    className: "bg-[#A9FCE6] text-foreground",
+    className: "bg-turquesa text-foreground",
     to: undefined,
   },
   {
@@ -168,7 +168,7 @@ const activityBlocks = [
     title: "Exposiciones.",
     space: "ESPACIO NO SE QUE",
     summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    className: "bg-[#A9FCE6] text-foreground",
+    className: "bg-turquesa text-foreground",
     to: undefined,
   },
   {
@@ -198,7 +198,7 @@ const activityBlocks = [
           'flex min-h-16 items-center px-5 py-4 text-left text-3xl font-normal leading-none transition-colors sm:min-h-20 sm:px-6 sm:text-4xl lg:px-8 lg:text-5xl',
           index === 0 ? 'border-r border-foreground' : '',
           activeTab === tab.id
-            ? 'bg-[#A9FCE6] text-foreground'
+            ? 'bg-turquesa text-foreground'
             : 'bg-background text-foreground',
         ]"
         @click="activeTab = tab.id"
@@ -238,14 +238,14 @@ const activityBlocks = [
           <RouterLink
             v-if="block.to"
             :to="block.to"
-            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-[#A9FCE6] sm:text-base"
+            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-turquesa sm:text-base"
           >
             VER MÁS &gt;
           </RouterLink>
           <button
             v-else
             type="button"
-            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-[#A9FCE6] sm:text-base"
+            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-turquesa sm:text-base"
           >
             VER MÁS &gt;
           </button>
@@ -272,8 +272,8 @@ const activityBlocks = [
               'px-4 py-3 text-center text-sm font-medium uppercase tracking-wide transition-colors',
               index < scheduleDays.length - 1 ? 'border-r border-foreground' : '',
               activeScheduleDay === day.id
-                ? 'bg-[#A9FCE6] text-foreground'
-                : 'bg-background text-foreground hover:bg-[#A9FCE6]',
+                ? 'bg-turquesa text-foreground'
+                : 'bg-background text-foreground hover:bg-turquesa',
             ]"
             @click="activeScheduleDay = day.id"
           >
@@ -312,7 +312,7 @@ const activityBlocks = [
               :style="blockStyle(block)"
               :class="[
                 'absolute rounded-sm border border-foreground px-2 py-1 text-[0.6rem] leading-tight sm:text-[0.65rem]',
-                block.tone === 'soft' ? 'bg-[#A9FCE6]/70' : 'bg-[#A9FCE6]',
+                block.tone === 'soft' ? 'bg-turquesa/70' : 'bg-turquesa',
               ]"
             >
               <p class="font-medium uppercase tracking-wide">{{ block.title }}</p>

@@ -17,6 +17,8 @@ const navLinks = [
   { label: "Tienda", to: { path: "/", hash: "#actividades" } },
   { label: "FAQs", to: { path: "/", hash: "#faqs" } },
 ]
+
+const esclatLogo = "/img/logos/esclat/svg/horizontal-black.svg"
 </script>
 
 <template>
@@ -24,9 +26,10 @@ const navLinks = [
     <div class="flex h-14 items-center gap-4 px-4 sm:px-6 lg:px-8">
       <RouterLink
         :to="{ path: '/', hash: '#inicio' }"
-        class="text-xl font-normal uppercase leading-none text-foreground transition hover:text-primary"
+        class="inline-flex items-center"
+        aria-label="Ir al inicio"
       >
-        Esclat
+        <img :src="esclatLogo" alt="ESCLAT" class="h-9 w-auto" />
       </RouterLink>
 
       <div class="ml-auto flex items-center gap-6">

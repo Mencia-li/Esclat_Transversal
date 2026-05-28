@@ -4,9 +4,9 @@ import { festivalDays, festivalInfo } from "@/data/festival"
 
 function dayClass(index: number) {
   const classes = [
-    "bg-primary text-primary-foreground",
+    "bg-blue_ice text-foreground",
     "bg-background text-foreground",
-    "bg-secondary text-secondary-foreground",
+    "bg-grey text-foreground",
   ] as const
 
   return classes[index] ?? classes[0]
@@ -24,27 +24,14 @@ function dayClass(index: number) {
     <div data-reveal class="grid grid-cols-4 border-t border-foreground">
       <RouterLink
         :to="{ name: 'program-detail', params: { dia: festivalDays[0]?.id } }"
-        class="group relative min-h-52 overflow-hidden border-r border-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-60 lg:min-h-80"
+        class="group flex min-h-52 items-center justify-center overflow-hidden border-r border-foreground bg-black p-6 outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-60 lg:min-h-80"
+        aria-label="Ver programa"
       >
-        <video
-          class="absolute inset-0 h-full w-full object-cover grayscale transition duration-300 group-hover:scale-105"
-          src="/video/hero/esclat-hero.mp4"
-          autoplay
-          muted
-          loop
-          playsinline
-          aria-hidden="true"
+        <img
+          src="/img/logos/esclat/png/72/vertical-white.png"
+          alt="ESCLAT"
+          class="h-24 w-auto object-contain sm:h-28 lg:h-36"
         />
-        <div class="absolute inset-0 bg-foreground/35" />
-        <div class="relative z-10 flex h-full min-h-52 flex-col justify-between p-2 text-background sm:min-h-60 sm:p-4 lg:min-h-80 lg:p-5">
-          <p class="text-sm leading-tight sm:text-lg lg:text-2xl">
-            23/10 -<br />
-            25/10
-          </p>
-          <h2 class="max-w-xs text-lg font-semibold leading-tight sm:text-2xl lg:text-3xl">
-            Tres días para que todo lo que llevamos dentro estalle.
-          </h2>
-        </div>
       </RouterLink>
 
       <RouterLink

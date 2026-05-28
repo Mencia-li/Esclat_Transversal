@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { festivalInfo } from "@/data/festival"
 
+const esclatLogo = "/img/logos/esclat/svg/horizontal-black.svg"
+
 const socialLinks = [
   { name: "Instagram", icon: "/img/logos/instagram.svg" },
   { name: "TikTok", icon: "/img/logos/tiktok.svg" },
@@ -12,7 +14,7 @@ const socialLinks = [
   <footer class="border-t border-foreground bg-background">
     <div class="grid gap-8 px-5 py-8 sm:px-6 md:grid-cols-4 lg:px-8">
       <div>
-        <p class="text-3xl font-normal leading-none text-foreground">Esclat.</p>
+        <img :src="esclatLogo" alt="ESCLAT" class="h-12 w-auto" loading="lazy" />
       </div>
 
       <div class="space-y-2 text-xs">

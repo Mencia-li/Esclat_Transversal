@@ -162,7 +162,7 @@ watch(
       <h1 class="text-4xl font-normal leading-none text-foreground sm:text-5xl">Artistas.</h1>
     </div>
 
-    <div class="border-b border-foreground bg-[#A9FCE6] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+    <div class="border-b border-foreground bg-blue_ice px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <article
         v-if="artist && detail"
         class="mx-auto w-full max-w-[96rem] border border-foreground bg-background"
@@ -183,9 +183,9 @@ watch(
               :href="detail.spotifyUrl"
               target="_blank"
               rel="noreferrer"
-              class="flex min-h-14 items-center justify-center gap-3 border border-foreground bg-background px-4 text-lg font-normal uppercase text-foreground transition-colors hover:bg-[#A9FCE6]"
+              class="flex min-h-14 items-center justify-center gap-3 border border-foreground bg-background px-4 text-lg font-normal uppercase text-foreground transition-colors hover:bg-blue_ice"
             >
-              <CirclePlay class="size-6 shrink-0 fill-foreground text-foreground" />
+              <CirclePlay class="size-6 shrink-0 fill-grey text-grey" />
               Escuchar en Spotify
             </a>
           </aside>
@@ -201,10 +201,10 @@ watch(
             </div>
 
             <div class="mt-5 flex flex-wrap gap-3">
-              <span class="bg-[#A9FCE6] px-4 py-3 text-sm font-medium uppercase text-foreground sm:text-base">
+              <span class="bg-turquesa px-4 py-3 text-sm font-medium uppercase text-foreground sm:text-base">
                 {{ artist.stage }}
               </span>
-              <span class="bg-[#A9FCE6] px-4 py-3 text-sm font-medium uppercase text-foreground sm:text-base">
+              <span class="bg-turquesa px-4 py-3 text-sm font-medium uppercase text-foreground sm:text-base">
                 {{ artist.time }}
               </span>
             </div>
@@ -334,7 +334,7 @@ watch(
   top: 2px;
   width: 0.45rem;
   border-radius: 9999px;
-  background: color-mix(in oklch, var(--foreground) 88%, transparent);
+  background: var(--grey);
   cursor: grab;
   transform: translateX(-50%);
   touch-action: none;

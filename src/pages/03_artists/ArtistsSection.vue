@@ -403,7 +403,7 @@ onBeforeUnmount(() => {
           'flex min-h-16 items-center px-5 py-4 text-left text-3xl font-normal leading-none transition-colors sm:min-h-20 sm:px-6 sm:text-4xl lg:px-8 lg:text-5xl',
           index === 0 ? 'border-r border-foreground' : '',
           activeTab === tab.id
-            ? 'bg-[#A9FCE6] text-foreground'
+            ? 'bg-turquesa text-foreground'
             : 'bg-background text-foreground',
         ]"
         @click="activeTab = tab.id"
@@ -497,7 +497,7 @@ onBeforeUnmount(() => {
       <div v-if="!showExpandedArtists" class="mt-5 flex justify-center">
         <button
           type="button"
-          class="border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-[#A9FCE6] sm:px-6 sm:text-base"
+          class="border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-turquesa sm:px-6 sm:text-base"
           @click="showExpandedArtistsView"
         >
           Ver todos los artistas
@@ -516,8 +516,8 @@ onBeforeUnmount(() => {
               'min-h-12 px-2 text-center text-base font-normal leading-none transition-colors sm:text-xl',
               filter.id !== '25/10' ? 'border-r border-foreground' : '',
               expandedActiveFilter === filter.id
-                ? 'bg-foreground text-background'
-                : 'bg-background text-foreground hover:bg-[#A9FCE6]',
+                ? 'bg-grey text-foreground'
+                : 'bg-background text-foreground',
             ]"
             @click="expandedActiveFilter = filter.id"
           >
@@ -573,11 +573,11 @@ onBeforeUnmount(() => {
             <div>
               <a
                 href=""
-                class="inline-flex min-h-14 items-center gap-3 border border-foreground bg-background px-6 text-sm font-medium uppercase text-foreground transition-colors hover:bg-[#A9FCE6] sm:text-base"
+                class="inline-flex min-h-14 items-center gap-3 border border-foreground bg-background px-6 text-sm font-medium uppercase text-foreground transition-colors hover:bg-turquesa sm:text-base"
                 aria-label="Escuchar en Spotify, falta link"
                 @click.prevent
               >
-                <span class="size-6 rounded-full bg-foreground" aria-hidden="true" />
+                <span class="size-6 rounded-full bg-grey" aria-hidden="true" />
                 Escuchar en Spotify <span class="normal-case">(falta link)</span>
               </a>
             </div>
@@ -670,7 +670,7 @@ onBeforeUnmount(() => {
         <div class="mt-8 flex justify-center">
           <button
             type="button"
-            class="border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-[#A9FCE6] sm:px-6 sm:text-base"
+            class="border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-turquesa sm:px-6 sm:text-base"
             @click="hideExpandedArtistsView"
           >
             Ver menos
@@ -717,7 +717,7 @@ onBeforeUnmount(() => {
 }
 
 .playlist-song-list {
-  scrollbar-color: rgb(255 255 255 / 35%) transparent;
+  scrollbar-color: var(--grey) transparent;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
 }
@@ -735,7 +735,7 @@ onBeforeUnmount(() => {
 }
 
 .playlist-song-list::-webkit-scrollbar-thumb {
-  background: rgb(255 255 255 / 35%);
+  background: var(--grey);
   border-radius: 999px;
 }
 
