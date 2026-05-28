@@ -14,7 +14,7 @@ const socialLinks = [
   <footer class="border-t border-foreground bg-background">
     <div class="grid gap-8 px-5 py-8 sm:px-6 md:grid-cols-4 lg:px-8">
       <div>
-        <img :src="esclatLogo" alt="ESCLAT" class="h-12 w-auto" loading="lazy" />
+        <img :src="esclatLogo" alt="ESCLAT" class="h-16 w-auto" loading="lazy" />
       </div>
 
       <div class="space-y-2 text-xs">

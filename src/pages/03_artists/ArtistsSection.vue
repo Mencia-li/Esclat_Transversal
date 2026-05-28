@@ -133,6 +133,12 @@ type PlaylistTheme = {
   color: string
   listColor: string
   coverColor: string
+  textColor: string
+  mutedTextColor: string
+  subtleTextColor: string
+  badgeBackground: string
+  badgeTextColor: string
+  borderColor: string
 }
 
 type PlaylistColumn = PlaylistTheme & {
@@ -145,23 +151,41 @@ const playlistThemes: Record<ArtistDateFilter, PlaylistTheme> = {
   "23/10": {
     title: "DAY 23",
     subtitle: "Amor propio y salud mental",
-    color: "#6D2E8F",
-    listColor: "#54206F",
-    coverColor: "#8B45B3",
+    color: "#000000",
+    listColor: "#111111",
+    coverColor: "#1f1f1f",
+    textColor: "#ffffff",
+    mutedTextColor: "rgb(255 255 255 / 72%)",
+    subtleTextColor: "rgb(255 255 255 / 45%)",
+    badgeBackground: "rgb(255 255 255 / 14%)",
+    badgeTextColor: "#ffffff",
+    borderColor: "rgb(255 255 255 / 18%)",
   },
   "24/10": {
     title: "DAY 24",
     subtitle: "Cuerpo, identidad y belleza",
-    color: "#006094",
-    listColor: "#004C78",
-    coverColor: "#0088BF",
+    color: "var(--turquesa)",
+    listColor: "color-mix(in oklch, var(--turquesa) 88%, black)",
+    coverColor: "color-mix(in oklch, var(--turquesa) 78%, white)",
+    textColor: "var(--foreground)",
+    mutedTextColor: "color-mix(in oklch, var(--foreground) 72%, transparent)",
+    subtleTextColor: "color-mix(in oklch, var(--foreground) 48%, transparent)",
+    badgeBackground: "rgb(0 0 0 / 14%)",
+    badgeTextColor: "var(--foreground)",
+    borderColor: "rgb(0 0 0 / 16%)",
   },
   "25/10": {
     title: "DAY 25",
     subtitle: "Fama, industria e imagen pública",
-    color: "#41A9D6",
-    listColor: "#1F82AE",
-    coverColor: "#9DE5FF",
+    color: "#ffffff",
+    listColor: "#f2f2f2",
+    coverColor: "color-mix(in oklch, var(--background) 90%, black)",
+    textColor: "var(--foreground)",
+    mutedTextColor: "color-mix(in oklch, var(--foreground) 72%, transparent)",
+    subtleTextColor: "color-mix(in oklch, var(--foreground) 48%, transparent)",
+    badgeBackground: "rgb(0 0 0 / 12%)",
+    badgeTextColor: "var(--foreground)",
+    borderColor: "rgb(0 0 0 / 18%)",
   },
 }
 
@@ -404,7 +428,7 @@ onBeforeUnmount(() => {
           index === 0 ? 'border-r border-foreground' : '',
           activeTab === tab.id
             ? 'bg-turquesa text-foreground'
-            : 'bg-background text-foreground',
+            : 'bg-background text-foreground hover:bg-grey',
         ]"
         @click="activeTab = tab.id"
       >
@@ -485,19 +509,19 @@ onBeforeUnmount(() => {
         <CarouselPrevious
           variant="ghost"
           size="icon-lg"
-          class="left-0 size-8 rounded-none bg-background/80 text-foreground shadow-none hover:bg-secondary disabled:opacity-40 sm:size-10"
+          class="left-0 size-8 rounded-none bg-background/70 text-foreground shadow-none hover:bg-grey/70 disabled:opacity-40 sm:size-10"
         />
         <CarouselNext
           variant="ghost"
           size="icon-lg"
-          class="right-0 size-8 rounded-none bg-background/80 text-foreground shadow-none hover:bg-secondary disabled:opacity-40 sm:size-10"
+          class="right-0 size-8 rounded-none bg-background/70 text-foreground shadow-none hover:bg-grey/70 disabled:opacity-40 sm:size-10"
         />
       </Carousel>
 
       <div v-if="!showExpandedArtists" class="mt-5 flex justify-center">
         <button
           type="button"
-          class="border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-turquesa sm:px-6 sm:text-base"
+          class="border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-grey sm:px-6 sm:text-base"
           @click="showExpandedArtistsView"
         >
           Ver todos los artistas
@@ -516,8 +540,8 @@ onBeforeUnmount(() => {
               'min-h-12 px-2 text-center text-base font-normal leading-none transition-colors sm:text-xl',
               filter.id !== '25/10' ? 'border-r border-foreground' : '',
               expandedActiveFilter === filter.id
-                ? 'bg-grey text-foreground'
-                : 'bg-background text-foreground',
+                ? 'bg-blue_ice text-foreground'
+                : 'bg-background text-foreground hover:bg-grey',
             ]"
             @click="expandedActiveFilter = filter.id"
           >
@@ -570,24 +594,22 @@ onBeforeUnmount(() => {
           </div>
 
           <section class="space-y-5">
-            <div>
-              <a
-                href=""
-                class="inline-flex min-h-14 items-center gap-3 border border-foreground bg-background px-6 text-sm font-medium uppercase text-foreground transition-colors hover:bg-turquesa sm:text-base"
-                aria-label="Escuchar en Spotify, falta link"
-                @click.prevent
-              >
-                <span class="size-6 rounded-full bg-grey" aria-hidden="true" />
-                Escuchar en Spotify <span class="normal-case">(falta link)</span>
-              </a>
-            </div>
-
             <div :class="['grid gap-5', expandedActiveFilter === 'todos' ? 'lg:grid-cols-3' : 'lg:grid-cols-1']">
               <article
                 v-for="playlist in playlistColumns"
                 :key="playlist.date"
-                class="overflow-hidden rounded-lg bg-(--playlist-list-color) text-white shadow-[0_1rem_2.5rem_rgba(0,0,0,0.18)]"
-                :style="{ '--playlist-color': playlist.color, '--playlist-list-color': playlist.listColor, '--playlist-cover-color': playlist.coverColor }"
+                class="overflow-hidden rounded-lg border border-[var(--playlist-border-color)] bg-(--playlist-list-color) text-[var(--playlist-text-color)] shadow-[0_1rem_2.5rem_rgba(0,0,0,0.16)]"
+                :style="{
+                  '--playlist-color': playlist.color,
+                  '--playlist-list-color': playlist.listColor,
+                  '--playlist-cover-color': playlist.coverColor,
+                  '--playlist-text-color': playlist.textColor,
+                  '--playlist-muted-color': playlist.mutedTextColor,
+                  '--playlist-subtle-color': playlist.subtleTextColor,
+                  '--playlist-badge-bg': playlist.badgeBackground,
+                  '--playlist-badge-text': playlist.badgeTextColor,
+                  '--playlist-border-color': playlist.borderColor,
+                }"
               >
                 <div class="relative grid gap-4 bg-(--playlist-color) p-4 sm:grid-cols-[7rem_minmax(0,1fr)] sm:p-5 xl:grid-cols-[8.5rem_minmax(0,1fr)]">
                   <img
@@ -597,7 +619,7 @@ onBeforeUnmount(() => {
                     loading="lazy"
                   />
 
-                  <div class="grid size-24 grid-cols-2 overflow-hidden rounded-md border border-white/20 bg-(--playlist-cover-color) sm:size-28 xl:size-[8.5rem]">
+                  <div class="grid size-24 grid-cols-2 overflow-hidden rounded-md border border-[var(--playlist-border-color)] bg-(--playlist-cover-color) sm:size-28 xl:size-[8.5rem]">
                     <img
                       v-for="cover in playlist.coverImages"
                       :key="cover.src"
@@ -610,27 +632,27 @@ onBeforeUnmount(() => {
 
                   <div class="flex min-w-0 flex-col justify-between pr-10">
                     <div>
-                      <h4 class="max-w-full text-3xl font-bold uppercase leading-none text-white sm:text-4xl lg:text-3xl xl:text-4xl">
+                      <h4 class="max-w-full text-3xl font-bold uppercase leading-none text-[var(--playlist-text-color)] sm:text-4xl lg:text-3xl xl:text-4xl">
                         {{ playlist.title }}
                       </h4>
 
                       <div class="mt-2 flex flex-wrap items-center gap-2">
-                        <span class="rounded-sm bg-black/30 px-2 py-1 text-xs font-bold uppercase leading-none text-white">
+                        <span class="rounded-sm bg-[var(--playlist-badge-bg)] px-2 py-1 text-xs font-bold uppercase leading-none text-[var(--playlist-badge-text)]">
                           Muestra
                         </span>
-                        <p class="text-lg font-semibold leading-none text-white/65">
+                        <p class="text-lg font-semibold leading-none text-[var(--playlist-muted-color)]">
                           ESCLAT Festival
                         </p>
                       </div>
 
-                      <p class="mt-2 text-sm font-medium leading-tight text-white/80">
+                      <p class="mt-2 text-sm font-medium leading-tight text-[var(--playlist-muted-color)]">
                         {{ playlist.subtitle }}
                       </p>
 
                       <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
                         <button
                           type="button"
-                          class="inline-flex items-center gap-2 text-sm font-semibold text-white transition-opacity hover:opacity-75"
+                          class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--playlist-text-color)] transition-opacity hover:opacity-75"
                         >
                           <CirclePlus class="size-5" aria-hidden="true" />
                           Guardar en Spotify
@@ -654,12 +676,12 @@ onBeforeUnmount(() => {
                     class="grid grid-cols-[1.75rem_minmax(0,1fr)_3.25rem] items-center gap-3 py-2.5"
                     :title="song.description"
                   >
-                    <span class="text-sm font-semibold text-white/45">{{ songIndex + 1 }}</span>
+                    <span class="text-sm font-semibold text-[var(--playlist-subtle-color)]">{{ songIndex + 1 }}</span>
                     <span class="min-w-0">
-                      <span class="block truncate text-sm font-bold uppercase leading-tight text-white">{{ song.title }}</span>
-                      <span class="mt-1 block truncate text-xs font-semibold leading-tight text-white/55">{{ song.artistName }}</span>
+                      <span class="block truncate text-sm font-bold uppercase leading-tight text-[var(--playlist-text-color)]">{{ song.title }}</span>
+                      <span class="mt-1 block truncate text-xs font-semibold leading-tight text-[var(--playlist-muted-color)]">{{ song.artistName }}</span>
                     </span>
-                    <span class="text-right text-sm font-semibold text-white/70">{{ song.duration }}</span>
+                    <span class="text-right text-sm font-semibold text-[var(--playlist-muted-color)]">{{ song.duration }}</span>
                   </li>
                 </ol>
               </article>
@@ -670,7 +692,7 @@ onBeforeUnmount(() => {
         <div class="mt-8 flex justify-center">
           <button
             type="button"
-            class="border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-turquesa sm:px-6 sm:text-base"
+            class="border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-grey sm:px-6 sm:text-base"
             @click="hideExpandedArtistsView"
           >
             Ver menos

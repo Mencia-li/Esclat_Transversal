@@ -24,7 +24,7 @@ import { faqs } from "@/data/festival"
     >
       <AccordionItem v-for="faq in faqs" :key="faq.id" :value="faq.id" class="border-foreground">
         <AccordionTrigger
-          class="min-h-14 items-center gap-3 rounded-none px-5 py-0 text-foreground sm:min-h-16 sm:gap-4 sm:px-6 lg:px-8 [&_svg]:mt-0 [&_svg]:text-foreground"
+          class="min-h-14 items-center gap-3 rounded-none px-5 py-0 text-foreground transition-colors hover:bg-grey hover:text-foreground data-[state=open]:bg-background data-[state=open]:hover:bg-background sm:min-h-16 sm:gap-4 sm:px-6 lg:px-8 [&_svg]:mt-0 [&_svg]:text-foreground"
         >
           <span class="text-left text-base font-normal leading-tight sm:text-lg lg:text-xl">
             {{ faq.question }}

@@ -153,7 +153,7 @@ watch(
     <div class="border-b border-foreground bg-background px-5 py-5 sm:px-6 lg:px-8">
       <RouterLink
         :to="{ path: '/', hash: '#artistas' }"
-        class="mb-5 inline-flex items-center gap-2 text-sm font-medium uppercase text-foreground underline-offset-4 hover:underline"
+        class="mb-5 inline-flex items-center gap-2 border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-grey sm:px-6 sm:text-base"
       >
         <ArrowLeft class="size-4" />
         Volver a artistas

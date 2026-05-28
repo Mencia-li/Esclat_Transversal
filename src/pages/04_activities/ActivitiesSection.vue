@@ -150,33 +150,33 @@ const activityBlocks = [
   {
     id: "talleres",
     title: "Talleres.",
-    space: "ESPACIO NO SE QUE",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    space: "Sala Factoria y Sala Visual Room · Nave 1, 1a planta",
+    summary: "Talleres participativos del programa: produccion musical, creacion de personajes y maquillaje sonoro, con dos sesiones por taller cada dia.",
     className: "bg-background text-foreground",
     to: undefined,
   },
   {
     id: "charlas",
     title: "Charlas.",
-    space: "ESPACIO NO SE QUE",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    className: "bg-turquesa text-foreground",
+    space: "La Polivalent · Nave 1, planta baja",
+    summary: "Charlas y conversaciones diarias en formato abierto al debate, con capacidad para 80 personas.",
+    className: "bg-blue_ice text-foreground",
     to: undefined,
   },
   {
     id: "exposiciones",
     title: "Exposiciones.",
-    space: "ESPACIO NO SE QUE",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    className: "bg-turquesa text-foreground",
+    space: "Sala de Exposiciones · Nave 1, planta baja",
+    summary: "Cada dia acoge una exposicion fotografica vinculada al tema de la jornada. Acceso libre durante todo el horario del festival.",
+    className: "bg-background text-foreground md:bg-blue_ice",
     to: undefined,
   },
   {
     id: "stands-merch",
     title: "Stands&Merch.",
-    space: "ESPACIO NO SE QUE",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    className: "bg-background text-foreground",
+    space: "Patios y pasillos · entre Nave 1 y Nave 3",
+    summary: "Food trucks, bebidas y merchandising oficial de Esclat. Punto de encuentro para descansar y socializar durante todo el festival.",
+    className: "bg-blue_ice text-foreground md:bg-background",
     to: { path: "/tienda" },
   },
 ] as const
@@ -199,7 +199,7 @@ const activityBlocks = [
           index === 0 ? 'border-r border-foreground' : '',
           activeTab === tab.id
             ? 'bg-turquesa text-foreground'
-            : 'bg-background text-foreground',
+            : 'bg-background text-foreground hover:bg-grey',
         ]"
         @click="activeTab = tab.id"
       >
@@ -226,11 +226,11 @@ const activityBlocks = [
           block.className,
         ]"
       >
-        <h3 class="text-xl font-normal leading-none sm:text-2xl lg:text-3xl">{{ block.title }}</h3>
-        <p class="mt-5 text-sm font-normal uppercase leading-tight sm:mt-6 sm:text-base lg:text-lg">
+        <h3 class="text-xl font-semibold leading-tight tracking-tight sm:text-2xl lg:text-3xl">{{ block.title }}</h3>
+        <p class="mt-4 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-foreground/75 sm:mt-5 sm:text-xs lg:text-sm">
           {{ block.space }}
         </p>
-        <p class="mt-4 max-w-3xl text-xs leading-relaxed sm:text-sm lg:text-base">
+        <p class="mt-4 max-w-3xl text-sm leading-relaxed text-foreground/90 sm:text-base lg:text-lg">
           {{ block.summary }}
         </p>
 
@@ -238,14 +238,14 @@ const activityBlocks = [
           <RouterLink
             v-if="block.to"
             :to="block.to"
-            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-turquesa sm:text-base"
+            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-grey sm:text-base"
           >
             VER MÁS &gt;
           </RouterLink>
           <button
             v-else
             type="button"
-            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-turquesa sm:text-base"
+            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-grey sm:text-base"
           >
             VER MÁS &gt;
           </button>
@@ -272,8 +272,8 @@ const activityBlocks = [
               'px-4 py-3 text-center text-sm font-medium uppercase tracking-wide transition-colors',
               index < scheduleDays.length - 1 ? 'border-r border-foreground' : '',
               activeScheduleDay === day.id
-                ? 'bg-turquesa text-foreground'
-                : 'bg-background text-foreground hover:bg-turquesa',
+                ? 'bg-blue_ice text-foreground'
+                : 'bg-background text-foreground hover:bg-grey',
             ]"
             @click="activeScheduleDay = day.id"
           >

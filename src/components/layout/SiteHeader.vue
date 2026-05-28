@@ -29,7 +29,7 @@ const esclatLogo = "/img/logos/esclat/svg/horizontal-black.svg"
         class="inline-flex items-center"
         aria-label="Ir al inicio"
       >
-        <img :src="esclatLogo" alt="ESCLAT" class="h-9 w-auto" />
+        <img :src="esclatLogo" alt="ESCLAT" class="h-12 w-auto" />
       </RouterLink>
 
       <div class="ml-auto flex items-center gap-6">
@@ -38,7 +38,7 @@ const esclatLogo = "/img/logos/esclat/svg/horizontal-black.svg"
             v-for="item in navLinks"
             :key="item.label"
             :to="item.to"
-            class="text-xs font-medium uppercase leading-none text-foreground transition hover:text-primary"
+            class="text-xs font-medium uppercase leading-none text-foreground transition hover:underline"
           >
             {{ item.label }}
           </RouterLink>

@@ -401,7 +401,7 @@ export const artists: Artist[] = [
     name: "BTS",
     date: "23/10",
     time: "22:30",
-    stage: "Escenario principal",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Su repertorio conecta salud mental, ansiedad y amor propio con una escala emocional capaz de cerrar el primer capítulo del festival.",
   },
@@ -410,7 +410,7 @@ export const artists: Artist[] = [
     name: "Olivia Rodrigo",
     date: "23/10",
     time: "21:20",
-    stage: "Escenario principal",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Canciones sobre presión, fragilidad y rabia adolescente que encajan con la pregunta del primer día: cómo nos sentimos por dentro.",
   },
@@ -419,7 +419,7 @@ export const artists: Artist[] = [
     name: "AURORA",
     date: "23/10",
     time: "20:20",
-    stage: "La Polivalent",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Una propuesta íntima y expansiva para pensar el cuerpo, la emoción y la vulnerabilidad como lugares de escucha.",
   },
@@ -428,7 +428,7 @@ export const artists: Artist[] = [
     name: "Laufey",
     date: "23/10",
     time: "19:30",
-    stage: "La Polivalent",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Su sensibilidad jazz-pop abre un espacio tranquilo para hablar de expectativas, amor propio y relatos personales.",
   },
@@ -437,7 +437,7 @@ export const artists: Artist[] = [
     name: "Amaia",
     date: "23/10",
     time: "18:45",
-    stage: "Escenario patio",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Una voz cercana al contexto hispanohablante para cerrar la parte más íntima y cotidiana del primer día.",
   },
@@ -446,7 +446,7 @@ export const artists: Artist[] = [
     name: "Meghan Trainor",
     date: "24/10",
     time: "18:45",
-    stage: "Escenario patio",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Su pop celebra el cuerpo desde un lugar directo y accesible, perfecto para abrir la conversación sobre belleza.",
   },
@@ -455,7 +455,7 @@ export const artists: Artist[] = [
     name: "Hwasa",
     date: "24/10",
     time: "19:30",
-    stage: "La Polivalent",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Una artista que tensiona los mandatos de género e imagen dentro de una industria altamente normativizada.",
   },
@@ -464,7 +464,7 @@ export const artists: Artist[] = [
     name: "Olivia Dean",
     date: "24/10",
     time: "20:20",
-    stage: "La Polivalent",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Una voz soul-pop que defiende la vulnerabilidad, la autenticidad y una belleza menos rígida y más humana.",
   },
@@ -473,7 +473,7 @@ export const artists: Artist[] = [
     name: "RAYE",
     date: "24/10",
     time: "21:20",
-    stage: "Escenario principal",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Una voz clave para hablar de dismorfia, industria musical y heridas que se esconden detrás del éxito.",
   },
@@ -482,7 +482,7 @@ export const artists: Artist[] = [
     name: "(G)I-DLE",
     date: "24/10",
     time: "22:30",
-    stage: "Escenario principal",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "El cierre explosivo del segundo día: identidad, rechazo del molde y una energía colectiva de ruptura.",
   },
@@ -491,7 +491,7 @@ export const artists: Artist[] = [
     name: "IU",
     date: "25/10",
     time: "18:45",
-    stage: "Escenario patio",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Su trayectoria permite hablar desde dentro de la fama, la exposición pública y la relación entre artista e industria.",
   },
@@ -500,7 +500,7 @@ export const artists: Artist[] = [
     name: "Pablo Alborán",
     date: "25/10",
     time: "19:30",
-    stage: "La Polivalent",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Aporta una presencia cercana al público local para pensar vulnerabilidad, masculinidad y expectativas mediáticas.",
   },
@@ -509,7 +509,7 @@ export const artists: Artist[] = [
     name: "Benson Boone",
     date: "25/10",
     time: "20:20",
-    stage: "La Polivalent",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Una propuesta pop emocional para observar cómo se construyen nuevos ídolos en tiempo de redes y viralidad.",
   },
@@ -518,7 +518,7 @@ export const artists: Artist[] = [
     name: "The Marías",
     date: "25/10",
     time: "21:20",
-    stage: "Escenario principal",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Su imaginario sonoro y visual conecta con la fabricación de atmósferas, deseo e imagen en la cultura pop.",
   },
@@ -527,7 +527,7 @@ export const artists: Artist[] = [
     name: "Lana Del Rey",
     date: "25/10",
     time: "22:30",
-    stage: "Escenario principal",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
       "Cierra el relato del festival mirando el glamour vacío de la fama y preguntando si el sistema nos ve como personas.",
   },
@@ -539,7 +539,7 @@ export const artistsCarouselItems: Artist[] = [
     name: "Sorpresa",
     date: "25/10",
     time: "Próximamente",
-    stage: "Escenario secreto",
+    stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary: "Último hueco reservado para una confirmación especial.",
     isPlaceholder: true,
   },
