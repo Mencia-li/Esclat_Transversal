@@ -23,7 +23,7 @@ function dayClass(index: number) {
 
     <div data-reveal class="grid grid-cols-4 border-t border-foreground">
       <RouterLink
-        :to="{ name: 'program-detail', params: { dia: festivalDays[0]?.id } }"
+        :to="{ name: 'festival' }"
         class="group flex min-h-52 items-center justify-center overflow-hidden border-r border-foreground bg-black p-6 outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-60 lg:min-h-80"
         aria-label="Ver programa"
       >
