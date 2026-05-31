@@ -24,13 +24,13 @@ const esclatLogo = "/img/logos/esclat/svg/horizontal-black.svg"
 <template>
   <header class="fixed left-0 top-0 z-50 w-full border-b border-foreground bg-background">
     <div class="flex h-14 items-center gap-4 px-4 sm:px-6 lg:px-8">
-          <RouterLink
-            :to="{ name: 'festival' }"
-            class="inline-flex items-center"
-            aria-label="Ir a Festival Esclat"
-          >
-            <img :src="esclatLogo" alt="ESCLAT" class="h-12 w-auto" />
-          </RouterLink>
+      <RouterLink
+        :to="{ name: 'home' }"
+        class="inline-flex items-center"
+        aria-label="Ir al inicio"
+      >
+        <img :src="esclatLogo" alt="ESCLAT" class="h-12 w-auto" />
+      </RouterLink>
 
       <div class="ml-auto flex items-center gap-6">
         <nav class="hidden items-center gap-10 md:flex">

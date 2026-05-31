@@ -247,6 +247,7 @@ const expandedArtistsGridClass = computed(() => {
     ? "artists-expanded-grid--all"
     : "artists-expanded-grid--day"
 })
+const showExpandedArtistName = computed(() => expandedActiveFilter.value !== "todos")
 
 const playlistColumns = computed<PlaylistColumn[]>(() => {
   const dates: ArtistDateFilter[] = expandedActiveFilter.value === "todos"
@@ -478,22 +479,10 @@ onBeforeUnmount(() => {
                       class="absolute inset-0 h-full w-full scale-110 object-cover transition duration-300 group-hover:scale-100 group-focus-visible:scale-100"
                       loading="lazy"
                     />
-                    <div class="absolute inset-0 bg-linear-to-t from-background/75 via-transparent to-transparent" />
-                    <span class="absolute right-1 top-1 bg-background px-1 py-0.5 text-xs leading-none text-foreground z-30 sm:right-2 sm:top-2 sm:text-base">
-                      {{ artist.date }}
-                    </span>
-                    <h3 class="absolute bottom-3 left-1 max-w-[calc(100%-0.5rem)] text-base font-normal uppercase leading-none text-foreground z-30 sm:bottom-3 sm:left-2 sm:max-w-[calc(100%-1rem)] sm:text-xl lg:text-2xl">
-                      {{ artist.name }}
-                    </h3>
                   </template>
 
                   <template v-else>
-                    <div class="flex h-full flex-col justify-between p-2 pb-3 text-primary-foreground sm:p-4 sm:pb-4">
-                      <span class="self-end bg-background px-1 py-0.5 text-xs leading-none text-foreground z-30 sm:text-base">
-                        {{ artist.date }}
-                      </span>
-                      <h3 class="text-base font-normal uppercase leading-none z-30 sm:text-xl lg:text-2xl">{{ artist.name }}</h3>
-                    </div>
+                    <div class="h-full bg-primary" />
                   </template>
 
                   <span
@@ -566,21 +555,26 @@ onBeforeUnmount(() => {
                       class="absolute inset-0 h-full w-full scale-105 object-cover transition duration-300 group-hover:scale-100 group-focus-visible:scale-100"
                       loading="lazy"
                     />
-                    <div class="absolute inset-0 bg-linear-to-t from-background/75 via-transparent to-transparent" />
-                    <span class="absolute right-2 top-2 bg-background px-1 py-0.5 text-sm leading-none text-foreground z-30">
-                      {{ artist.date }}
-                    </span>
-                    <h3 class="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] bg-background/85 px-1 text-base font-normal uppercase leading-none text-foreground z-30 sm:text-xl">
+                    <div
+                      v-if="showExpandedArtistName"
+                      class="absolute inset-0 bg-linear-to-t from-background/75 via-transparent to-transparent"
+                    />
+                    <h3
+                      v-if="showExpandedArtistName"
+                      class="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] bg-background/85 px-1 text-base font-normal uppercase leading-none text-foreground z-30 sm:text-xl"
+                    >
                       {{ artist.name }}
                     </h3>
                   </template>
 
                   <template v-else>
                     <div class="flex h-full flex-col justify-between p-3 text-primary-foreground">
-                      <span class="self-end bg-background px-1 py-0.5 text-sm leading-none text-foreground z-30">
-                        {{ artist.date }}
-                      </span>
-                      <h3 class="text-base font-normal uppercase leading-none z-30 sm:text-xl">{{ artist.name }}</h3>
+                      <h3
+                        v-if="showExpandedArtistName"
+                        class="mt-auto text-base font-normal uppercase leading-none z-30 sm:text-xl"
+                      >
+                        {{ artist.name }}
+                      </h3>
                     </div>
                   </template>
 
