@@ -303,9 +303,9 @@ const timelineHeaderSlots = computed(() =>
     (_, index) => scheduleStart.value + index * 0.25,
   ),
 )
-const scheduleLocationColumnWidth = "15rem"
+const scheduleLocationColumnWidth = "clamp(8.75rem, 32vw, 12rem)"
 const scheduleVisibleQuarterSlotCount = 12
-const scheduleQuarterColumnWidth = computed(() => `max(4rem, calc((100vw - ${scheduleLocationColumnWidth}) / ${scheduleVisibleQuarterSlotCount}))`)
+const scheduleQuarterColumnWidth = computed(() => `max(3.5rem, calc((100vw - ${scheduleLocationColumnWidth}) / ${scheduleVisibleQuarterSlotCount}))`)
 const scheduleTableStyle = computed(() => ({
   width: `calc(${scheduleLocationColumnWidth} + ${Array.from(
     { length: scheduleQuarterSlotCount.value },
@@ -496,7 +496,25 @@ const activityBlocks = [
       data-reveal
       class="grid bg-background"
     >
-      <div class="grid border-b border-grey" :style="scheduleDayGridStyle">
+      <div class="grid grid-cols-3 border-b border-grey md:hidden">
+        <button
+          v-for="(day, index) in scheduleDays"
+          :key="day.id"
+          type="button"
+          :class="[
+            'min-h-14 px-3 py-3 text-center text-sm font-medium leading-tight transition-colors',
+            index < scheduleDays.length - 1 ? 'border-r border-grey' : '',
+            activeScheduleDay === day.id
+              ? 'bg-blue_ice text-foreground'
+              : 'bg-background text-foreground hover:bg-grey',
+          ]"
+          @click="activeScheduleDay = day.id"
+        >
+          {{ day.label }}
+        </button>
+      </div>
+
+      <div class="hidden border-b border-grey md:grid" :style="scheduleDayGridStyle">
         <div class="border-r border-grey" />
         <button
           v-for="(day, index) in scheduleDays"
@@ -518,7 +536,7 @@ const activityBlocks = [
       <div class="overflow-x-auto border-b border-grey">
         <div class="grid min-w-full border-b border-grey" :style="scheduleTableStyle">
           <div
-            class="grid border-b border-grey text-[0.65rem] uppercase tracking-widest text-foreground/70"
+            class="grid border-b border-grey text-[0.6rem] uppercase tracking-widest text-foreground/70 sm:text-[0.65rem]"
             :style="scheduleGridStyle"
           >
             <div class="border-r border-grey px-4 py-2 text-left" />
@@ -535,9 +553,9 @@ const activityBlocks = [
           </div>
 
           <div v-for="row in activeScheduleRows" :key="row.id" class="grid border-b border-grey last:border-b-0" :style="scheduleRowGridStyle">
-            <div class="flex flex-col justify-center gap-1 border-r border-grey px-4 py-4 text-left">
-              <span class="whitespace-nowrap text-sm font-semibold uppercase leading-tight tracking-normal text-black">{{ row.label }}</span>
-              <span class="whitespace-nowrap text-[0.68rem] font-medium uppercase tracking-wide text-foreground/50">{{ row.sublabel }}</span>
+            <div class="flex flex-col justify-center gap-1 border-r border-grey px-3 py-4 text-left sm:px-4">
+              <span class="whitespace-nowrap text-[0.78rem] font-semibold uppercase leading-tight tracking-normal text-black sm:text-sm">{{ row.label }}</span>
+              <span class="whitespace-nowrap text-[0.58rem] font-medium uppercase tracking-wide text-foreground/50 sm:text-[0.68rem]">{{ row.sublabel }}</span>
             </div>
 
             <div :class="['relative w-full bg-background', row.heightClass ?? 'min-h-16']" :style="rowStyle(row)">
@@ -549,10 +567,10 @@ const activityBlocks = [
                 v-for="block in blocksForRow(row.id)"
                 :key="block.id"
                 :style="blockStyle(block)"
-                class="absolute min-w-28 rounded-sm border border-grey/70 border-l-4 border-l-turquesa bg-blue_ice px-2 py-1 text-[0.8rem] leading-tight shadow-sm sm:text-[1rem]"
+                class="absolute min-w-24 rounded-sm border border-grey border-l-4 border-l-turquesa bg-white px-2 py-1 text-[0.72rem] leading-tight sm:min-w-28 sm:text-[1rem]"
               >
                 <p class="font-medium text-black">{{ block.title }}</p>
-                <p v-if="block.meta" class="mt-1 text-[0.8rem] font-semibold text-turquesa">{{ block.meta }}</p>
+                <p v-if="block.meta" class="mt-1 text-[0.68rem] font-semibold text-turquesa sm:text-[0.8rem]">{{ block.meta }}</p>
               </div>
             </div>
           </div>

@@ -16,16 +16,13 @@
           <p class="text-sm font-semibold uppercase text-foreground">Festival.</p>
           <div class="mt-4 space-y-4 text-sm leading-relaxed text-foreground/90 sm:text-base">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-              ut labore et dolore magna aliqua.
+              ESCLAT es un festival de música, pensament i creativitat en Las Naves de Valencia. Durante tres días combina conciertos, talleres, exposiciones, cine y charlas.
             </p>
             <p>
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-              commodo consequat.
+              Su nombre significa estallido: una forma de hablar de todo eso que crece por dentro y a veces cuesta poner en palabras.
             </p>
             <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-              pariatur.
+              Salud mental, estándares de belleza e industria del entretenimiento atraviesan el programa. La música abre la puerta emocional; los talleres y conversaciones ayudan a cruzarla.
             </p>
           </div>
         </div>
@@ -43,15 +40,18 @@
 
       <div class="border-b border-foreground bg-background px-6 py-8 sm:px-8 lg:px-10">
         <p class="max-w-4xl text-sm leading-relaxed text-foreground/90 sm:text-base">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat.
+          Un espacio industrial reconvertido en centro de creación que lleva años siendo escenario de
+          proyectos culturales en Valencia. Grande sin ser frío, con patios exteriores, salas de distintos
+          tamaños y una acústica que funciona igual para un concierto que para una conversación en círculo.
+        </p>
+        <p class="mt-5 max-w-4xl text-sm leading-relaxed text-foreground/90 sm:text-base">
+          ESCLAT ocupa tres días sus naves, pasillos y patios.
         </p>
       </div>
 
       <div class="border-b border-foreground bg-background px-6 py-6 sm:px-8 lg:px-10">
         <div class="grid gap-6 lg:grid-cols-2 lg:items-start">
-          <article class="border border-foreground bg-background" aria-live="polite">
+          <article class="border border-foreground bg-background lg:mt-[2.375rem]" aria-live="polite">
             <div class="border-b border-foreground px-4 py-3 sm:px-6">
               <h3 class="text-2xl font-semibold uppercase leading-tight text-foreground sm:text-3xl">
                 {{ selectedMapZone.name }}
@@ -70,7 +70,7 @@
           <div class="relative w-full overflow-hidden">
             <img
               src="/img/spaces/naves-1-y2-nivel-1.png"
-              alt="Mapa de Las Naves 1 y 2, nivel 1"
+              alt="Mapa de Las Naves 1 y 2, planta baja"
               class="h-auto w-full select-none"
               draggable="false"
             />
@@ -79,7 +79,7 @@
               class="absolute inset-0 h-full w-full"
               viewBox="0 0 3508 2481"
               role="group"
-              aria-label="Mapa interactivo de Las Naves 1 y 2, nivel 1"
+              aria-label="Mapa interactivo de Las Naves 1 y 2, planta baja"
             >
               <defs v-if="hoveredMapZoneShapes.length">
                 <mask id="map-level-one-dim-mask" maskUnits="userSpaceOnUse">
@@ -135,7 +135,7 @@
 
         <div class="mt-6 border-t border-black pt-6">
           <div class="grid gap-6 lg:grid-cols-2 lg:items-start">
-            <article class="border border-foreground bg-background" aria-live="polite">
+            <article class="border border-foreground bg-background lg:mt-[2.3rem]" aria-live="polite">
               <div class="border-b border-foreground px-4 py-3 sm:px-6">
                 <h3 class="text-2xl font-semibold uppercase leading-tight text-foreground sm:text-3xl">
                   {{ selectedLevelTwoMapZone.name }}
@@ -154,20 +154,20 @@
             <div class="relative w-full overflow-hidden">
               <img
                 src="/img/spaces/naves-1-y2-nivel-2.png"
-                alt="Mapa de Las Naves 1 y 2, nivel 2"
+                alt="Mapa de Las Naves 1 y 2, planta superior"
                 class="h-auto w-full select-none"
                 draggable="false"
               />
 
               <svg
                 class="absolute inset-0 h-full w-full"
-                viewBox="0 0 3509 2481"
+                viewBox="0 0 1600 1131"
                 role="group"
-                aria-label="Mapa interactivo de Las Naves 1 y 2, nivel 2"
+                aria-label="Mapa interactivo de Las Naves 1 y 2, planta superior"
               >
                 <defs v-if="hoveredLevelTwoMapZoneShapes.length">
                   <mask id="map-level-two-dim-mask" maskUnits="userSpaceOnUse">
-                    <rect x="0" y="0" width="3509" height="2481" fill="white" />
+                    <rect x="0" y="0" width="1600" height="1131" fill="white" />
                     <path
                       v-for="(shape, shapeIndex) in hoveredLevelTwoMapZoneShapes"
                       :key="`level-two-mask-${shapeIndex}`"
@@ -184,8 +184,8 @@
                   class="map-dim-overlay"
                   x="0"
                   y="0"
-                  width="3509"
-                  height="2481"
+                  width="1600"
+                  height="1131"
                   mask="url(#map-level-two-dim-mask)"
                 />
 
@@ -204,6 +204,91 @@
                   @focusout="hoveredLevelTwoMapZoneId = null"
                   @keydown.enter.prevent="selectLevelTwoMapZone(zone.id)"
                   @keydown.space.prevent="selectLevelTwoMapZone(zone.id)"
+                >
+                  <path
+                    v-for="(shape, shapeIndex) in zone.shapes"
+                    :key="`${zone.id}-${shapeIndex}`"
+                    :d="shape.d"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                  />
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 border-t border-black pt-6">
+          <div class="grid gap-6 lg:grid-cols-2 lg:items-start">
+            <article class="border border-foreground bg-background lg:mt-[2.1rem]" aria-live="polite">
+              <div class="border-b border-foreground px-4 py-3 sm:px-6">
+                <h3 class="text-2xl font-semibold uppercase leading-tight text-foreground sm:text-3xl">
+                  {{ selectedNaveThreeMapZone.name }}
+                </h3>
+              </div>
+              <div class="p-4 sm:p-6">
+                <p class="inline-flex bg-blue_ice px-3 py-2 text-sm font-semibold uppercase text-foreground">
+                  {{ selectedNaveThreeMapZone.id }} · {{ selectedNaveThreeMapZone.location }}
+                </p>
+                <p class="mt-4 text-base leading-relaxed text-foreground/90 sm:text-lg">
+                  {{ selectedNaveThreeMapZone.description }}
+                </p>
+              </div>
+            </article>
+
+            <div class="relative w-full overflow-hidden">
+              <img
+                src="/img/spaces/nave3.png"
+                alt="Mapa de Nave 3"
+                class="h-auto w-full select-none"
+                draggable="false"
+              />
+
+              <svg
+                class="absolute inset-0 h-full w-full"
+                viewBox="0 0 1600 963"
+                role="group"
+                aria-label="Mapa interactivo de Nave 3"
+              >
+                <defs v-if="hoveredNaveThreeMapZoneShapes.length">
+                  <mask id="map-nave-three-dim-mask" maskUnits="userSpaceOnUse">
+                    <rect x="0" y="0" width="1600" height="963" fill="white" />
+                    <path
+                      v-for="(shape, shapeIndex) in hoveredNaveThreeMapZoneShapes"
+                      :key="`nave-three-mask-${shapeIndex}`"
+                      :d="shape.d"
+                      fill="black"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                    />
+                  </mask>
+                </defs>
+
+                <rect
+                  v-if="hoveredNaveThreeMapZoneShapes.length"
+                  class="map-dim-overlay"
+                  x="0"
+                  y="0"
+                  width="1600"
+                  height="963"
+                  mask="url(#map-nave-three-dim-mask)"
+                />
+
+                <g
+                  v-for="zone in naveThreeMapHotspots"
+                  :key="zone.id"
+                  class="map-hotspot"
+                  :class="{ 'is-active': isNaveThreeMapZoneActive(zone.id) }"
+                  role="button"
+                  tabindex="0"
+                  :aria-label="`${zone.id} ${zone.name}: ${zone.activity}`"
+                  @click="selectNaveThreeMapZone(zone.id)"
+                  @mouseenter="hoveredNaveThreeMapZoneId = zone.id"
+                  @mouseleave="hoveredNaveThreeMapZoneId = null"
+                  @focusin="hoveredNaveThreeMapZoneId = zone.id"
+                  @focusout="hoveredNaveThreeMapZoneId = null"
+                  @keydown.enter.prevent="selectNaveThreeMapZone(zone.id)"
+                  @keydown.space.prevent="selectNaveThreeMapZone(zone.id)"
                 >
                   <path
                     v-for="(shape, shapeIndex) in zone.shapes"
@@ -245,8 +330,8 @@
                   <h3 class="text-lg font-semibold uppercase text-foreground">CON INSCRIPCIÓN</h3>
                 </div>
                 <div class="p-6">
-                  <p class="text-xs font-semibold uppercase text-muted-foreground">GRATUITO · PLAZAS LIMITADAS</p>
-                  <p class="mt-4 text-sm leading-relaxed text-foreground/90">Talleres temáticos y talleres de instrumento. Plazas limitadas; la inscripción se abrirá una semana antes del festival a través de esta web.</p>
+                  <p class="text-xs font-semibold uppercase text-muted-foreground">GRATUITO · PLAZA LIMITADA</p>
+                  <p class="mt-4 text-sm leading-relaxed text-foreground/90">Talleres temáticos y talleres de instrumento. Plazas limitadas. Inscripción abierta una semana antes del festival a través de esta web.</p>
                 </div>
               </article>
             </div>
@@ -256,15 +341,15 @@
                 <div class="flex h-16 w-16 items-center justify-center border border-foreground bg-blue_ice text-foreground text-2xl font-semibold sm:h-20 sm:w-20 sm:text-3xl">1.</div>
                 <div class="space-y-2">
                   <h3 class="text-base font-semibold uppercase text-foreground sm:text-lg">Consulta el programa</h3>
-                  <p class="text-sm leading-relaxed text-muted-foreground">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget est vel lacus feugiat varius.</p>
+                  <p class="text-sm leading-relaxed text-muted-foreground">Revisa qué pasa cada día: viernes, sábado y domingo tienen temática, talleres y charla propios. Elige lo que más te interesa.</p>
                 </div>
               </article>
 
               <article class="grid gap-4 border border-foreground bg-background p-4 sm:grid-cols-[5rem_1fr] sm:gap-5 sm:p-5">
                 <div class="flex h-16 w-16 items-center justify-center border border-foreground bg-blue_ice text-foreground text-2xl font-semibold sm:h-20 sm:w-20 sm:text-3xl">2.</div>
                 <div class="space-y-2">
-                  <h3 class="text-base font-semibold uppercase text-foreground sm:text-lg">Inscríbete a los talleres</h3>
-                  <p class="text-sm leading-relaxed text-muted-foreground">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti, donec nec mauris non mi facilisis facilisis.</p>
+                  <h3 class="text-base font-semibold uppercase text-foreground sm:text-lg">Inscríbete a los talleres que quieras</h3>
+                  <p class="text-sm leading-relaxed text-muted-foreground">Revisa qué pasa cada día: viernes, sábado y domingo tienen temática, talleres y charla propios. Elige lo que más te interesa.</p>
                 </div>
               </article>
 
@@ -272,7 +357,7 @@
                 <div class="flex h-16 w-16 items-center justify-center border border-foreground bg-blue_ice text-foreground text-2xl font-semibold sm:h-20 sm:w-20 sm:text-3xl">3.</div>
                 <div class="space-y-2">
                   <h3 class="text-base font-semibold uppercase text-foreground sm:text-lg">Llega a Las Naves</h3>
-                  <p class="text-sm leading-relaxed text-muted-foreground">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae sem ac urna faucibus posuere.</p>
+                  <p class="text-sm leading-relaxed text-muted-foreground">El festival abre a las 16:00 h cada día. No hay control de entrada: accede directamente al espacio y muévete con libertad entre actividades.</p>
                 </div>
               </article>
 
@@ -280,7 +365,7 @@
                 <div class="flex h-16 w-16 items-center justify-center border border-foreground bg-blue_ice text-foreground text-2xl font-semibold sm:h-20 sm:w-20 sm:text-3xl">4.</div>
                 <div class="space-y-2">
                   <h3 class="text-base font-semibold uppercase text-foreground sm:text-lg">Participa a tu ritmo</h3>
-                  <p class="text-sm leading-relaxed text-muted-foreground">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu lacus sed urna interdum finibus.</p>
+                  <p class="text-sm leading-relaxed text-muted-foreground">Puedes asistir un día, dos o los tres. Entrar y salir cuantas veces quieras. No hay orden obligatorio ni recorrido fijo.</p>
                 </div>
               </article>
             </div>
@@ -343,13 +428,24 @@ type MapZone = {
   shapes: MapShape[]
 }
 
+const factoriaDescription =
+  "Los talleres más participativos del programa: producción musical, creación de personajes y maquillaje sonoro. Dos sesiones por taller cada día."
+const visualRoomDescription =
+  "Espacio para talleres más íntimos y reflexivos. También alberga la instalación interactiva del domingo sobre algoritmos."
+const exposicionesDescription =
+  "Cada día acoge una exposición fotográfica diferente vinculada al tema de la jornada. Acceso libre durante todo el horario del festival."
+const servicesDescription = "Servicios disponibles durante todo el horario del festival."
+const stairsDescription = "Accesos por escalera entre plantas del recinto."
+const liftsDescription = "Ascensores disponibles para moverse entre plantas del recinto."
+
 const mapZones: MapZone[] = [
   {
     id: "01",
     name: "La Polivalent",
     activity: "Charlas",
     location: "Nave 1, planta baja",
-    description: "Charlas y conversaciones del festival en La Polivalent.",
+    description:
+      "El espacio principal del festival. Aquí tienen lugar las charlas y conversaciones de cada día, con capacidad para 80 personas y formato abierto al debate.",
     shapes: [
       {
         d: "M2288 633L3329 636L3329 1949L2988 1952L2982 1512L2722 1512L2722 1776L2288 1776Z",
@@ -358,58 +454,62 @@ const mapZones: MapZone[] = [
   },
   {
     id: "02",
-    name: "Hall La Polivalent",
-    activity: "Sala de espera",
-    location: "Nave 1, planta baja",
-    description: "Zona de paso y espera antes de entrar a La Polivalent.",
+    name: "El cuarto de escucha",
+    activity: "Instalación",
+    location: "Hall La Polivalent",
+    description:
+      "Una instalación permanente los tres días: entras solo, escuchas cinco minutos y dejas una palabra en el mural. El mural crece durante todo el festival.",
     shapes: [{ d: "M2285 1776L2285 2036L2722 2036L2722 2281L2982 2278L2982 1770Z" }],
   },
   {
     id: "03",
-    name: "Factoria",
+    name: "Sala Factoria",
     activity: "Talleres",
-    location: "Nave 3",
-    description: "Espacio reservado para talleres.",
+    location: "Nave 1, planta superior",
+    description: factoriaDescription,
     shapes: [],
   },
   {
     id: "04",
-    name: "Visual Room",
+    name: "Sala Visual Room",
     activity: "Talleres",
-    location: "Nave 3",
-    description: "Espacio reservado para talleres visuales.",
+    location: "Nave 1, planta superior",
+    description: visualRoomDescription,
     shapes: [],
   },
   {
     id: "05",
     name: "Sala de exposiciones",
     activity: "Fotografías y álbumes",
-    location: "Nave 2, planta baja",
-    description: "Exposición de fotografías y álbumes.",
+    location: "Nave 1, planta baja",
+    description: exposicionesDescription,
     shapes: [{ d: "M1318 637L1318 1160L1585 1164L1585 1777L1932 1774L1929 635Z" }],
   },
   {
     id: "06",
-    name: "Patio 1",
-    activity: "Merch",
-    location: "Naves 1 y 2, planta baja",
-    description: "Stands de venta de merch.",
+    name: "Patios exteriores",
+    activity: "Talleres de instrumento",
+    location: "Patio 1 y Patio 2",
+    description:
+      "Los talleres de instrumento en rotación continua ocurren aquí: batería, djembé, ukelele, flauta, percusión latina y teclado. El domingo acoge también la batucada de cierre.",
     shapes: [{ d: "M1935 199H2285V2283H1935Z" }],
   },
   {
     id: "07",
-    name: "Patio 2",
-    activity: "Comida",
-    location: "Nave 2, planta baja",
-    description: "Stands de venta de comida.",
+    name: "Patios exteriores",
+    activity: "Talleres de instrumento",
+    location: "Patio 1 y Patio 2",
+    description:
+      "Los talleres de instrumento en rotación continua ocurren aquí: batería, djembé, ukelele, flauta, percusión latina y teclado. El domingo acoge también la batucada de cierre.",
     shapes: [{ d: "M180 197H871V2279H180Z" }],
   },
   {
     id: "08",
-    name: "Sala de cine",
+    name: "Sala de proyecciones",
     activity: "Películas",
-    location: "Nave 2, planta baja",
-    description: "Sala dedicada a las proyecciones de películas.",
+    location: "Nave 1, planta baja",
+    description:
+      "Dos proyecciones por día — documentales y ficción — con debate opcional al terminar. Aforo limitado a 40 personas.",
     shapes: [{ d: "M1493 1946H1930V2281H1493Z" }],
   },
   {
@@ -441,7 +541,7 @@ const mapZones: MapZone[] = [
     name: "Servicios",
     activity: "Baños",
     location: "Naves 1 y 2, planta baja",
-    description: "Servicios disponibles en ambas naves.",
+    description: servicesDescription,
     shapes: [
       { d: "M1317 1163H1580V1509H1317Z" },
       { d: "M2987 1951H3325V2283H2987Z" },
@@ -452,7 +552,7 @@ const mapZones: MapZone[] = [
     name: "Escaleras",
     activity: "Conexión vertical",
     location: "Naves 1 y 2, planta baja",
-    description: "Accesos por escalera hacia otros niveles del espacio.",
+    description: stairsDescription,
     shapes: [
       { d: "M1318 1512H1585V1773H1318Z" },
       { d: "M2722 1514H2982V1768H2722Z" },
@@ -465,53 +565,153 @@ const mapZones: MapZone[] = [
 const levelTwoMapZones: MapZone[] = [
   {
     id: "03",
-    name: "Factoria",
+    name: "Sala Factoria",
     activity: "Talleres",
-    location: "Naves 1 y 2, nivel 2",
-    description: "Espacio reservado para talleres.",
-    shapes: [{ d: "M1695 1155H2042V1775H1695Z" }],
+    location: "Nave 1, planta superior",
+    description: factoriaDescription,
+    shapes: [{ d: "M1041 517H1198V798H1041Z" }],
   },
   {
     id: "04",
-    name: "Visual Room",
+    name: "Sala Visual Room",
     activity: "Talleres",
-    location: "Naves 1 y 2, nivel 2",
-    description: "Espacio reservado para talleres visuales.",
-    shapes: [{ d: "M1695 636H2042V1154H1695Z" }],
+    location: "Nave 1, planta superior",
+    description: visualRoomDescription,
+    shapes: [{ d: "M1041 281H1198V516H1041Z" }],
   },
   {
     id: "WC",
     name: "Servicios",
     activity: "Baños",
-    location: "Naves 1 y 2, nivel 2",
-    description: "Servicios disponibles en el nivel 2.",
+    location: "Naves 1 y 2, planta superior",
+    description: servicesDescription,
     shapes: [
-      { d: "M737 1156H994V1509H737Z" },
-      { d: "M2144 637H2401V1062H2144Z" },
+      { d: "M604 517H722V678H604Z" },
+      { d: "M1244 281H1362V475H1244Z" },
     ],
   },
   {
     id: "ESC",
     name: "Escaleras",
     activity: "Conexión vertical",
-    location: "Naves 1 y 2, nivel 2",
-    description: "Accesos por escalera hacia otros niveles del espacio.",
+    location: "Naves 1 y 2, planta superior",
+    description: stairsDescription,
     shapes: [
-      { d: "M737 1508H997V1775H737Z" },
-      { d: "M2140 1512H2400V1773H2140Z" },
-      { d: "M2138 207H2401V452H2138Z" },
+      { d: "M604 679H721V798H604Z" },
+      { d: "M1245 680H1363V799H1245Z" },
+      { d: "M1241 85H1362V198H1241Z" },
+    ],
+  },
+]
+
+const naveThreeMapZones: MapZone[] = [
+  {
+    id: "01",
+    name: "La Polivalent",
+    activity: "Charlas",
+    location: "Nave 1, planta baja",
+    description:
+      "El espacio principal del festival. Aquí tienen lugar las charlas y conversaciones de cada día, con capacidad para 80 personas y formato abierto al debate.",
+    shapes: [{ d: "M280 787A20 20 0 1 0 240 787A20 20 0 1 0 280 787Z" }],
+  },
+  {
+    id: "02",
+    name: "El cuarto de escucha",
+    activity: "Instalación",
+    location: "Hall La Polivalent",
+    description:
+      "Una instalación permanente los tres días: entras solo, escuchas cinco minutos y dejas una palabra en el mural. El mural crece durante todo el festival.",
+    shapes: [
+      { d: "M309 802H392V886H309Z" },
+      { d: "M431 803H513V886H431Z" },
+    ],
+  },
+  {
+    id: "03",
+    name: "Sala Factoria",
+    activity: "Talleres",
+    location: "Nave 1, planta superior",
+    description: factoriaDescription,
+    shapes: [
+      { d: "M99 300H253V622H99Z" },
+      { d: "M303 301H454V621H303Z" },
+    ],
+  },
+  {
+    id: "04",
+    name: "Sala Visual Room",
+    activity: "Talleres",
+    location: "Nave 1, planta superior",
+    description: visualRoomDescription,
+    shapes: [
+      { d: "M573 303H608V612H573Z" },
+      { d: "M611 621H965V655H611Z" },
+      { d: "M965 305H1001V617H965Z" },
+    ],
+  },
+  {
+    id: "05",
+    name: "Sala de exposiciones",
+    activity: "Fotografías y álbumes",
+    location: "Nave 1, planta baja",
+    description: exposicionesDescription,
+    shapes: [
+      { d: "M1084 303H1122V658H1084Z" },
+      { d: "M1476 304H1511V658H1476Z" },
+    ],
+  },
+  {
+    id: "WC",
+    name: "Servicios",
+    activity: "Baños",
+    location: "Nave 3",
+    description: servicesDescription,
+    shapes: [
+      { d: "M136 822H221V885H136Z" },
+      { d: "M1159 823H1243V888H1159Z" },
+    ],
+  },
+  {
+    id: "ESC",
+    name: "Escaleras",
+    activity: "Conexión vertical",
+    location: "Nave 3",
+    description: stairsDescription,
+    shapes: [
+      { d: "M135 694H252V743H135Z" },
+      { d: "M303 694H416V743H303Z" },
+      { d: "M644 698H762V748H644Z" },
+      { d: "M812 697H927V748H812Z" },
+      { d: "M1153 697H1268V747H1153Z" },
+      { d: "M1324 697H1438V747H1324Z" },
+    ],
+  },
+  {
+    id: "ASC",
+    name: "Ascensores",
+    activity: "Conexión vertical",
+    location: "Nave 3",
+    description: liftsDescription,
+    shapes: [
+      { d: "M39 796H136V885H39Z" },
+      { d: "M548 798H647V888H548Z" },
+      { d: "M1059 797H1157V888H1059Z" },
     ],
   },
 ]
 
 const mapHotspots = mapZones.filter((zone) => zone.shapes.length > 0)
 const levelTwoMapHotspots = levelTwoMapZones.filter((zone) => zone.shapes.length > 0)
+const naveThreeMapHotspots = naveThreeMapZones.filter((zone) => zone.shapes.length > 0)
 const defaultMapZone = mapZones[0] as MapZone
 const defaultLevelTwoMapZone = levelTwoMapZones[0] as MapZone
+const defaultNaveThreeMapZone = naveThreeMapZones[0] as MapZone
 const selectedMapZoneId = ref("01")
 const selectedLevelTwoMapZoneId = ref("03")
+const selectedNaveThreeMapZoneId = ref("01")
 const hoveredMapZoneId = ref<string | null>(null)
 const hoveredLevelTwoMapZoneId = ref<string | null>(null)
+const hoveredNaveThreeMapZoneId = ref<string | null>(null)
 
 const selectedMapZone = computed<MapZone>(
   () => mapZones.find((zone) => zone.id === selectedMapZoneId.value) ?? defaultMapZone,
@@ -519,6 +719,10 @@ const selectedMapZone = computed<MapZone>(
 
 const selectedLevelTwoMapZone = computed<MapZone>(
   () => levelTwoMapZones.find((zone) => zone.id === selectedLevelTwoMapZoneId.value) ?? defaultLevelTwoMapZone,
+)
+
+const selectedNaveThreeMapZone = computed<MapZone>(
+  () => naveThreeMapZones.find((zone) => zone.id === selectedNaveThreeMapZoneId.value) ?? defaultNaveThreeMapZone,
 )
 
 const hoveredMapZoneShapes = computed(
@@ -529,6 +733,10 @@ const hoveredLevelTwoMapZoneShapes = computed(
   () => levelTwoMapHotspots.find((zone) => zone.id === hoveredLevelTwoMapZoneId.value)?.shapes ?? [],
 )
 
+const hoveredNaveThreeMapZoneShapes = computed(
+  () => naveThreeMapHotspots.find((zone) => zone.id === hoveredNaveThreeMapZoneId.value)?.shapes ?? [],
+)
+
 function selectMapZone(zoneId: string) {
   selectedMapZoneId.value = zoneId
 }
@@ -537,12 +745,20 @@ function selectLevelTwoMapZone(zoneId: string) {
   selectedLevelTwoMapZoneId.value = zoneId
 }
 
+function selectNaveThreeMapZone(zoneId: string) {
+  selectedNaveThreeMapZoneId.value = zoneId
+}
+
 function isMapZoneActive(zoneId: string) {
   return hoveredMapZoneId.value === zoneId
 }
 
 function isLevelTwoMapZoneActive(zoneId: string) {
   return hoveredLevelTwoMapZoneId.value === zoneId
+}
+
+function isNaveThreeMapZoneActive(zoneId: string) {
+  return hoveredNaveThreeMapZoneId.value === zoneId
 }
 </script>
 
