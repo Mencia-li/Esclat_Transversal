@@ -1,6 +1,22 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@font-face {
+  font-family: "Questrial";
+  src: url("/fonts/Questrial/Questrial-Regular.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit/static/Outfit-Light.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 300;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -42,10 +58,14 @@
   --color-blue_ice: var(--blue_ice);
   --color-turquesa: var(--turquesa);
   --color-grey: var(--grey);
+  --font-sans: var(--esclat-font-body);
+  --font-display: var(--esclat-font-display);
 }
 
 :root {
   --radius: 0.5rem;
+  --esclat-font-body: "Questrial", ui-sans-serif, system-ui, sans-serif;
+  --esclat-font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --blue_ice: #b2f2f4;
   --turquesa: #2ad9dd;
   --grey: #D5D4D8;
@@ -126,7 +146,27 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--esclat-font-body);
+    font-weight: 400;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  b,
+  strong {
+    font-family: var(--esclat-font-display);
+    font-weight: 300;
   }
 
   html,
@@ -139,6 +179,24 @@
   #app {
     min-height: 100svh;
   }
+}
+
+.font-medium,
+.font-semibold,
+.font-bold,
+.font-extrabold,
+.font-black,
+.text-xl,
+.text-2xl,
+.text-3xl,
+.text-4xl,
+.text-5xl,
+.text-6xl,
+.text-7xl,
+.text-8xl,
+.text-9xl {
+  font-family: var(--esclat-font-display);
+  font-weight: 300;
 }
 
 [data-reveal] {

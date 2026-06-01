@@ -2,7 +2,7 @@ import Home from "@/pages/01_home/Home.vue"
 import RouteShell from "@/pages/detail/RouteShell.vue"
 import ArtistDetail from "@/pages/03_artists/ArtistDetail.vue"
 import ProgramDetail from "@/pages/02_program/ProgramDetail.vue"
-import FestivalPage from "@/pages/07_festival/FestivalPage.vue"
+import FestivalPage from "@/pages/02_program/festival/FestivalPage.vue"
 import ShopSection from "@/pages/05_shop/ShopSection.vue"
 import { createRouter, createWebHashHistory } from "vue-router"
 

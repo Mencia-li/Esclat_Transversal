@@ -103,7 +103,7 @@ export interface SafetyRule {
 
 export const festivalInfo = {
   name: "Esclat",
-  claim: "Las cosas que crecen dentro hasta terminar por esclatar.",
+  claim: "Festival de música, pensament i creativitat.",
   dates: "23-25 octubre 2026",
   hours: "16:00-00:00 h",
   place: "Las Naves, Valencia",
