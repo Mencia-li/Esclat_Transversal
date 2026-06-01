@@ -408,7 +408,7 @@ const activityBlocks = [
   },
   {
     id: "stands-merch",
-    title: "Stands&Merch.",
+    title: "Tienda.",
     space: "Patios y pasillos · entre Nave 1 y Nave 3",
     summary: "Food trucks, bebidas y merchandising oficial de Esclat. Punto de encuentro para descansar y socializar durante todo el festival.",
     className: "bg-blue_ice text-foreground md:bg-background",
