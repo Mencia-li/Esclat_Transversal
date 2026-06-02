@@ -63,7 +63,7 @@ onBeforeUnmount(() => {
         class="partners-track flex w-max py-6"
         aria-hidden="true"
       >
-        <div ref="groupRef" class="partners-group flex shrink-0 items-center gap-0 pr-0">
+        <div ref="groupRef" class="partners-group flex shrink-0 items-center gap-6 pr-6 sm:gap-12 sm:pr-12 lg:gap-16 lg:pr-16">
           <img
             v-for="logo in partnerLogos"
             :key="`primary-${logo.src}`"
@@ -73,7 +73,7 @@ onBeforeUnmount(() => {
             loading="lazy"
           />
         </div>
-        <div class="partners-group flex shrink-0 items-center gap-0 pr-0">
+        <div class="partners-group flex shrink-0 items-center gap-6 pr-6 sm:gap-12 sm:pr-12 lg:gap-16 lg:pr-16">
           <img
             v-for="logo in partnerLogos"
             :key="`clone-${logo.src}`"
@@ -90,8 +90,9 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .partners-marquee {
-  --marquee-gap: 8rem;
-  --marquee-fade: 16rem;
+  /* Valores base para móvil (mucho más reducidos) */
+  --marquee-gap: 1.5rem;
+  --marquee-fade: 2.5rem;
   padding-inline: var(--marquee-gap);
   mask-image: linear-gradient(
     90deg,
@@ -102,6 +103,22 @@ onBeforeUnmount(() => {
     transparent calc(100% - var(--marquee-gap)),
     transparent 100%
   );
+}
+
+/* Tablet */
+@media (min-width: 640px) {
+  .partners-marquee {
+    --marquee-gap: 4rem;
+    --marquee-fade: 8rem;
+  }
+}
+
+/* Desktop (valores originales) */
+@media (min-width: 1024px) {
+  .partners-marquee {
+    --marquee-gap: 8rem;
+    --marquee-fade: 16rem;
+  }
 }
 
 .partners-track {
