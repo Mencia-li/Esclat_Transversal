@@ -191,7 +191,7 @@ const playlistThemes: Record<ArtistDateFilter, PlaylistTheme> = {
 
 const playlistArtistOrder: Record<ArtistDateFilter, string[]> = {
   "23/10": ["aurora", "laufey", "amaia", "olivia-rodrigo", "bts"],
-  "24/10": ["meghan-trainor", "hwasa", "olivia-dean", "raye", "gidle"],
+  "24/10": ["meghan-trainor", "hwasa", "rigoberta-bandini", "raye", "gidle"],
   "25/10": ["pablo-alboran", "benson-boone", "the-marias", "iu", "lana-del-rey"],
 }
 
@@ -239,7 +239,7 @@ const expandedArtists = computed(() => {
     return carouselItems.value
   }
 
-  return carouselItems.value.filter((artist) => artist.date === expandedActiveFilter.value && !artist.isPlaceholder)
+  return orderedArtistsForDate(expandedActiveFilter.value)
 })
 
 const expandedArtistsGridClass = computed(() => {

@@ -2,6 +2,12 @@
 import { RouterLink } from "vue-router"
 import { festivalDays, festivalInfo } from "@/data/festival"
 
+const dayRouteNames: Record<string, string> = {
+  "23-10": "program-dia-23",
+  "24-10": "program-dia-24",
+  "25-10": "program-dia-25",
+}
+
 function dayClass(index: number) {
   const classes = [
     "bg-blue_ice text-foreground",
@@ -10,6 +16,14 @@ function dayClass(index: number) {
   ] as const
 
   return classes[index] ?? classes[0]
+}
+
+function dayRoute(dayId: string) {
+  if (dayRouteNames[dayId]) {
+    return { name: dayRouteNames[dayId] }
+  }
+
+  return { name: "program-detail", params: { dia: dayId } }
 }
 </script>
 
@@ -37,7 +51,7 @@ function dayClass(index: number) {
       <RouterLink
         v-for="(day, index) in festivalDays"
         :key="day.id"
-        :to="{ name: 'program-detail', params: { dia: day.id } }"
+        :to="dayRoute(day.id)"
         :class="[
           'group flex min-h-52 flex-col justify-between border-r border-foreground p-2 outline-none transition duration-300 last:border-r-0 hover:brightness-95 focus-visible:ring-2 focus-visible:ring-ring sm:min-h-60 sm:p-4 lg:min-h-80 lg:p-5',
           dayClass(index),

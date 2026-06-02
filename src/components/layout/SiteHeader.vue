@@ -14,7 +14,7 @@ import {
 const navLinks = [
   { label: "Programa", to: { path: "/", hash: "#programa" } },
   { label: "Artistas", to: { path: "/", hash: "#artistas" } },
-  { label: "Tienda", to: { path: "/", hash: "#actividades" } },
+  { label: "Tienda", to: { path: "/entradas" } },
   { label: "FAQs", to: { path: "/", hash: "#faqs" } },
 ]
 
@@ -64,7 +64,7 @@ const esclatLogo = "/img/logos/esclat/svg/horizontal-black.svg"
           </DropdownMenu>
 
           <Button as-child size="sm" class="rounded-none bg-foreground px-4 text-xs uppercase text-background hover:bg-foreground/85">
-            <RouterLink :to="{ path: '/', hash: '#actividades' }">
+            <RouterLink :to="{ path: '/entradas' }">
               Entradas
             </RouterLink>
           </Button>

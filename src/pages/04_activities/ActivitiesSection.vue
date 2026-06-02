@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue"
 import { RouterLink } from "vue-router"
-import { festivalDays } from "@/data/festival"
+import { artistConcertSlots, artists, festivalDays } from "@/data/festival"
 
 const tabItems = [
   { id: "experiencia", label: "Experiencia." },
@@ -82,6 +82,7 @@ const activityScheduleRows: ScheduleRow[] = [
   { id: "sala-visual", label: "Sala Visual Room", sublabel: "Nave 1, 1a planta" },
   { id: "todos", label: "Todos los espacios", sublabel: "Actividad colectiva" },
   { id: "la-polivalent", label: "La Polivalent", sublabel: "Nave 1, planta baja" },
+  { id: "escenario-principal", label: "Escenario principal", sublabel: "Nave 3" },
 ]
 
 const sundayScheduleRows: ScheduleRow[] = [
@@ -96,7 +97,44 @@ const sundayScheduleRows: ScheduleRow[] = [
   { id: "patio-2", label: "Patio 2", sublabel: "Espacio exterior abierto" },
   { id: "todos", label: "Todos los espacios", sublabel: "Actividad colectiva" },
   { id: "patios", label: "Patios y Pasillos", sublabel: "Cierre" },
+  { id: "escenario-principal", label: "Escenario principal", sublabel: "Nave 3" },
 ]
+
+function timeToDecimal(time: string) {
+  const match = time.match(/^(\d{1,2}):(\d{2})$/)
+
+  if (!match) {
+    return Number.MAX_SAFE_INTEGER
+  }
+
+  const hours = Number(match[1])
+  const minutes = Number(match[2])
+
+  return hours + minutes / 60
+}
+
+function concertScheduleBlocks(date: string, prefix: string): ScheduleBlock[] {
+  const dayArtists = artists
+    .filter((artist) => artist.date === date && !artist.isPlaceholder)
+    .sort((firstArtist, secondArtist) => timeToDecimal(firstArtist.time) - timeToDecimal(secondArtist.time))
+
+  return dayArtists.map((artist) => {
+    const slot = artistConcertSlots[artist.id]
+    const start = timeToDecimal(slot?.start ?? artist.time)
+    const rawEnd = timeToDecimal(slot?.end ?? artist.time)
+    const end = rawEnd <= start ? rawEnd + 24 : rawEnd
+
+    return {
+      id: `${prefix}-concierto-${artist.id}`,
+      rowId: "escenario-principal",
+      title: `Concierto - ${artist.name}`,
+      meta: slot ? `${slot.start}-${slot.end}` : artist.time,
+      start,
+      end,
+      tone: "strong",
+    }
+  })
+}
 
 const fridayScheduleBlocks: ScheduleBlock[] = [
   { id: "viernes-expo", rowId: "expos", title: "Exposicion fotografica - Backstage: la otra cara", meta: "16:00-20:00", start: 16.0, end: 20.0 },
@@ -113,6 +151,7 @@ const fridayScheduleBlocks: ScheduleBlock[] = [
   { id: "viernes-pausa", rowId: "todos", title: "Pausa libre", meta: "18:15-18:30", start: 18.25, end: 18.5 },
   { id: "viernes-charla", rowId: "la-polivalent", title: "Como suena la ansiedad", meta: "18:30-19:30", start: 18.5, end: 19.5 },
   { id: "viernes-cierre", rowId: "patios", title: "Cierre de actividades", meta: "19:30-20:00", start: 19.5, end: 20.0 },
+  ...concertScheduleBlocks("23/10", "viernes"),
 ]
 
 const saturdayScheduleBlocks: ScheduleBlock[] = [
@@ -130,6 +169,7 @@ const saturdayScheduleBlocks: ScheduleBlock[] = [
   { id: "sabado-charla", rowId: "la-polivalent", title: "La imagen del artista en la industria musical", meta: "18:30-19:30", start: 18.5, end: 19.5 },
   { id: "sabado-bingo", rowId: "sala-factoria", title: "El bingo de los mandatos", meta: "18:30-19:00", start: 18.5, end: 19.0 },
   { id: "sabado-cierre", rowId: "patios", title: "Cierre de actividades", meta: "19:30-20:00", start: 19.5, end: 20.0 },
+  ...concertScheduleBlocks("24/10", "sabado"),
 ]
 
 const sundayScheduleBlocks: ScheduleBlock[] = [
@@ -256,13 +296,14 @@ const sundayScheduleBlocks: ScheduleBlock[] = [
     start: 19.5,
     end: 20.0,
   },
+  ...concertScheduleBlocks("25/10", "domingo"),
 ]
 
 const defaultScheduleConfig: ScheduleConfig = {
   rows: activityScheduleRows,
   blocks: fridayScheduleBlocks,
   start: 15.75,
-  end: 20.25,
+  end: 24.25,
   notes: [],
 }
 
@@ -272,21 +313,21 @@ const scheduleConfigs: Record<string, ScheduleConfig> = {
     rows: activityScheduleRows,
     blocks: fridayScheduleBlocks,
     start: 15.75,
-    end: 20.25,
+    end: 24.25,
     notes: [],
   },
   "24-10": {
     rows: activityScheduleRows,
     blocks: saturdayScheduleBlocks,
     start: 15.75,
-    end: 20.25,
+    end: 24.25,
     notes: [],
   },
   "25-10": {
     rows: sundayScheduleRows,
     blocks: sundayScheduleBlocks,
     start: 15.75,
-    end: 20.25,
+    end: 24.25,
     notes: [],
   },
 }
@@ -303,9 +344,9 @@ const timelineHeaderSlots = computed(() =>
     (_, index) => scheduleStart.value + index * 0.25,
   ),
 )
-const scheduleLocationColumnWidth = "clamp(8.75rem, 32vw, 12rem)"
+const scheduleLocationColumnWidth = "clamp(6.75rem, 30vw, 12rem)"
 const scheduleVisibleQuarterSlotCount = 12
-const scheduleQuarterColumnWidth = computed(() => `max(3.5rem, calc((100vw - ${scheduleLocationColumnWidth}) / ${scheduleVisibleQuarterSlotCount}))`)
+const scheduleQuarterColumnWidth = computed(() => `max(2.75rem, calc((100vw - ${scheduleLocationColumnWidth}) / ${scheduleVisibleQuarterSlotCount}))`)
 const scheduleTableStyle = computed(() => ({
   width: `calc(${scheduleLocationColumnWidth} + ${Array.from(
     { length: scheduleQuarterSlotCount.value },
@@ -324,8 +365,8 @@ const scheduleRowGridStyle = computed(() => ({
 const scheduleTimelineStyle = computed(() => ({
   gridTemplateColumns: `repeat(${scheduleQuarterSlotCount.value}, ${scheduleQuarterColumnWidth.value})`,
 }))
-const stackedBlockMinHeightRem = 3.25
-const stackedBlockGapRem = 3.5
+const stackedBlockMinHeightRem = 2.75
+const stackedBlockGapRem = 3
 
 function blocksForRow(rowId: ScheduleRow["id"]): ScheduleLayoutBlock[] {
   const levelEnds: number[] = []
@@ -349,7 +390,7 @@ function blocksForRow(rowId: ScheduleRow["id"]): ScheduleLayoutBlock[] {
 
 function rowStyle(row: ScheduleRow) {
   const maxLevel = blocksForRow(row.id).reduce((level, block) => Math.max(level, block.layoutLevel), 0)
-  const baseMinHeight = row.heightClass === "min-h-28" ? 7 : 4
+  const baseMinHeight = row.heightClass === "min-h-28" ? 6.25 : 3.5
   const stackedMinHeight = 1 + stackedBlockMinHeightRem + maxLevel * stackedBlockGapRem
 
   return {
@@ -373,7 +414,7 @@ function blockStyle(block: ScheduleLayoutBlock) {
 }
 
 function formatHour(hour: number) {
-  const normalized = hour === 24 ? 0 : hour
+  const normalized = hour >= 24 ? hour - 24 : hour
   const totalMinutes = Math.round(normalized * 60)
   const hours = Math.floor(totalMinutes / 60)
   const minutes = totalMinutes % 60
@@ -388,7 +429,7 @@ const activityBlocks = [
     space: "Sala Factoria y Sala Visual Room · Nave 1, 1a planta",
     summary: "Talleres participativos del programa: produccion musical, creacion de personajes y maquillaje sonoro, con dos sesiones por taller cada dia.",
     className: "bg-background text-foreground",
-    to: undefined,
+    to: { path: "/talleres" },
   },
   {
     id: "charlas",
@@ -396,7 +437,7 @@ const activityBlocks = [
     space: "La Polivalent · Nave 1, planta baja",
     summary: "Charlas y conversaciones diarias en formato abierto al debate, con capacidad para 80 personas.",
     className: "bg-blue_ice text-foreground",
-    to: undefined,
+    to: { path: "/charlas" },
   },
   {
     id: "exposiciones",
@@ -404,7 +445,7 @@ const activityBlocks = [
     space: "Sala de Exposiciones · Nave 1, planta baja",
     summary: "Cada dia acoge una exposicion fotografica vinculada al tema de la jornada. Acceso libre durante todo el horario del festival.",
     className: "bg-background text-foreground md:bg-blue_ice",
-    to: undefined,
+    to: { path: "/exposiciones" },
   },
   {
     id: "stands-merch",
@@ -412,7 +453,7 @@ const activityBlocks = [
     space: "Patios y pasillos · entre Nave 1 y Nave 3",
     summary: "Food trucks, bebidas y merchandising oficial de Esclat. Punto de encuentro para descansar y socializar durante todo el festival.",
     className: "bg-blue_ice text-foreground md:bg-background",
-    to: { path: "/tienda" },
+    to: { path: "/entradas" },
   },
 ] as const
 </script>
@@ -539,12 +580,12 @@ const activityBlocks = [
             class="grid border-b border-grey text-[0.6rem] uppercase tracking-widest text-foreground/70 sm:text-[0.65rem]"
             :style="scheduleGridStyle"
           >
-            <div class="border-r border-grey px-4 py-2 text-left" />
+            <div class="sticky left-0 z-30 border-r border-grey bg-background px-2 py-1.5 text-left sm:px-4 sm:py-2" />
             <div
               v-for="(slot, index) in timelineHeaderSlots"
               :key="slot"
               :class="[
-                'py-2 text-center',
+                'py-1.5 text-center sm:py-2',
                 index < timelineHeaderSlots.length - 1 ? 'border-r border-grey/70' : '',
               ]"
             >
@@ -553,9 +594,9 @@ const activityBlocks = [
           </div>
 
           <div v-for="row in activeScheduleRows" :key="row.id" class="grid border-b border-grey last:border-b-0" :style="scheduleRowGridStyle">
-            <div class="flex flex-col justify-center gap-1 border-r border-grey px-3 py-4 text-left sm:px-4">
-              <span class="whitespace-nowrap text-[0.78rem] font-semibold uppercase leading-tight tracking-normal text-black sm:text-sm">{{ row.label }}</span>
-              <span class="whitespace-nowrap text-[0.58rem] font-medium uppercase tracking-wide text-foreground/50 sm:text-[0.68rem]">{{ row.sublabel }}</span>
+            <div class="sticky left-0 z-20 flex flex-col justify-center gap-1 border-r border-grey bg-background px-2 py-2.5 text-left sm:px-4 sm:py-4">
+              <span class="break-words text-[0.66rem] font-semibold uppercase leading-tight tracking-normal text-black sm:whitespace-nowrap sm:text-sm">{{ row.label }}</span>
+              <span class="break-words text-[0.48rem] font-medium uppercase leading-tight tracking-wide text-foreground/50 sm:whitespace-nowrap sm:text-[0.68rem]">{{ row.sublabel }}</span>
             </div>
 
             <div :class="['relative w-full bg-background', row.heightClass ?? 'min-h-16']" :style="rowStyle(row)">
@@ -567,10 +608,10 @@ const activityBlocks = [
                 v-for="block in blocksForRow(row.id)"
                 :key="block.id"
                 :style="blockStyle(block)"
-                class="absolute min-w-24 rounded-sm border border-grey border-l-4 border-l-turquesa bg-white px-2 py-1 text-[0.72rem] leading-tight sm:min-w-28 sm:text-[1rem]"
+                class="absolute min-w-20 rounded-sm border border-grey border-l-4 border-l-turquesa bg-white px-1.5 py-1 text-[0.58rem] leading-tight sm:min-w-28 sm:px-2 sm:text-[1rem]"
               >
                 <p class="font-medium text-black">{{ block.title }}</p>
-                <p v-if="block.meta" class="mt-1 text-[0.68rem] font-semibold text-turquesa sm:text-[0.8rem]">{{ block.meta }}</p>
+                <p v-if="block.meta" class="mt-0.5 text-[0.54rem] font-semibold text-turquesa sm:mt-1 sm:text-[0.8rem]">{{ block.meta }}</p>
               </div>
             </div>
           </div>
