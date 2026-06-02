@@ -25,7 +25,7 @@ npm install
 
 ## Desarrollo
 
-Inicia el servidor de desarrollo con recarga en caliente:
+Inicia el servidor de desarrollo:
 
 ```bash
 npm run dev
@@ -33,23 +33,11 @@ npm run dev
 
 ## Build y vista previa de producción
 
-Genera la build de producción (incluye chequeo de tipos con `vue-tsc`):
+Genera la build de producción:
 
 ```bash
 npm run build
 ```
-
-Ver la build localmente:
-
-```bash
-npm run preview
-```
-
-## Scripts (extraídos de package.json)
-
-- `dev`: inicia Vite en modo desarrollo.
-- `build`: ejecuta `vue-tsc -b` y construye la app con Vite.
-- `preview`: sirve la build de producción localmente.
 
 ## Estructura principal
 
