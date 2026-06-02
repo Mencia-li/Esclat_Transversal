@@ -12,10 +12,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 const navLinks = [
+  { label: "Festival", to: { name: "festival" } },
   { label: "Programa", to: { path: "/", hash: "#programa" } },
   { label: "Artistas", to: { path: "/", hash: "#artistas" } },
-  { label: "Tienda", to: { path: "/entradas" } },
+  { label: "Tienda", to: { path: "/tienda" } },
   { label: "FAQs", to: { path: "/", hash: "#faqs" } },
+]
+
+const entryLinks = [
+  { label: "Viernes 23", to: { name: "program-dia-23", hash: "#entradas-dia" } },
+  { label: "Sábado 24", to: { name: "program-dia-24", hash: "#entradas-dia" } },
+  { label: "Domingo 25", to: { name: "program-dia-25", hash: "#entradas-dia" } },
 ]
 
 const esclatLogo = "/img/logos/esclat/svg/horizontal-black.svg"
@@ -63,15 +70,27 @@ const esclatLogo = "/img/logos/esclat/svg/horizontal-black.svg"
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Button as-child size="sm" class="rounded-none bg-foreground px-4 text-xs uppercase text-background hover:bg-foreground/85">
-            <RouterLink :to="{ path: '/entradas' }">
-              Entradas
-            </RouterLink>
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger as-child>
+              <Button size="sm" class="rounded-none bg-foreground px-4 text-xs uppercase text-background hover:bg-foreground/85">
+                Entradas
+              </Button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Elige día</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem v-for="item in entryLinks" :key="item.label" as-child>
+                <RouterLink :to="item.to">
+                  {{ item.label }}
+                </RouterLink>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <Button as-child variant="outline" size="sm" class="hidden rounded-none border-foreground px-4 text-xs uppercase sm:inline-flex">
             <RouterLink :to="{ path: '/', hash: '#inicio' }">
-              Festival
+              Inicio
             </RouterLink>
           </Button>
         </div>

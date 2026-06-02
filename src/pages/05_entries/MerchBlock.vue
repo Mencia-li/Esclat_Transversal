@@ -48,8 +48,8 @@ const merchItems = [
       </div>
 
       <Button as-child variant="secondary" size="lg" class="w-fit">
-        <RouterLink :to="{ path: '/entradas', hash: '#contacto' }">
-          Consultar merch
+        <RouterLink :to="{ path: '/tienda' }">
+          Ver tienda
           <ArrowUpRight class="size-4" />
         </RouterLink>
       </Button>

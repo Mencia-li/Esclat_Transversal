@@ -4,6 +4,7 @@ import { useRoute } from "vue-router"
 const revealSelector = "[data-reveal]"
 const parallaxSelector = "[data-parallax]"
 
+// Composable global usado en App.vue para animar elementos al hacer scroll.
 export function useScrollReveal() {
   const route = useRoute()
   const observedElements = new WeakSet<Element>()
@@ -39,6 +40,7 @@ export function useScrollReveal() {
   }
 
   function observeTree(root: ParentNode = document) {
+    // Cada cambio de ruta puede montar nodos nuevos con data-reveal.
     if (root instanceof HTMLElement && root.matches(revealSelector)) {
       observeElement(root)
     }
@@ -62,6 +64,7 @@ export function useScrollReveal() {
     }
 
     document.querySelectorAll<HTMLElement>(parallaxSelector).forEach((element) => {
+      // data-parallax define el recorrido máximo en píxeles.
       const amount = Number(element.dataset.parallax ?? 0)
 
       if (!Number.isFinite(amount)) {
@@ -96,8 +99,9 @@ export function useScrollReveal() {
         })
       },
       {
-        rootMargin: "0px 0px -8% 0px",
-        threshold: 0.12,
+        // Ajusta aqui cuando aparece/desaparece data-reveal.
+        rootMargin: "35% 0px 10% 0px",
+        threshold: 0.2,
       },
     )
 

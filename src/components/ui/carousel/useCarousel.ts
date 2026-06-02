@@ -3,6 +3,7 @@ import { createInjectionState } from "@vueuse/core"
 import emblaCarouselVue from "embla-carousel-vue"
 import { onMounted, ref } from "vue"
 
+// Estado compartido entre Carousel, CarouselContent y los botones anterior/siguiente.
 const [useProvideCarousel, useInjectCarousel] = createInjectionState(
   ({ opts, orientation, plugins }: CarouselProps, emits: CarouselEmits) => {
     const [emblaNode, emblaApi] = emblaCarouselVue(
@@ -24,6 +25,7 @@ const [useProvideCarousel, useInjectCarousel] = createInjectionState(
     const canScrollNext = ref(false)
     const canScrollPrev = ref(false)
 
+    // Embla avisa cuando cambia el slide; asi activamos o desactivamos los botones.
     function onSelect(api: CarouselApi) {
       canScrollNext.value = api?.canScrollNext() || false
       canScrollPrev.value = api?.canScrollPrev() || false

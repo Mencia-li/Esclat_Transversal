@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Fuentes locales del proyecto: se sirven desde public/fonts para evitar cargas externas. */
 @font-face {
   font-family: "Questrial";
   src: url("/fonts/Questrial/Questrial-Regular.ttf") format("truetype");
@@ -19,6 +20,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Mapeo de tokens Shadcn/Tailwind a la identidad visual de Esclat. */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -106,6 +108,7 @@
   --sidebar-ring: var(--esclat-blue);
 }
 
+/* La variante dark queda preparada aunque la web actual usa principalmente el tema claro. */
 .dark {
   --background: var(--esclat-dark-gray);
   --foreground: var(--esclat-white);
@@ -199,6 +202,7 @@
   font-weight: 300;
 }
 
+/* Estados de entrada usados por useScrollReveal.ts. */
 [data-reveal] {
   opacity: 0;
   filter: blur(10px);
@@ -273,6 +277,7 @@
 }
 
 @layer utilities {
+  /* Contenedores y temas reutilizados por páginas largas. */
   .festival-theme-program {
     background-color: var(--esclat-gray);
     color: var(--esclat-dark-gray);

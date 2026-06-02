@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import type { Component } from "vue"
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue"
-import { Camera, CheckCircle2, ChevronDown, MapPin, Mic2, MessagesSquare, Music2, Play, Ticket } from "lucide-vue-next"
+import { RouterLink } from "vue-router"
+import { ArrowLeft, Camera, CheckCircle2, MapPin, Mic2, MessagesSquare, Music2, Play, Ticket } from "lucide-vue-next"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -16,16 +23,20 @@ type CompleteProgramItem = {
   title: string
   category: string
   location: string
+  description: string
+  meta: string
+  tags: string[]
   icon: Component
   sortValue: number
 }
 
-type TicketFormField = "name" | "email"
+type TicketFormField = "firstName" | "lastName" | "email"
 
 const venueMapUrl = "https://www.google.com/maps?q=Las%20Naves%20Valencia&output=embed"
 
 const ticketForm = reactive({
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
 })
 
@@ -78,6 +89,14 @@ function categoryIcon(category: string) {
   return Music2
 }
 
+function cleanMeta(meta: string) {
+  return meta
+    .split("·")
+    .map((item) => item.trim())
+    .filter((item) => !/^(hasta\s+\d+\s+personas|grupos?\s+de\s+\d+)$/i.test(item))
+    .join(" · ")
+}
+
 function concertTimeLabel(artistId: string, fallbackTime: string) {
   const slot = artistConcertSlots[artistId]
 
@@ -105,7 +124,11 @@ const day = computed(() => {
 const dayTitle = computed(() => `${day.value.weekday} ${day.value.date.split("/")[0]}.`)
 const dayArtists = computed(() => artists.filter((artist) => artist.date === day.value.date))
 const validTicketEmail = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ticketForm.email))
-const canSubmitTicket = computed(() => ticketForm.name.trim().length > 1 && validTicketEmail.value)
+const canSubmitTicket = computed(() => (
+  ticketForm.firstName.trim().length > 1 &&
+  ticketForm.lastName.trim().length > 1 &&
+  validTicketEmail.value
+))
 
 const completeProgram = computed<CompleteProgramItem[]>(() => [
   ...day.value.schedule.map((event) => ({
@@ -113,6 +136,9 @@ const completeProgram = computed<CompleteProgramItem[]>(() => [
     title: eventTitle(event.category, event.title),
     category: categoryLabel(event.category),
     location: event.space,
+    description: event.summary,
+    meta: cleanMeta(event.meta),
+    tags: event.tags,
     icon: categoryIcon(event.category),
     sortValue: timeToMinutes(event.time),
   })),
@@ -121,6 +147,9 @@ const completeProgram = computed<CompleteProgramItem[]>(() => [
     title: `Concierto - ${artist.name}`,
     category: "Concierto",
     location: artist.stage,
+    description: artist.summary,
+    meta: "",
+    tags: [],
     icon: Mic2,
     sortValue: concertSortValue(artist.id, artist.time),
   })),
@@ -160,6 +189,7 @@ function updateProgramMaxHeight() {
     return
   }
 
+  // En desktop, el acordeón del programa se limita a la altura natural del timeline.
   const timelineStyles = window.getComputedStyle(timelineColumn)
   const timelineNaturalHeight =
     timelineContent.getBoundingClientRect().height +
@@ -218,6 +248,16 @@ watch(
 <template>
   <section class="border-b border-foreground bg-background">
     <div class="mx-auto w-full max-w-368 border-x border-foreground">
+      <div class="border-b border-foreground bg-background px-5 py-5 sm:px-6 lg:px-8">
+        <RouterLink
+          :to="{ path: '/', hash: '#programa' }"
+          class="inline-flex items-center gap-2 border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-grey sm:px-6 sm:text-base"
+        >
+          <ArrowLeft class="size-4" />
+          Volver al programa
+        </RouterLink>
+      </div>
+
       <div data-reveal class="border-b border-foreground bg-turquesa px-5 py-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-normal leading-none text-foreground sm:text-4xl lg:text-5xl">
           {{ dayTitle }}
@@ -279,43 +319,77 @@ watch(
             class="mt-6 overflow-y-auto pr-2"
             :style="{ maxHeight: programMaxHeight, scrollbarColor: 'var(--grey) transparent' }"
           >
-            <div class="overflow-hidden rounded-md border border-grey bg-background">
-              <article
+            <Accordion
+              type="single"
+              collapsible
+              class="overflow-hidden rounded-md border border-grey bg-background"
+            >
+              <AccordionItem
                 v-for="event in completeProgram"
                 :key="`${event.time}-${event.title}`"
-                class="grid min-h-20 grid-cols-[2.75rem_minmax(0,1fr)_1.5rem] gap-3 border-b border-grey px-4 py-4 last:border-b-0 sm:px-5 lg:grid-cols-[3rem_minmax(13rem,1.35fr)_8.5rem_8rem_minmax(12rem,1fr)_1.5rem] lg:items-center"
+                :value="`${event.time}-${event.title}`"
+                class="border-grey last:border-b-0"
               >
-                <div class="flex size-10 items-center justify-center rounded-md bg-blue_ice text-black">
-                  <component :is="event.icon" class="size-5" aria-hidden="true" />
-                </div>
+                <AccordionTrigger
+                  class="grid min-h-20 grid-cols-[minmax(0,1fr)_1.5rem] items-center rounded-none px-4 py-0 text-foreground transition-colors hover:bg-grey hover:text-foreground data-[state=open]:bg-background data-[state=open]:hover:bg-background sm:px-5 [&_svg]:mt-0 [&_svg]:justify-self-end [&_svg]:text-foreground"
+                >
+                  <div class="grid w-full grid-cols-[2.75rem_minmax(0,1fr)] gap-3 py-4 lg:grid-cols-[3rem_minmax(13rem,1.35fr)_8.5rem_8rem_minmax(12rem,1fr)] lg:items-center">
+                    <div class="flex size-10 items-center justify-center rounded-md bg-blue_ice text-black">
+                      <component :is="event.icon" class="size-5" aria-hidden="true" />
+                    </div>
 
-                <div class="min-w-0">
-                  <h4 class="text-base font-semibold leading-tight text-foreground sm:text-lg">
-                    {{ event.title }}
-                  </h4>
+                    <div class="min-w-0">
+                      <h4 class="text-base font-semibold leading-tight text-foreground sm:text-lg">
+                        {{ event.title }}
+                      </h4>
 
-                  <div class="mt-2 grid gap-1 text-sm leading-tight text-foreground/70 sm:grid-cols-3 lg:hidden">
-                    <p>{{ event.category }}</p>
-                    <p>{{ event.time }}</p>
-                    <p>{{ event.location }}</p>
+                      <div class="mt-2 grid gap-1 text-sm leading-tight text-foreground/70 sm:grid-cols-3 lg:hidden">
+                        <p>{{ event.category }}</p>
+                        <p>{{ event.time }}</p>
+                        <p>{{ event.location }}</p>
+                      </div>
+                    </div>
+
+                    <p class="hidden text-sm font-semibold leading-tight text-foreground/70 lg:block">
+                      {{ event.category }}
+                    </p>
+
+                    <p class="hidden text-sm font-semibold leading-tight text-foreground lg:block">
+                      {{ event.time }}
+                    </p>
+
+                    <p class="hidden text-sm font-semibold leading-tight text-foreground/70 lg:block">
+                      {{ event.location }}
+                    </p>
                   </div>
-                </div>
+                </AccordionTrigger>
 
-                <p class="hidden text-sm font-semibold leading-tight text-foreground/70 lg:block">
-                  {{ event.category }}
-                </p>
+                <AccordionContent class="border-t border-grey px-4 pb-5 pt-4 text-base leading-relaxed text-foreground/80 sm:px-5 lg:px-5">
+                  <div class="grid gap-3 lg:grid-cols-[3rem_1fr]">
+                    <span class="hidden lg:block" aria-hidden="true" />
+                    <div>
+                      <p>{{ event.description }}</p>
 
-                <p class="hidden text-sm font-semibold leading-tight text-foreground lg:block">
-                  {{ event.time }}
-                </p>
-
-                <p class="hidden text-sm font-semibold leading-tight text-foreground/70 lg:block">
-                  {{ event.location }}
-                </p>
-
-                <ChevronDown class="mt-2 size-5 justify-self-end text-foreground/80 lg:mt-0" aria-hidden="true" />
-              </article>
-            </div>
+                      <div
+                        v-if="event.meta || event.tags.length"
+                        class="mt-4 flex flex-wrap gap-2 text-xs font-semibold uppercase leading-none text-foreground/70"
+                      >
+                        <span v-if="event.meta" class="border border-grey bg-background px-3 py-2">
+                          {{ event.meta }}
+                        </span>
+                        <span
+                          v-for="tag in event.tags"
+                          :key="tag"
+                          class="border border-grey bg-blue_ice px-3 py-2 text-foreground"
+                        >
+                          {{ tag }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </section>
       </div>
@@ -326,7 +400,12 @@ watch(
         </h2>
       </div>
 
-      <div data-reveal style="--reveal-delay: 520ms" class="grid border-b border-foreground bg-background lg:grid-cols-[1.1fr_0.9fr]">
+      <div
+        id="entradas-dia"
+        data-reveal
+        style="--reveal-delay: 520ms"
+        class="scroll-mt-20 grid border-b border-foreground bg-background lg:grid-cols-[1.1fr_0.9fr]"
+      >
         <section class="min-h-[24rem] border-b border-foreground lg:min-h-[34rem] lg:border-b-0 lg:border-r" aria-label="Mapa de ubicación">
           <iframe
             :src="venueMapUrl"
@@ -364,10 +443,21 @@ watch(
                 <Label for="ticket-name">Nombre</Label>
                 <Input
                   id="ticket-name"
-                  :value="ticketForm.name"
-                  placeholder="Nombre y apellidos"
+                  :value="ticketForm.firstName"
+                  placeholder="Nombre"
                   class="rounded-none border-grey"
-                  @input="updateTicketField('name', $event)"
+                  @input="updateTicketField('firstName', $event)"
+                />
+              </div>
+
+              <div class="space-y-2">
+                <Label for="ticket-last-name">Apellido</Label>
+                <Input
+                  id="ticket-last-name"
+                  :value="ticketForm.lastName"
+                  placeholder="Apellido"
+                  class="rounded-none border-grey"
+                  @input="updateTicketField('lastName', $event)"
                 />
               </div>
 
@@ -384,7 +474,7 @@ watch(
               </div>
 
               <p v-if="ticketTriedSubmit && !canSubmitTicket" class="text-sm font-medium text-foreground">
-                Completa el nombre y un correo válido.
+                Completa el nombre, el apellido y un correo válido.
               </p>
 
               <p v-if="ticketSubmitted" class="border border-turquesa bg-blue_ice px-3 py-2 text-sm font-medium text-foreground">

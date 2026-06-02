@@ -4,6 +4,7 @@ import CalendarSection from "@/pages/02_program/CalendarSection.vue"
 import ArtistsSection from "@/pages/03_artists/ArtistsSection.vue"
 import ActivitiesSection from "@/pages/04_activities/ActivitiesSection.vue"
 import FaqSection from "@/pages/06_faqs/FaqSection.vue"
+import PartnersMarquee from "@/pages/08_partners/PartnersMarquee.vue"
 </script>
 
 <template>
@@ -27,5 +28,7 @@ import FaqSection from "@/pages/06_faqs/FaqSection.vue"
     <section id="faqs" class="scroll-mt-20">
       <FaqSection />
     </section>
+
+    <PartnersMarquee />
   </div>
 </template>

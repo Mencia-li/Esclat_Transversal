@@ -1,3 +1,4 @@
+// Barrel export: piezas del select Shadcn usadas en formularios.
 export { default as Select } from "./Select.vue"
 export { default as SelectContent } from "./SelectContent.vue"
 export { default as SelectItem } from "./SelectItem.vue"

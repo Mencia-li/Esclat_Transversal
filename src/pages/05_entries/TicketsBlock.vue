@@ -16,10 +16,11 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { ticketOptions } from "@/data/festival"
 
-type AccessField = "name" | "email" | "notes"
+type AccessField = "firstName" | "lastName" | "email" | "notes"
 
 const form = reactive({
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
   ticketId: ticketOptions[0]?.id ?? "",
   notes: "",
@@ -30,7 +31,12 @@ const triedSubmit = ref(false)
 
 const selectedTicket = computed(() => ticketOptions.find((ticket) => ticket.id === form.ticketId) ?? ticketOptions[0])
 const validEmail = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-const canSubmit = computed(() => form.name.trim().length > 1 && validEmail.value && form.ticketId.length > 0)
+const canSubmit = computed(() => (
+  form.firstName.trim().length > 1 &&
+  form.lastName.trim().length > 1 &&
+  validEmail.value &&
+  form.ticketId.length > 0
+))
 
 function updateField(field: AccessField, event: Event) {
   const target = event.target as HTMLInputElement | HTMLTextAreaElement
@@ -140,14 +146,24 @@ function submitAccess() {
             <Label for="access-name">Nombre</Label>
             <Input
               id="access-name"
-              :value="form.name"
-              placeholder="Nombre y apellidos"
-              @input="updateField('name', $event)"
+              :value="form.firstName"
+              placeholder="Nombre"
+              @input="updateField('firstName', $event)"
             />
           </div>
 
           <div class="space-y-2">
-            <Label for="access-email">Email</Label>
+            <Label for="access-last-name">Apellido</Label>
+            <Input
+              id="access-last-name"
+              :value="form.lastName"
+              placeholder="Apellido"
+              @input="updateField('lastName', $event)"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <Label for="access-email">Correo</Label>
             <Input
               id="access-email"
               type="email"
@@ -169,7 +185,7 @@ function submitAccess() {
           </div>
 
           <p v-if="triedSubmit && !canSubmit" class="text-sm font-medium text-primary">
-            Completa el nombre, un email válido y el tipo de acceso.
+            Completa el nombre, el apellido, un correo válido y el tipo de acceso.
           </p>
 
           <p v-if="submitted" class="rounded-md bg-secondary px-3 py-2 text-sm font-medium text-foreground">

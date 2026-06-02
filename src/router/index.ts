@@ -2,19 +2,22 @@ import Home from "@/pages/01_home/Home.vue"
 import RouteShell from "@/pages/detail/RouteShell.vue"
 import ArtistDetail from "@/pages/03_artists/ArtistDetail.vue"
 import ProgramDetail from "@/pages/02_program/ProgramDetail.vue"
-import Dia23Page from "@/pages/02_program/Dia_23/Dia_23.vue"
-import Dia24Page from "@/pages/02_program/Dia_24/Dia_24.vue"
-import Dia25Page from "@/pages/02_program/Dia_25/Dia_25.vue"
+import Day23Page from "@/pages/02_program/days/Day23Page.vue"
+import Day24Page from "@/pages/02_program/days/Day24Page.vue"
+import Day25Page from "@/pages/02_program/days/Day25Page.vue"
 import FestivalPage from "@/pages/02_program/festival/FestivalPage.vue"
 import CharlasPage from "@/pages/04_activities/charlas/CharlasPage.vue"
 import ExposicionesPage from "@/pages/04_activities/exposiciones/ExposicionesPage.vue"
 import TalleresPage from "@/pages/04_activities/talleres/TalleresPage.vue"
 import EntriesPage from "@/pages/05_entries/EntriesPage.vue"
+import StorePage from "@/pages/07_store/StorePage.vue"
 import { createRouter, createWebHashHistory } from "vue-router"
 
+// Hash history mantiene URLs tipo /#/programa, practicas para hosting estatico.
 export const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   scrollBehavior(to) {
+    // Si navegamos a una seccion con hash, dejamos espacio para el header fijo.
     if (to.hash) {
       return {
         el: to.hash,
@@ -27,6 +30,7 @@ export const router = createRouter({
   },
 
   routes: [
+    // Home: hero, programa, artistas, actividades y FAQs.
     {
       path: "/",
       name: "home",
@@ -42,6 +46,7 @@ export const router = createRouter({
       component: RouteShell,
       redirect: { path: "/", hash: "#programa" },
       children: [
+        // Los tres dias usan el mismo componente base con distinto dayId.
         {
           path: "amor-propio",
           redirect: { name: "program-dia-23" },
@@ -49,17 +54,17 @@ export const router = createRouter({
         {
           path: "dia-23",
           name: "program-dia-23",
-          component: Dia23Page,
+          component: Day23Page,
         },
         {
           path: "dia-24",
           name: "program-dia-24",
-          component: Dia24Page,
+          component: Day24Page,
         },
         {
           path: "dia-25",
           name: "program-dia-25",
-          component: Dia25Page,
+          component: Day25Page,
         },
         {
           path: ":dia",
@@ -73,6 +78,7 @@ export const router = createRouter({
       name: "artist-detail",
       component: ArtistDetail,
     },
+    // Ruta corta que devuelve a la seccion de artistas de la home.
     {
       path: "/artistas",
       redirect: { path: "/", hash: "#artistas" },
@@ -99,7 +105,8 @@ export const router = createRouter({
     },
     {
       path: "/tienda",
-      redirect: { name: "entries" },
+      name: "store",
+      component: StorePage,
     },
     {
       path: "/:pathMatch(.*)",

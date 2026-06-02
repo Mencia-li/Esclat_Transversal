@@ -1,3 +1,5 @@
+// Datos embebidos: la web no depende de una API externa para programa, artistas o FAQs.
+// Las interfaces tipan cada bloque para que los componentes sepan que campos pueden pintar.
 export interface ProgramEvent {
   id: string
   time: string
@@ -59,12 +61,6 @@ export interface ArtistConcertSlot {
   end: string
 }
 
-export interface ProgramBlock {
-  id: string
-  title: string
-  summary: string
-}
-
 export interface FaqItem {
   id: string
   question: string
@@ -76,22 +72,6 @@ export interface TicketOption {
   name: string
   description: string
   access: string
-}
-
-export interface FestivalPillar {
-  id: string
-  title: string
-  summary: string
-}
-
-export interface FestivalSpace {
-  id: string
-  name: string
-  location: string
-  summary: string
-  capacity: string
-  use: string
-  assetHint: string
 }
 
 export interface AccessStep {
@@ -106,6 +86,7 @@ export interface SafetyRule {
   summary: string
 }
 
+// Informacion general reutilizada por header, footer, hero y bloques de entradas.
 export const festivalInfo = {
   name: "Esclat",
   claim: "Festival de música, pensament i creativitat.",
@@ -118,24 +99,7 @@ export const festivalInfo = {
   producer: "Festival de música, pensamiento y creatividad en Las Naves.",
 }
 
-export const festivalPillars: FestivalPillar[] = [
-  {
-    id: "musica",
-    title: "Música en directo",
-    summary: "La puerta emocional de entrada a los temas del festival.",
-  },
-  {
-    id: "talleres",
-    title: "Talleres",
-    summary: "Herramientas prácticas para profundizar en lo que se escucha y se vive.",
-  },
-  {
-    id: "conversaciones",
-    title: "Conversaciones",
-    summary: "Espacios de debate para decir en voz alta lo que normalmente se evita.",
-  },
-]
-
+// Cada dia mezcla actividades culturales y conciertos. DayProgramPage lo usa para construir timelines.
 export const festivalDays: FestivalDay[] = [
   {
     id: "23-10",
@@ -400,6 +364,7 @@ export const festivalDays: FestivalDay[] = [
   },
 ]
 
+// Cartel de conciertos. El orden coincide con las imagenes public/img/artists/artistN.jpg.
 export const artists: Artist[] = [
   {
     id: "bts",
@@ -538,6 +503,7 @@ export const artists: Artist[] = [
   },
 ]
 
+// Horarios reales de concierto cuando una actuacion tiene inicio y final definidos.
 export const artistConcertSlots: Record<string, ArtistConcertSlot> = {
   aurora: { start: "20:00", end: "20:25" },
   laufey: { start: "20:40", end: "21:05" },
@@ -556,6 +522,7 @@ export const artistConcertSlots: Record<string, ArtistConcertSlot> = {
   "lana-del-rey": { start: "23:15", end: "00:15" },
 }
 
+// El carrusel usa el cartel real y una ultima celda de "sorpresa" sin ficha.
 export const artistsCarouselItems: Artist[] = [
   ...artists,
   {
@@ -569,6 +536,7 @@ export const artistsCarouselItems: Artist[] = [
   },
 ]
 
+// Fichas largas de artistas. Partial permite que un artista exista aunque su ficha no este lista.
 export const artistDetails: Partial<Record<string, ArtistDetail>> = {
   bts: {
     artisticName: "BTS",
@@ -1242,102 +1210,7 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
   },
 }
 
-export const programBlocks: ProgramBlock[] = [
-  {
-    id: "talleres",
-    title: "Talleres.",
-    summary:
-      "Producción musical, collage, maquillaje, movimiento y creación de objetos para transformar los temas del festival en práctica.",
-  },
-  {
-    id: "cine-doc",
-    title: "Cine y doc.",
-    summary:
-      "Proyecciones de ficción y documental con debate opcional para abrir conversación antes de las charlas.",
-  },
-  {
-    id: "exposiciones",
-    title: "Exposiciones.",
-    summary:
-      "Tres exposiciones fotográficas sobre salud mental, cuerpo, fama, privacidad e industria musical.",
-  },
-  {
-    id: "charlas",
-    title: "Charlas.",
-    summary:
-      "Conversaciones en La Polivalent con formato abierto, preguntas del público y enfoque accesible.",
-  },
-  {
-    id: "instrumentos",
-    title: "Instrumentos.",
-    summary:
-      "Talleres de batería reducida, djembé, ukulele, flauta, percusión latina, teclado y batucada final.",
-  },
-  {
-    id: "escucha",
-    title: "Cuarto de escucha.",
-    summary:
-      "Una instalación permanente: cinco minutos de audio, una palabra en el mural y una memoria colectiva en crecimiento.",
-  },
-]
-
-export const festivalSpaces: FestivalSpace[] = [
-  {
-    id: "polivalent",
-    name: "La Polivalent",
-    location: "Nave 1, planta baja",
-    summary: "El espacio principal para charlas y conversaciones con formato abierto al debate.",
-    capacity: "Hasta 80 personas",
-    use: "Charlas principales",
-    assetHint: "public/img/spaces/polivalent.webp",
-  },
-  {
-    id: "exposiciones",
-    name: "Sala de Exposiciones",
-    location: "Nave 1, planta baja",
-    summary: "Acoge una exposición fotográfica diferente cada día, siempre vinculada al tema de la jornada.",
-    capacity: "Hasta 60 personas",
-    use: "Exposiciones",
-    assetHint: "public/img/spaces/sala-exposiciones.webp",
-  },
-  {
-    id: "proyecciones",
-    name: "Sala de proyecciones",
-    location: "Nave 1",
-    summary: "Dos proyecciones por día con debate opcional al terminar.",
-    capacity: "Hasta 40 personas",
-    use: "Cine y documental",
-    assetHint: "public/img/spaces/sala-proyecciones.webp",
-  },
-  {
-    id: "factoria",
-    name: "Sala Factoría",
-    location: "Nave 1, 1ª planta",
-    summary: "Talleres participativos de producción musical, maquillaje, juego y creación textil.",
-    capacity: "Hasta 48 personas",
-    use: "Talleres A",
-    assetHint: "public/img/spaces/sala-factoria.webp",
-  },
-  {
-    id: "visual-room",
-    name: "Sala Visual Room",
-    location: "Nave 1, 1ª planta",
-    summary: "Talleres más íntimos y reflexivos, además de instalación interactiva.",
-    capacity: "Hasta 30 personas",
-    use: "Talleres B",
-    assetHint: "public/img/spaces/visual-room.webp",
-  },
-  {
-    id: "patios",
-    name: "Patios exteriores",
-    location: "Patio 1 y Patio 2",
-    summary: "Instrumentos en rotación continua, juegos abiertos y batucada colectiva de cierre.",
-    capacity: "Rotación continua",
-    use: "Instrumentos y cierre",
-    assetHint: "public/img/spaces/patios.webp",
-  },
-]
-
+// Opciones del formulario de inscripcion.
 export const ticketOptions: TicketOption[] = [
   {
     id: "libre",
@@ -1359,6 +1232,7 @@ export const ticketOptions: TicketOption[] = [
   },
 ]
 
+// Pasos de acceso reutilizados en la pagina de festival y entradas.
 export const accessSteps: AccessStep[] = [
   {
     id: "consulta",
@@ -1382,6 +1256,7 @@ export const accessSteps: AccessStep[] = [
   },
 ]
 
+// Normas basicas mostradas como cards o acordeon segun la pagina.
 export const safetyRules: SafetyRule[] = [
   {
     id: "seguro",
@@ -1415,6 +1290,7 @@ export const safetyRules: SafetyRule[] = [
   },
 ]
 
+// Preguntas frecuentes de la seccion final de la home.
 export const faqs: FaqItem[] = [
   {
     id: "reserva",

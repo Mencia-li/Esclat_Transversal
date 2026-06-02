@@ -371,6 +371,7 @@ const stackedBlockGapRem = 3
 function blocksForRow(rowId: ScheduleRow["id"]): ScheduleLayoutBlock[] {
   const levelEnds: number[] = []
 
+  // Si dos bloques se solapan en la misma fila, los apilamos en niveles verticales.
   return activeScheduleConfig.value.blocks
     .filter((block) => block.rowId === rowId)
     .sort((a, b) => a.start - b.start || a.end - b.end)
@@ -399,6 +400,7 @@ function rowStyle(row: ScheduleRow) {
 }
 
 function blockStyle(block: ScheduleLayoutBlock) {
+  // Posicionamiento proporcional dentro de la línea temporal horizontal.
   const safeStart = Math.max(block.start, scheduleStart.value)
   const safeEnd = Math.min(block.end, scheduleEnd.value)
   const left = ((safeStart - scheduleStart.value) / scheduleSpan.value) * 100
@@ -435,7 +437,7 @@ const activityBlocks = [
     id: "charlas",
     title: "Charlas.",
     space: "La Polivalent · Nave 1, planta baja",
-    summary: "Charlas y conversaciones diarias en formato abierto al debate, con capacidad para 80 personas.",
+    summary: "Charlas y conversaciones diarias en formato abierto al debate.",
     className: "bg-blue_ice text-foreground",
     to: { path: "/charlas" },
   },
@@ -453,7 +455,7 @@ const activityBlocks = [
     space: "Patios y pasillos · entre Nave 1 y Nave 3",
     summary: "Food trucks, bebidas y merchandising oficial de Esclat. Punto de encuentro para descansar y socializar durante todo el festival.",
     className: "bg-blue_ice text-foreground md:bg-background",
-    to: { path: "/entradas" },
+    to: { path: "/tienda" },
   },
 ] as const
 </script>
