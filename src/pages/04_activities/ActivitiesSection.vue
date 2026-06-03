@@ -4,8 +4,8 @@ import { RouterLink } from "vue-router"
 import { artistConcertSlots, artists, festivalDays } from "@/data/festival"
 
 const tabItems = [
-  { id: "experiencia", label: "Experiencia." },
-  { id: "horarios", label: "Horarios." },
+  { id: "experiencia", label: "EXPERIENCIA" },
+  { id: "horarios", label: "HORARIOS" },
 ] as const
 
 type TabId = (typeof tabItems)[number]["id"]
@@ -137,34 +137,34 @@ function concertScheduleBlocks(date: string, prefix: string): ScheduleBlock[] {
 }
 
 const fridayScheduleBlocks: ScheduleBlock[] = [
-  { id: "viernes-expo", rowId: "expos", title: "Exposicion fotografica - Backstage: la otra cara", meta: "16:00-20:00", start: 16.0, end: 20.0 },
-  { id: "viernes-eighth-grade", rowId: "proyecciones", title: "Proyeccion - Eighth Grade (2018)", meta: "16:00-17:45", start: 16.0, end: 17.75 },
-  { id: "viernes-amy", rowId: "proyecciones", title: "Proyeccion - Amy (2015)", meta: "18:00-20:00", start: 18.0, end: 20.0 },
+  { id: "viernes-expo", rowId: "expos", title: "Exposición fotográfica - Backstage: la otra cara", meta: "16:00-20:00", start: 16.0, end: 20.0 },
+  { id: "viernes-eighth-grade", rowId: "proyecciones", title: "Proyección - Eighth Grade (2018)", meta: "16:00-17:45", start: 16.0, end: 17.75 },
+  { id: "viernes-amy", rowId: "proyecciones", title: "Proyección - Amy (2015)", meta: "18:00-20:00", start: 18.0, end: 20.0 },
   { id: "viernes-stands", rowId: "patios", title: "Stands, comida y merch del festival", meta: "16:00-20:00", start: 16.0, end: 20.0 },
   { id: "viernes-caja-bombo", rowId: "patio-1", title: "Caja y bombo - el ritmo que ya tienes", meta: "16:00-18:00", start: 16.0, end: 18.0, level: 0 },
   { id: "viernes-djembe", rowId: "patio-1", title: "Djembe colectivo - un ritmo entre todos", meta: "16:00-18:00", start: 16.0, end: 18.0, level: 1 },
   { id: "viernes-escucha", rowId: "hall", title: "El cuarto de escucha", meta: "16:00-20:00", start: 16.0, end: 20.0 },
-  { id: "viernes-taller-a-1", rowId: "sala-factoria", title: "Taller A - Produce tu estado de animo", meta: "16:15-16:55", start: 16.25, end: 16.92 },
-  { id: "viernes-taller-a-2", rowId: "sala-factoria", title: "Taller A - Produce tu estado de animo", meta: "17:25-18:05", start: 17.42, end: 18.08 },
-  { id: "viernes-taller-b-1", rowId: "sala-visual", title: "Taller B - Adivina quien eres", meta: "16:25-17:05", start: 16.42, end: 17.08 },
-  { id: "viernes-taller-b-2", rowId: "sala-visual", title: "Taller B - Adivina quien eres", meta: "17:35-18:15", start: 17.58, end: 18.25 },
+  { id: "viernes-taller-a-1", rowId: "sala-factoria", title: "Taller A - Produce tu estado de ánimo", meta: "16:15-16:55", start: 16.25, end: 16.92 },
+  { id: "viernes-taller-a-2", rowId: "sala-factoria", title: "Taller A - Produce tu estado de ánimo", meta: "17:25-18:05", start: 17.42, end: 18.08 },
+  { id: "viernes-taller-b-1", rowId: "sala-visual", title: "Taller B - Lo que mi canción favorita dice de mí", meta: "16:25-17:05", start: 16.42, end: 17.08 },
+  { id: "viernes-taller-b-2", rowId: "sala-visual", title: "Taller B - Lo que mi canción favorita dice de mí", meta: "17:35-18:15", start: 17.58, end: 18.25 },
   { id: "viernes-pausa", rowId: "todos", title: "Pausa libre", meta: "18:15-18:30", start: 18.25, end: 18.5 },
-  { id: "viernes-charla", rowId: "la-polivalent", title: "Como suena la ansiedad", meta: "18:30-19:30", start: 18.5, end: 19.5 },
+  { id: "viernes-charla", rowId: "la-polivalent", title: "Cómo suena la ansiedad", meta: "18:30-19:30", start: 18.5, end: 19.5 },
   { id: "viernes-cierre", rowId: "patios", title: "Cierre de actividades", meta: "19:30-20:00", start: 19.5, end: 20.0 },
   ...concertScheduleBlocks("23/10", "viernes"),
 ]
 
 const saturdayScheduleBlocks: ScheduleBlock[] = [
-  { id: "sabado-expo", rowId: "expos", title: "Exposicion fotografica - Cuerpos sin filtro", meta: "16:00-20:00", start: 16.0, end: 20.0 },
-  { id: "sabado-miss-americana", rowId: "proyecciones", title: "Proyeccion - Miss Americana (2020)", meta: "16:00-17:30", start: 16.0, end: 17.5 },
-  { id: "sabado-frida", rowId: "proyecciones", title: "Proyeccion - Frida (2002)", meta: "17:45-20:00", start: 17.75, end: 20.0 },
-  { id: "sabado-ukulele", rowId: "patio-1", title: "Ukulele - tres acordes y una cancion", meta: "16:00-18:00", start: 16.0, end: 18.0, level: 0 },
+  { id: "sabado-expo", rowId: "expos", title: "Exposición fotográfica - Cuerpos sin filtro", meta: "16:00-20:00", start: 16.0, end: 20.0 },
+  { id: "sabado-miss-americana", rowId: "proyecciones", title: "Proyección - Miss Americana (2020)", meta: "16:00-17:30", start: 16.0, end: 17.5 },
+  { id: "sabado-frida", rowId: "proyecciones", title: "Proyección - Frida (2002)", meta: "17:45-20:00", start: 17.75, end: 20.0 },
+  { id: "sabado-ukulele", rowId: "patio-1", title: "Ukulele - tres acordes y una canción", meta: "16:00-18:00", start: 16.0, end: 18.0, level: 0 },
   { id: "sabado-flauta", rowId: "patio-1", title: "Flauta: el instrumento que todos tocaron mal y ahora suena bien", meta: "16:00-18:00", start: 16.0, end: 18.0, level: 1 },
-  { id: "sabado-escucha", rowId: "hall", title: "El cuarto de escucha (continua desde el dia 1)", meta: "16:00-20:00", start: 16.0, end: 20.0 },
+  { id: "sabado-escucha", rowId: "hall", title: "El cuarto de escucha (continúa desde el día 1)", meta: "16:00-20:00", start: 16.0, end: 20.0 },
   { id: "sabado-taller-a-1", rowId: "sala-factoria", title: "Taller A - Pinta caras", meta: "16:15-16:55", start: 16.25, end: 16.92 },
   { id: "sabado-taller-a-2", rowId: "sala-factoria", title: "Taller A - Pinta caras", meta: "17:25-18:05", start: 17.42, end: 18.08 },
-  { id: "sabado-taller-b-1", rowId: "sala-visual", title: "Taller B - Crea tu portada de album", meta: "16:25-17:05", start: 16.42, end: 17.08 },
-  { id: "sabado-taller-b-2", rowId: "sala-visual", title: "Taller B - Crea tu portada de album", meta: "17:35-18:15", start: 17.58, end: 18.25 },
+  { id: "sabado-taller-b-1", rowId: "sala-visual", title: "Taller B - Crea tu portada de álbum", meta: "16:25-17:05", start: 16.42, end: 17.08 },
+  { id: "sabado-taller-b-2", rowId: "sala-visual", title: "Taller B - Crea tu portada de álbum", meta: "17:35-18:15", start: 17.58, end: 18.25 },
   { id: "sabado-pausa", rowId: "todos", title: "Pausa libre", meta: "18:15-18:30", start: 18.25, end: 18.5 },
   { id: "sabado-charla", rowId: "la-polivalent", title: "La imagen del artista en la industria musical", meta: "18:30-19:30", start: 18.5, end: 19.5 },
   { id: "sabado-bingo", rowId: "sala-factoria", title: "El bingo de los mandatos", meta: "18:30-19:00", start: 18.5, end: 19.0 },
@@ -177,7 +177,7 @@ const sundayScheduleBlocks: ScheduleBlock[] = [
   {
     id: "domingo-expo",
     rowId: "expos",
-    title: "Exposicion fotografica - Lo que no sale en la foto",
+    title: "Exposición fotográfica - Lo que no sale en la foto",
     meta: "16:00-20:00",
     start: 16.0,
     end: 20.0,
@@ -185,7 +185,7 @@ const sundayScheduleBlocks: ScheduleBlock[] = [
   {
     id: "domingo-proyeccion-1",
     rowId: "proyecciones",
-    title: "Proyeccion - Shut Up and Sing (2006)",
+    title: "Proyección - Shut Up and Sing (2006)",
     meta: "16:00-17:35",
     start: 16.0,
     end: 17.58,
@@ -193,7 +193,7 @@ const sundayScheduleBlocks: ScheduleBlock[] = [
   {
     id: "domingo-proyeccion-2",
     rowId: "proyecciones",
-    title: "Proyeccion - The Last Dance: episodios seleccionados (2020)",
+    title: "Proyección - The Last Dance: episodios seleccionados (2020)",
     meta: "17:50-18:40",
     start: 17.83,
     end: 18.67,
@@ -209,7 +209,7 @@ const sundayScheduleBlocks: ScheduleBlock[] = [
   {
     id: "domingo-caja-claves",
     rowId: "patio-1",
-    title: "Caja china y claves - groove con lo minimo",
+    title: "Caja china y claves - groove con lo mínimo",
     meta: "16:00-18:00",
     start: 16.0,
     end: 18.0,
@@ -218,7 +218,7 @@ const sundayScheduleBlocks: ScheduleBlock[] = [
   {
     id: "domingo-teclado",
     rowId: "patio-1",
-    title: "Teclado - toca de oido, sin permiso",
+    title: "Teclado - toca de oído, sin permiso",
     meta: "16:00-18:00",
     start: 16.0,
     end: 18.0,
@@ -267,7 +267,7 @@ const sundayScheduleBlocks: ScheduleBlock[] = [
   {
     id: "domingo-respiro",
     rowId: "todos",
-    title: "Ultimo respiro del festival",
+    title: "Último respiro del festival",
     meta: "18:15-18:45",
     start: 18.25,
     end: 18.75,
@@ -275,7 +275,7 @@ const sundayScheduleBlocks: ScheduleBlock[] = [
   {
     id: "domingo-charla",
     rowId: "la-polivalent",
-    title: "Ser famoso cuesta mas de lo que cobras",
+    title: "Ser famoso cuesta más de lo que cobras",
     meta: "18:30-19:30",
     start: 18.5,
     end: 19.5,
@@ -427,15 +427,15 @@ function formatHour(hour: number) {
 const activityBlocks = [
   {
     id: "talleres",
-    title: "Talleres.",
-    space: "Sala Factoria y Sala Visual Room · Nave 1, 1a planta",
-    summary: "Talleres participativos del programa: produccion musical, creacion de personajes y maquillaje sonoro, con dos sesiones por taller cada dia.",
+    title: "TALLERES",
+    space: "Sala Factoría y Sala Visual Room · Nave 1, 1a planta",
+    summary: "Talleres participativos del programa: producción musical, creación de personajes y maquillaje sonoro, con dos sesiones por taller cada día.",
     className: "bg-background text-foreground",
     to: { path: "/talleres" },
   },
   {
     id: "charlas",
-    title: "Charlas.",
+    title: "CHARLAS",
     space: "La Polivalent · Nave 1, planta baja",
     summary: "Charlas y conversaciones diarias en formato abierto al debate.",
     className: "bg-blue_ice text-foreground",
@@ -443,15 +443,15 @@ const activityBlocks = [
   },
   {
     id: "exposiciones",
-    title: "Exposiciones.",
+    title: "EXPOSICIONES",
     space: "Sala de Exposiciones · Nave 1, planta baja",
-    summary: "Cada dia acoge una exposicion fotografica vinculada al tema de la jornada. Acceso libre durante todo el horario del festival.",
+    summary: "Cada día acoge una exposición fotográfica vinculada al tema de la jornada. Acceso libre durante todo el horario del festival.",
     className: "bg-background text-foreground md:bg-blue_ice",
     to: { path: "/exposiciones" },
   },
   {
     id: "stands-merch",
-    title: "Tienda.",
+    title: "TIENDA",
     space: "Patios y pasillos · entre Nave 1 y Nave 3",
     summary: "Food trucks, bebidas y merchandising oficial de Esclat. Punto de encuentro para descansar y socializar durante todo el festival.",
     className: "bg-blue_ice text-foreground md:bg-background",
@@ -473,7 +473,7 @@ const activityBlocks = [
         :aria-selected="activeTab === tab.id"
         :tabindex="activeTab === tab.id ? 0 : -1"
         :class="[
-          'flex min-h-16 items-center px-5 py-4 text-left text-3xl font-normal leading-none transition-colors sm:min-h-20 sm:px-6 sm:text-4xl lg:px-8 lg:text-5xl',
+          'esclat-section-tab',
           index === 0 ? 'border-r border-foreground' : '',
           activeTab === tab.id
             ? 'bg-turquesa text-foreground'
@@ -497,33 +497,33 @@ const activityBlocks = [
         v-for="(block, index) in activityBlocks"
         :key="block.id"
         :class="[
-          'flex min-h-44 flex-col border-b border-foreground p-4 sm:min-h-52 sm:p-6 lg:min-h-60 lg:p-8',
+          'flex min-h-36 flex-col border-b border-foreground p-3 sm:min-h-52 sm:p-6 lg:min-h-60 lg:p-8',
           index % 2 === 0 ? 'md:border-r' : '',
           index >= activityBlocks.length - 2 ? 'md:border-b-0' : '',
           index === activityBlocks.length - 1 ? 'border-b-0' : '',
           block.className,
         ]"
       >
-        <h3 class="text-xl font-semibold leading-tight tracking-tight sm:text-2xl lg:text-3xl">{{ block.title }}</h3>
-        <p class="mt-4 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-foreground/75 sm:mt-5 sm:text-xs lg:text-sm">
+        <h3 class="text-lg font-semibold leading-tight tracking-tight sm:text-2xl lg:text-3xl">{{ block.title }}</h3>
+        <p class="mt-3 text-[0.56rem] font-semibold uppercase tracking-[0.18em] text-foreground/75 sm:mt-5 sm:text-xs sm:tracking-[0.2em] lg:text-sm">
           {{ block.space }}
         </p>
-        <p class="mt-4 max-w-3xl text-sm leading-relaxed text-foreground/90 sm:text-base lg:text-lg">
+        <p class="mt-3 max-w-3xl text-[0.82rem] leading-relaxed text-foreground/90 sm:mt-4 sm:text-base lg:text-lg">
           {{ block.summary }}
         </p>
 
-        <div class="mt-auto flex justify-end pt-6">
+        <div class="mt-auto flex justify-end pt-4 sm:pt-6">
           <RouterLink
             v-if="block.to"
             :to="block.to"
-            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-grey sm:text-base"
+            class="inline-flex min-h-9 items-center border border-foreground bg-background px-4 text-xs font-normal uppercase leading-none text-foreground transition-colors hover:bg-grey sm:min-h-10 sm:px-5 sm:text-base"
           >
             VER MÁS &gt;
           </RouterLink>
           <button
             v-else
             type="button"
-            class="inline-flex min-h-10 items-center border border-foreground bg-background px-5 text-sm font-normal uppercase leading-none text-foreground transition-colors hover:bg-grey sm:text-base"
+            class="inline-flex min-h-9 items-center border border-foreground bg-background px-4 text-xs font-normal uppercase leading-none text-foreground transition-colors hover:bg-grey sm:min-h-10 sm:px-5 sm:text-base"
           >
             VER MÁS &gt;
           </button>

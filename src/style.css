@@ -302,6 +302,18 @@
     @apply mx-auto w-full max-w-5xl px-6 py-10 md:py-12;
   }
 
+  .esclat-section-title-box {
+    @apply border-b border-foreground bg-turquesa px-4 py-3 sm:px-6 sm:py-4 lg:px-8;
+  }
+
+  .esclat-section-title {
+    @apply text-2xl font-normal uppercase leading-none text-foreground sm:text-4xl lg:text-5xl;
+  }
+
+  .esclat-section-tab {
+    @apply flex min-h-12 items-center px-4 py-3 text-left text-2xl font-normal uppercase leading-none transition-colors sm:min-h-20 sm:px-6 sm:py-4 sm:text-4xl lg:px-8 lg:text-5xl;
+  }
+
   .festival-section {
     position: relative;
     min-height: calc(100svh - 5rem);

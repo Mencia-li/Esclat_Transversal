@@ -11,7 +11,7 @@ import TicketsBlock from "./TicketsBlock.vue"
       <div data-reveal class="mb-5 flex shrink-0 flex-col gap-3 md:flex-row md:items-end md:justify-between lg:mb-4">
         <div>
           <p class="text-sm font-semibold uppercase text-primary">Entradas gratuitas</p>
-          <h2 class="mt-2 text-4xl font-semibold leading-tight text-foreground sm:text-5xl">Entradas.</h2>
+          <h2 class="mt-2 text-4xl font-semibold leading-tight text-foreground sm:text-5xl">ENTRADAS</h2>
         </div>
 
         <p class="max-w-md text-sm leading-relaxed text-muted-foreground">

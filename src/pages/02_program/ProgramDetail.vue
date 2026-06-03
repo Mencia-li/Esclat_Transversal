@@ -55,7 +55,7 @@ const day = computed(() => festivalDays.find((item) => item.id === dayId.value))
 
         <div data-reveal style="--reveal-delay: 220ms" class="space-y-4">
           <div class="flex items-end justify-between gap-4 border-b border-border pb-3">
-            <h2 class="text-3xl font-semibold text-foreground">Horario.</h2>
+            <h2 class="text-3xl font-semibold text-foreground">HORARIO</h2>
             <p class="text-sm font-medium text-muted-foreground">{{ day.schedule.length }} bloques</p>
           </div>
 

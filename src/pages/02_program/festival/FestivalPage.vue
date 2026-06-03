@@ -31,17 +31,19 @@ const accessModes = [
 
 <template>
   <section class="border-b border-foreground bg-background">
-    <div class="mx-auto w-full max-w-368 border-x border-foreground">
-      <div class="border-b border-foreground bg-background px-5 py-5 sm:px-6 lg:px-8">
-        <RouterLink
-          :to="{ path: '/', hash: '#programa' }"
-          class="inline-flex items-center gap-2 border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-grey sm:px-6 sm:text-base"
-        >
-          <ArrowLeft class="size-4" />
-          Volver al programa
-        </RouterLink>
-      </div>
+    <div class="border-b border-foreground bg-background px-5 py-5 sm:px-6 lg:px-8">
+      <RouterLink
+        :to="{ path: '/', hash: '#programa' }"
+        class="mb-5 inline-flex items-center gap-2 border border-foreground bg-background px-5 py-3 text-sm font-medium uppercase text-foreground transition-colors hover:bg-grey sm:px-6 sm:text-base"
+      >
+        <ArrowLeft class="size-4" />
+        Volver al programa
+      </RouterLink>
 
+      <h1 class="text-4xl font-normal leading-none text-foreground sm:text-5xl">FESTIVAL</h1>
+    </div>
+
+    <div class="mx-auto w-full max-w-368 border-x border-foreground">
       <div class="grid border-b border-foreground lg:grid-cols-[1fr_1.15fr]">
         <div class="relative min-h-64 overflow-hidden border-b border-foreground bg-background lg:min-h-80 lg:border-b-0 lg:border-r">
           <div class="relative z-10 flex h-full items-center justify-center p-8">
@@ -54,13 +56,12 @@ const accessModes = [
         </div>
 
         <div class="bg-blue_ice p-6 sm:p-8 lg:p-10">
-          <p class="text-sm font-semibold uppercase text-foreground">Festival.</p>
           <div class="mt-4 space-y-4 text-sm leading-relaxed text-foreground/90 sm:text-base">
             <p>
-              ESCLAT es un festival de música, pensament i creativitat en Las Naves de Valencia. Durante tres días combina conciertos, talleres, exposiciones, cine y charlas.
+              Festival de música, pensament i creativitat en Las Naves de Valencia. Durante tres días combina conciertos, talleres, exposiciones, cine y charlas.
             </p>
             <p>
-              Su nombre significa estallido: una forma de hablar de todo eso que crece por dentro y a veces cuesta poner en palabras.
+              Su nombre significa estallido, una forma de hablar de todo eso que crece por dentro y a veces cuesta poner en palabras.
             </p>
             <p>
               Salud mental, estándares de belleza e industria del entretenimiento atraviesan el programa. La música abre la puerta emocional; los talleres y conversaciones ayudan a cruzarla.
@@ -75,8 +76,8 @@ const accessModes = [
         </p>
       </div>
 
-      <div class="border-b border-foreground bg-turquesa px-6 py-6 sm:px-8 lg:px-10">
-        <p class="text-3xl font-normal leading-none text-foreground sm:text-4xl lg:text-5xl">Las Naves.</p>
+      <div class="esclat-section-title-box">
+        <p class="esclat-section-title">LAS NAVES</p>
       </div>
 
       <div class="border-b border-foreground bg-background px-6 py-8 sm:px-8 lg:px-10">
@@ -101,8 +102,8 @@ const accessModes = [
       </div>
 
       <section class="border-b border-foreground bg-background">
-        <div class="border-b border-foreground bg-turquesa px-6 py-4 sm:px-8 lg:px-10">
-          <h2 class="text-3xl font-normal leading-none text-foreground sm:text-4xl lg:text-5xl">Acceso.</h2>
+        <div class="esclat-section-title-box">
+          <h2 class="esclat-section-title">ACCESO</h2>
         </div>
 
         <div class="px-6 py-8 sm:px-8 lg:px-10">
@@ -141,8 +142,8 @@ const accessModes = [
       </section>
 
       <section class="mt-6 border-y border-foreground bg-background sm:mt-8 lg:mt-10">
-        <div data-reveal class="border-b border-foreground bg-turquesa px-5 py-4 sm:px-6 lg:px-8">
-          <h2 class="text-3xl font-normal leading-none text-foreground sm:text-4xl lg:text-5xl">Normas.</h2>
+        <div data-reveal class="esclat-section-title-box">
+          <h2 class="esclat-section-title">NORMAS</h2>
         </div>
 
         <Accordion

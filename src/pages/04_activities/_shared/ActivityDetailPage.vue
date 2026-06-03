@@ -20,7 +20,7 @@ defineProps<{
         Volver a actividades
       </RouterLink>
 
-      <h1 class="text-4xl font-normal leading-none text-foreground sm:text-5xl">{{ title }}.</h1>
+      <h1 class="text-4xl font-normal leading-none text-foreground sm:text-5xl">{{ title.toUpperCase() }}</h1>
     </div>
 
     <div class="border-b border-foreground bg-blue_ice px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
@@ -43,7 +43,7 @@ defineProps<{
           </div>
 
           <div class="border-b border-foreground px-4 py-4 sm:px-6">
-            <p class="text-xl font-semibold leading-tight text-[#5d6fcb] sm:text-2xl">{{ day.timeRange }}</p>
+            <p class="text-xl font-semibold leading-tight text-turquesa sm:text-2xl">{{ day.timeRange }}</p>
           </div>
 
           <div class="grid gap-6 p-4 sm:p-6 lg:p-8">
@@ -61,7 +61,7 @@ defineProps<{
                 >
                   {{ activity.label }}
                 </p>
-                <p class="px-3 py-3 text-right text-sm font-semibold text-foreground/75 sm:px-4 sm:text-base">
+                <p class="px-3 py-3 text-right text-sm font-semibold text-turquesa sm:px-4 sm:text-base">
                   {{ activity.time }}
                 </p>
               </div>

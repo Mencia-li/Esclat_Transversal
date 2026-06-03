@@ -258,8 +258,8 @@ watch(
         </RouterLink>
       </div>
 
-      <div data-reveal class="border-b border-foreground bg-turquesa px-5 py-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-normal leading-none text-foreground sm:text-4xl lg:text-5xl">
+      <div data-reveal class="esclat-section-title-box">
+        <h1 class="esclat-section-title">
           {{ dayTitle }}
         </h1>
       </div>
@@ -270,9 +270,9 @@ watch(
         </p>
       </div>
 
-      <div data-reveal style="--reveal-delay: 220ms" class="border-b border-foreground bg-turquesa px-5 py-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-normal leading-none text-foreground sm:text-4xl lg:text-5xl">
-          Talleres.
+      <div data-reveal style="--reveal-delay: 220ms" class="esclat-section-title-box">
+        <h2 class="esclat-section-title">
+          TALLERES
         </h2>
       </div>
 
@@ -394,9 +394,9 @@ watch(
         </section>
       </div>
 
-      <div data-reveal style="--reveal-delay: 420ms" class="border-b border-foreground bg-turquesa px-5 py-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-normal leading-none text-foreground sm:text-4xl lg:text-5xl">
-          Entradas.
+      <div data-reveal style="--reveal-delay: 420ms" class="esclat-section-title-box">
+        <h2 class="esclat-section-title">
+          ENTRADAS
         </h2>
       </div>
 

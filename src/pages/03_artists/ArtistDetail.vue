@@ -159,7 +159,7 @@ watch(
         Volver a artistas
       </RouterLink>
 
-      <h1 class="text-4xl font-normal leading-none text-foreground sm:text-5xl">Artistas.</h1>
+      <h1 class="text-4xl font-normal leading-none text-foreground sm:text-5xl">ARTISTAS</h1>
     </div>
 
     <div class="border-b border-foreground bg-blue_ice px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
@@ -300,7 +300,7 @@ watch(
       </article>
 
       <article v-else class="mx-auto w-full max-w-5xl border border-foreground bg-background p-6 sm:p-8">
-        <h2 class="text-3xl font-normal uppercase leading-none text-foreground sm:text-4xl">Biografía no disponible.</h2>
+        <h2 class="text-3xl font-normal uppercase leading-none text-foreground sm:text-4xl">BIOGRAFÍA NO DISPONIBLE</h2>
         <p class="mt-4 text-base leading-relaxed text-muted-foreground">
           La ficha solicitada todavía no está preparada.
         </p>

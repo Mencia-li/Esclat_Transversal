@@ -89,7 +89,7 @@ export interface SafetyRule {
 // Informacion general reutilizada por header, footer, hero y bloques de entradas.
 export const festivalInfo = {
   name: "Esclat",
-  claim: "Festival de música, pensament i creativitat.",
+  claim: "FESTIVAL DE MÚSICA, PENSAMENT I CREATIVITAT.",
   dates: "23-25 octubre 2026",
   hours: "16:00-00:00 h",
   place: "Las Naves, Valencia",
@@ -116,7 +116,7 @@ export const festivalDays: FestivalDay[] = [
       "Eighth Grade",
       "Amy",
       "Produce tu estado de ánimo",
-      "Adivina quién eres",
+      "Lo que mi canción favorita dice de mí",
       "Cómo suena la ansiedad",
     ],
     schedule: [
@@ -168,12 +168,12 @@ export const festivalDays: FestivalDay[] = [
         id: "adivina",
         time: "16:25 y 17:35",
         category: "Taller",
-        title: "Adivina quién eres",
+        title: "Lo que mi canción favorita dice de mí",
         summary:
-          "Versión musical del juego de los post-its para abrir una conversación sobre etiquetas, comportamiento e identidad.",
+          "Cada participante comparte 30 segundos de su canción favorita y recibe una lectura colectiva de lo que transmite.",
         space: "Sala Visual Room · Nave 1",
         meta: "40 min · hasta 30 personas · participativo",
-        tags: ["etiquetas", "presión social", "identidad"],
+        tags: ["escucha", "identidad", "espejo"],
       },
       {
         id: "ansiedad",
@@ -1199,11 +1199,11 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
       },
       {
         title: "Young and Beautiful",
-        description: "Cierre del festival y del relato: me querrán cuando deje de ser el producto?",
+        description: "Cierre del festival y del relato: ¿me querrán cuando deje de ser el producto?",
       },
     ],
     festivalReason:
-      "Lana Del Rey cierra ESCLAT porque representa el punto final del recorrido: después de mirar hacia dentro, hacia el cuerpo y hacia la industria, su propuesta muestra el resultado emocional de un sistema que convierte la belleza, el deseo y la fama en productos. Su presencia permite cerrar el festival con una pregunta incómoda: si la industria construye imágenes perfectas para consumirlas, en qué momento deja de ver a las personas que hay detrás? Dentro de ESCLAT, Lana aporta una conclusión melancólica y crítica: el glamour puede brillar mucho, pero también puede estar profundamente vacío.",
+      "Lana Del Rey cierra ESCLAT porque representa el punto final del recorrido: después de mirar hacia dentro, hacia el cuerpo y hacia la industria, su propuesta muestra el resultado emocional de un sistema que convierte la belleza, el deseo y la fama en productos. Su presencia permite cerrar el festival con una pregunta incómoda: si la industria construye imágenes perfectas para consumirlas, ¿en qué momento deja de ver a las personas que hay detrás? Dentro de ESCLAT, Lana aporta una conclusión melancólica y crítica: el glamour puede brillar mucho, pero también puede estar profundamente vacío.",
     spotifyUrl: "https://open.spotify.com/search/Lana%20Del%20Rey",
     videoEmbedUrl: "https://www.youtube.com/embed/cE6wxDqdOV0",
     videoTitle: "Lana Del Rey - Video Games",

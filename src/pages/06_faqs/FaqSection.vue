@@ -10,8 +10,8 @@ import { faqs } from "@/data/festival"
 
 <template>
   <section class="mt-6 border-y border-foreground bg-background sm:mt-8 lg:mt-10">
-    <div data-reveal class="border-b border-foreground bg-turquesa px-5 py-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-normal leading-none text-foreground sm:text-4xl lg:text-5xl">FAQs.</h2>
+    <div data-reveal class="esclat-section-title-box">
+      <h2 class="esclat-section-title">FAQS</h2>
     </div>
 
     <Accordion

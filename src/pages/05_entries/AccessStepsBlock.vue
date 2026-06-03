@@ -7,7 +7,7 @@ import { accessSteps } from "@/data/festival"
   <section data-reveal class="rounded-md border border-border bg-background p-6">
     <div class="mb-6 flex items-center gap-3 text-primary">
       <ClipboardList class="size-5" />
-      <h3 class="text-2xl font-semibold text-foreground">Cómo asistir.</h3>
+      <h3 class="text-2xl font-semibold text-foreground">CÓMO ASISTIR</h3>
     </div>
 
     <div class="grid gap-4">

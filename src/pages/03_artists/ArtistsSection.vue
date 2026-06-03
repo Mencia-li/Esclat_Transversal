@@ -15,8 +15,8 @@ import { artistDetails, artistsCarouselItems } from "@/data/festival"
 const spotifyLogoUrl = "/img/logos/spotify_logo.png"
 
 const tabItems = [
-  { id: "artistas", label: "Artistas." },
-  { id: "cartel", label: "Cartel." },
+  { id: "artistas", label: "ARTISTAS" },
+  { id: "cartel", label: "CARTEL" },
 ] as const
 
 type TabId = (typeof tabItems)[number]["id"]
@@ -425,7 +425,7 @@ onBeforeUnmount(() => {
         :aria-selected="activeTab === tab.id"
         :tabindex="activeTab === tab.id ? 0 : -1"
         :class="[
-          'flex min-h-16 items-center px-5 py-4 text-left text-3xl font-normal leading-none transition-colors sm:min-h-20 sm:px-6 sm:text-4xl lg:px-8 lg:text-5xl',
+          'esclat-section-tab',
           index === 0 ? 'border-r border-foreground' : '',
           activeTab === tab.id
             ? 'bg-turquesa text-foreground'

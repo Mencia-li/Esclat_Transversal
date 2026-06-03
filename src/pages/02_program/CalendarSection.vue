@@ -40,7 +40,7 @@ function dayRoute(dayId: string) {
 <template>
   <section class="border-b border-foreground bg-background">
     <div data-reveal class="px-5 py-4 sm:px-6 lg:px-8">
-      <h2 class="max-w-6xl text-3xl font-normal leading-tight text-foreground sm:text-5xl lg:text-6xl">
+      <h2 class="w-full text-3xl font-normal leading-tight text-foreground sm:text-4xl lg:text-4xl xl:whitespace-nowrap 2xl:text-5xl min-[1800px]:text-6xl">
         {{ festivalInfo.claim }}
       </h2>
     </div>

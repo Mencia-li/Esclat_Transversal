@@ -7,7 +7,7 @@ import { safetyRules } from "@/data/festival"
   <section data-reveal style="--reveal-delay: 120ms" class="rounded-md border border-border bg-secondary p-6">
     <div class="mb-6 flex items-center gap-3 text-primary">
       <ShieldCheck class="size-5" />
-      <h3 class="text-2xl font-semibold text-foreground">Normas básicas.</h3>
+      <h3 class="text-2xl font-semibold text-foreground">NORMAS BÁSICAS</h3>
     </div>
 
     <div class="grid gap-3 sm:grid-cols-2">

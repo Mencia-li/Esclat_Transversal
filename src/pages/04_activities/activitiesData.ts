@@ -34,7 +34,7 @@ export const workshopDays: ActivityDetailDay[] = [
         id: "viernes-produce",
         label: "Taller",
         labelClass: "bg-turquesa",
-        title: "Taller A - Produce tu estado de ánimo (x 2 sesiones)",
+        title: "Taller A - Produce tu estado de ánimo ",
         time: "16:15-16:55 h y 17:25-18:05 h",
         space: "Sala Factoría · Nave 1, 1ª planta",
         description:
@@ -46,13 +46,13 @@ export const workshopDays: ActivityDetailDay[] = [
         id: "viernes-adivina",
         label: "Taller",
         labelClass: "bg-turquesa",
-        title: "Taller B - Adivina quién eres (x 2 sesiones)",
+        title: "Taller B — Lo que mi canción favorita dice de mí",
         time: "16:25-17:05 h y 17:35-18:15 h",
         space: "Sala Visual Room · Nave 1, 1ª planta",
         description:
-          "Versión musical del juego clásico de los post-its: cada participante lleva pegado un arquetipo social - el raro, el popular, el artista underground, el que siempre encaja - y el resto del grupo le trata en consonancia sin decirle cuál es el suyo. Lo que empieza como un juego divertido acaba siendo una conversación muy honesta sobre cómo las etiquetas moldean el comportamiento. Muy participativo, muy revelador.",
+          "En círculo, cada participante pone 30 segundos de su canción favorita y el resto le devuelve qué le transmite esa canción sobre quien la ha puesto. Es como un espejo musical: descubres cómo te ven los demás a través de lo que escuchas. Funciona muy bien para gente que no se conoce.",
         meta: "40 min por sesión | Muy participativo",
-        tags: "etiquetas · presión social · identidad",
+        tags: "escucha · identidad · espejo",
       },
     ],
   },
@@ -67,7 +67,7 @@ export const workshopDays: ActivityDetailDay[] = [
         id: "sabado-pinta-caras",
         label: "Taller",
         labelClass: "bg-turquesa",
-        title: "Taller A - Pinta caras (x 2 sesiones)",
+        title: "Taller A - Pinta caras ",
         time: "16:15-16:55 h y 17:25-18:05 h",
         space: "Sala Factoría · Nave 1, 1ª planta",
         description:
@@ -79,7 +79,7 @@ export const workshopDays: ActivityDetailDay[] = [
         id: "sabado-portada",
         label: "Taller",
         labelClass: "bg-turquesa",
-        title: "Taller B - Crea tu portada de álbum (x 2 sesiones)",
+        title: "Taller B - Crea tu portada de álbum ",
         time: "16:25-17:05 h y 17:35-18:15 h",
         space: "Sala Visual Room · Nave 1, 1ª planta",
         description:
@@ -100,7 +100,7 @@ export const workshopDays: ActivityDetailDay[] = [
         id: "domingo-camiseta",
         label: "Taller",
         labelClass: "bg-turquesa",
-        title: "Taller A - Pinta tu camiseta (x 2 sesiones)",
+        title: "Taller A - Pinta tu camiseta ",
         time: "16:15-17:15 h y 17:15-18:15 h",
         space: "Sala Factoría · Nave 1, 1ª planta",
         description:
@@ -112,7 +112,7 @@ export const workshopDays: ActivityDetailDay[] = [
         id: "domingo-cuerpo",
         label: "Taller",
         labelClass: "bg-turquesa",
-        title: "Taller B - El cuerpo escucha (x 2 sesiones)",
+        title: "Taller B - El cuerpo escucha ",
         time: "16:15-17:05 h y 17:15-18:05 h",
         space: "Sala Visual Room · Nave 1, 1ª planta",
         description:
