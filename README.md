@@ -41,8 +41,16 @@ npm run build
 
 ## Estructura principal
 
-La estructura está pensada para que cada zona visible de la web tenga su carpeta y sus archivos principales.  
-Si necesitas cambiar un texto, dato, layout o ruta, esta es la referencia rápida:
+La estructura de `src/pages` sigue la posición real de las zonas en la web.  
+Las carpetas `01_`, `02_`, `03_`, etc. no son tipos técnicos: indican el orden visual de la página.
+
+Puntos importantes:
+
+- `02_program` contiene el bloque de programa, las páginas de cada día y el bloque real de entradas del header.
+- `04_experience` contiene los recuadros de experiencia: talleres, charlas, exposiciones y tienda.
+- `/tienda` sigue siendo una ruta propia, pero su página vive dentro de `04_experience/store` porque nace desde ese hueco visual.
+- `src/router/RouteShell.vue` solo existe para renderizar rutas hijas de `/programa`.
+- La carpeta `Portfolio_Mencia_Li/`, si aparece en local, es referencia externa y no forma parte de la app ESCLAT.
 
 ```
 .
@@ -51,13 +59,15 @@ Si necesitas cambiar un texto, dato, layout o ruta, esta es la referencia rápid
 │   ├── img/
 │   │   ├── artists/                     # Fotos del cartel y artistas
 │   │   ├── logos/                       # Logo ESCLAT, redes sociales, Spotify y partners
+│   │   ├── merch/                       # Imágenes de productos de tienda
 │   │   └── spaces/                      # Mapas e imágenes de Las Naves
 │   └── video/
 │       └── hero/                        # Vídeo de portada
 │
 ├── referencia/                          # Material de referencia visual y PDFs originales
 │   ├── images/                          # Capturas/maquetas usadas como guía visual
-│   └── pdfs/                            # Documentación base de contenido y artistas
+│   ├── pdfs/                            # Documentación base de contenido y artistas
+│   └── src/                             # Código del proyecto de referencia, no forma parte de ESCLAT
 │
 ├── src/
 │   ├── App.vue                          # Layout raíz: header, router-view, footer
@@ -80,42 +90,43 @@ Si necesitas cambiar un texto, dato, layout o ruta, esta es la referencia rápid
 │   │       └── textarea/                # Textareas
 │
 │   ├── composables/
+│   │   ├── useContactFields.ts          # Validación y actualización común de formularios de contacto
 │   │   └── useScrollReveal.ts           # Animaciones de aparición al hacer scroll
 │
 │   ├── data/
-│   │   └── festival.ts                  # Datos centrales: festival, días, artistas, horarios, FAQs y tickets
+│   │   └── festival.ts                  # Datos centrales: festival, días, artistas, horarios, actividades, FAQs y acceso
 │
 │   ├── lib/
 │   │   └── utils.ts                     # Helpers compartidos, como fusión de clases CSS
 │
 │   ├── router/
-│   │   └── index.ts                     # Rutas: home, festival, programa, artistas, actividades, entradas y tienda
+│   │   ├── index.ts                     # Rutas: home, festival, programa, artistas, talleres, charlas, exposiciones, entradas y tienda
+│   │   └── RouteShell.vue               # Envoltorio de rutas hijas, usado por /programa
 │
 │   └── pages/
+│       ├── Home.vue                     # Ensambla la home: inicio, programa, artistas, experiencia, FAQs y partners
+│       │
 │       ├── 01_home/
-│       │   ├── Home.vue                 # Orden de secciones de la home: inicio, programa, artistas, actividades, FAQs
 │       │   └── HeroSection.vue          # Portada inicial con vídeo y mensaje principal
 │       │
 │       ├── 02_program/
-│       │   ├── CalendarSection.vue      # Bloque de programa en la home: días, temas, artistas/cartel
-│       │   ├── ProgramDetail.vue        # Vista de detalle genérica de programa
-│       │   ├── _shared/
-│       │   │   └── DayProgramPage.vue   # Plantilla común para las páginas de cada día
-│       │   ├── days/
-│       │   │   ├── Day23Page.vue        # Programa del 23/10
-│       │   │   ├── Day24Page.vue        # Programa del 24/10
-│       │   │   └── Day25Page.vue        # Programa del 25/10
+│       │   ├── CalendarSection.vue      # Recuadros de programa en la home: Festival, 23/10, 24/10 y 25/10
+│       │   ├── DayProgramPage.vue       # Plantilla común para los días 23/10, 24/10 y 25/10
+│       │   ├── useDayProgram.ts         # Construye timeline, programa completo y conciertos por día
 │       │   └── festival/
 │       │       ├── FestivalPage.vue     # Página FESTIVAL: descripción, Las Naves, normas y mapas
 │       │       ├── FestivalMap.vue      # Render de mapas/planos del recinto
 │       │       └── festivalMaps.ts      # Datos de mapas, plantas y escenarios
 │       │
 │       ├── 03_artists/
-│       │   ├── ArtistsSection.vue       # Sección ARTISTAS/CARTEL de la home
-│       │   └── ArtistDetail.vue         # Ficha individual de cada artista
+│       │   ├── ArtistsSection.vue       # Recuadro ARTISTAS/CARTEL de la home
+│       │   ├── useArtistsSection.ts     # Estado, filtros, carrusel y playlists de artistas
+│       │   ├── ArtistDetail.vue         # Vista de ficha individual de cada artista
+│       │   ├── useArtistDetail.ts       # Datos derivados de la ficha individual
+│       │   └── useArtistImages.ts       # Ruta común de imágenes de artistas
 │       │
-│       ├── 04_activities/
-│       │   ├── ActivitiesSection.vue    # Sección EXPERIENCIA/HORARIOS de la home
+│       ├── 04_experience/
+│       │   ├── ActivitiesSection.vue    # Recuadro EXPERIENCIA/HORARIOS: talleres, charlas, exposiciones y tienda
 │       │   ├── activitiesData.ts        # Datos de talleres, charlas y exposiciones
 │       │   ├── _shared/
 │       │   │   └── ActivityDetailPage.vue # Plantilla común para detalle de actividades
@@ -123,27 +134,16 @@ Si necesitas cambiar un texto, dato, layout o ruta, esta es la referencia rápid
 │       │   │   └── CharlasPage.vue      # Página de charlas
 │       │   ├── exposiciones/
 │       │   │   └── ExposicionesPage.vue # Página de exposiciones
+│       │   ├── store/
+│       │   │   └── StorePage.vue        # Página TIENDA: productos, categorías, carrito e IVA
 │       │   └── talleres/
 │       │       └── TalleresPage.vue     # Página de talleres
 │       │
-│       ├── 05_entries/
-│       │   ├── EntriesPage.vue          # Página ENTRADAS completa
-│       │   ├── TicketsBlock.vue         # Recuadro de tipos de entradas/precios
-│       │   ├── AccessStepsBlock.vue     # Pasos de compra/acceso
-│       │   ├── SafetyRulesBlock.vue     # Normas y seguridad
-│       │   └── MerchBlock.vue           # Bloque que enlaza con tienda
-│       │
-│       ├── 06_faqs/
+│       ├── 05_faqs/
 │       │   └── FaqSection.vue           # FAQs en acordeón
 │       │
-│       ├── 07_store/
-│       │   └── StorePage.vue            # Página TIENDA: categorías, productos, carrito e IVA
-│       │
-│       ├── 08_partners/
-│       │   └── PartnersMarquee.vue      # Marquesina de colaboradores/patrocinadores
-│       │
-│       └── detail/
-│           └── RouteShell.vue           # Envoltorio para vistas hijas y transiciones
+│       └── 06_partners/
+│           └── PartnersMarquee.vue      # Marquesina de colaboradores/patrocinadores
 │
 ├── components.json                      # Configuración de componentes Shadcn/Reka
 ├── package.json                         # Scripts y dependencias
@@ -158,25 +158,42 @@ Si necesitas cambiar un texto, dato, layout o ruta, esta es la referencia rápid
 | --- | --- |
 | Navegación superior o menú móvil | `src/components/layout/SiteHeader.vue` |
 | Footer, contacto, redes o acceso | `src/components/layout/SiteFooter.vue` |
-| Orden de secciones de la home | `src/pages/01_home/Home.vue` |
+| Orden de secciones de la home | `src/pages/Home.vue` |
 | Hero inicial | `src/pages/01_home/HeroSection.vue` |
 | Programa, días, temas y horarios base | `src/data/festival.ts` |
-| Bloque de programa de la home | `src/pages/02_program/CalendarSection.vue` |
-| Páginas de cada día | `src/pages/02_program/days/` y `src/pages/02_program/_shared/DayProgramPage.vue` |
+| Recuadros Festival / 23/10 / 24/10 / 25/10 | `src/pages/02_program/CalendarSection.vue` |
+| Páginas de cada día y bloque `ENTRADAS` del header | `src/pages/02_program/DayProgramPage.vue`; el `dayId` se pasa desde `src/router/index.ts` |
 | Página Festival / Las Naves / normas | `src/pages/02_program/festival/FestivalPage.vue` |
 | Mapas del recinto | `src/pages/02_program/festival/FestivalMap.vue` y `festivalMaps.ts` |
-| Artistas y cartel de la home | `src/pages/03_artists/ArtistsSection.vue` |
-| Ficha de artista | `src/pages/03_artists/ArtistDetail.vue` |
+| Artistas y cartel de la home | `src/pages/03_artists/ArtistsSection.vue` y `src/pages/03_artists/useArtistsSection.ts` |
+| Ficha de artista | `src/pages/03_artists/ArtistDetail.vue` y `src/pages/03_artists/useArtistDetail.ts` |
 | Datos de artistas | `src/data/festival.ts` |
-| Actividades de la home | `src/pages/04_activities/ActivitiesSection.vue` |
-| Datos de talleres, charlas y exposiciones | `src/pages/04_activities/activitiesData.ts` |
-| Plantilla de detalle de actividades | `src/pages/04_activities/_shared/ActivityDetailPage.vue` |
-| Entradas, accesos, normas y merch | `src/pages/05_entries/` |
-| FAQs | `src/pages/06_faqs/FaqSection.vue` y datos en `src/data/festival.ts` |
-| Tienda, productos, categorías, carrito e IVA | `src/pages/07_store/StorePage.vue` |
-| Sponsors/partners | `src/pages/08_partners/PartnersMarquee.vue` |
+| Recuadros Talleres / Charlas / Exposiciones / Tienda | `src/pages/04_experience/ActivitiesSection.vue` |
+| Horarios visuales de actividades | `src/pages/04_experience/ActivitiesSection.vue` |
+| Datos de talleres, charlas y exposiciones | `src/pages/04_experience/activitiesData.ts` |
+| Plantilla de detalle de actividades | `src/pages/04_experience/_shared/ActivityDetailPage.vue` |
+| FAQs | `src/pages/05_faqs/FaqSection.vue` y datos en `src/data/festival.ts` |
+| Sponsors/partners | `src/pages/06_partners/PartnersMarquee.vue` |
+| Entradas del header | `src/pages/02_program/DayProgramPage.vue`, bloque `#entradas-dia` |
+| Tienda, productos, categorías, carrito e IVA | `src/pages/04_experience/store/StorePage.vue` |
 | Rutas de navegación | `src/router/index.ts` |
 | Colores, fuentes, responsive global y clases comunes | `src/style.css` |
+
+### Rutas principales
+
+| Ruta | Renderiza |
+| --- | --- |
+| `/` | `src/pages/Home.vue` |
+| `/festival` | `src/pages/02_program/festival/FestivalPage.vue` |
+| `/programa/dia-23` | `src/pages/02_program/DayProgramPage.vue` con `dayId: "23-10"` |
+| `/programa/dia-24` | `src/pages/02_program/DayProgramPage.vue` con `dayId: "24-10"` |
+| `/programa/dia-25` | `src/pages/02_program/DayProgramPage.vue` con `dayId: "25-10"` |
+| `/entradas` | Redirige a `/programa/dia-23#entradas-dia` |
+| `/artistas/:id` | `src/pages/03_artists/ArtistDetail.vue` |
+| `/talleres` | `src/pages/04_experience/talleres/TalleresPage.vue` |
+| `/charlas` | `src/pages/04_experience/charlas/CharlasPage.vue` |
+| `/exposiciones` | `src/pages/04_experience/exposiciones/ExposicionesPage.vue` |
+| `/tienda` | `src/pages/04_experience/store/StorePage.vue` |
 
 ## Assets
 

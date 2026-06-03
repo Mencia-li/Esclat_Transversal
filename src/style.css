@@ -326,23 +326,4 @@
     @apply flex items-center border-b border-border;
   }
 
-  .festival-section-entries {
-    position: relative;
-    @apply flex items-center border-b border-border;
-    min-height: calc(100svh - 5rem);
-  }
-
-  .entries-section-container {
-    @apply mx-auto flex w-full max-w-[92rem] flex-col px-6 py-8 md:py-10 lg:px-8;
-  }
-
-  @media (min-width: 1024px) {
-    .festival-section-entries {
-      align-items: stretch;
-    }
-
-    .entries-section-container {
-      @apply py-10;
-    }
-  }
 }

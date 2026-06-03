@@ -81,12 +81,12 @@ const accessModes = [
       </div>
 
       <div class="border-b border-foreground bg-background px-6 py-8 sm:px-8 lg:px-10">
-        <p class="max-w-4xl text-sm leading-relaxed text-foreground/90 sm:text-base">
+        <p class="w-full text-sm leading-relaxed text-foreground/90 sm:text-base">
           Un espacio industrial reconvertido en centro de creación que lleva años siendo escenario de
           proyectos culturales en Valencia. Grande sin ser frío, con patios exteriores, salas de distintos
           tamaños y una acústica que funciona igual para un concierto que para una conversación en círculo.
         </p>
-        <p class="mt-5 max-w-4xl text-sm leading-relaxed text-foreground/90 sm:text-base">
+        <p class="mt-5 w-full text-sm leading-relaxed text-foreground/90 sm:text-base">
           ESCLAT ocupa tres días sus naves, pasillos y patios.
         </p>
       </div>

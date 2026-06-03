@@ -430,13 +430,13 @@ export const artists: Artist[] = [
       "Una artista que tensiona los mandatos de género e imagen dentro de una industria altamente normativizada.",
   },
   {
-    id: "rigoberta-bandini",
-    name: "Rigoberta Bandini",
+    id: "olivia-dean",
+    name: "Olivia Dean",
     date: "24/10",
     time: "21:20",
     stage: "NAVE 3 - ESCENARIO PRINCIPAL",
     summary:
-      "Pop español con humor, crítica y cuerpo femenino como territorio político, perfecto para el tramo local del segundo día.",
+      "Soul pop británico sobre vulnerabilidad emocional, belleza auténtica y relaciones afectivas.",
   },
   {
     id: "raye",
@@ -512,7 +512,7 @@ export const artistConcertSlots: Record<string, ArtistConcertSlot> = {
   bts: { start: "23:15", end: "00:15" },
   "meghan-trainor": { start: "20:00", end: "20:25" },
   hwasa: { start: "20:40", end: "21:05" },
-  "rigoberta-bandini": { start: "21:20", end: "21:45" },
+  "olivia-dean": { start: "21:20", end: "21:45" },
   raye: { start: "22:00", end: "23:00" },
   gidle: { start: "23:15", end: "00:15" },
   "pablo-alboran": { start: "20:00", end: "20:25" },
@@ -831,39 +831,40 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     videoEmbedUrl: "https://www.youtube.com/embed/brZRDjFIFJs",
     videoTitle: "Hwasa - Maria",
   },
-  "rigoberta-bandini": {
-    artisticName: "Rigoberta Bandini",
-    realName: "Paula Ribó González",
-    origin: "Barcelona, España",
-    discipline: "Cantante, compositora, actriz y creadora escénica",
-    genre: "Pop español, electropop, indie pop y canción de autor",
-    themeAxis: "Cuerpo femenino, maternidad, estándares de belleza, humor, identidad y libertad",
+  "olivia-dean": {
+    artisticName: "Olivia Dean",
+    realName: "Olivia Lauryn Dean",
+    origin: "Londres, Reino Unido",
+    discipline: "Cantante y compositora",
+    genre: "Soul pop, neo-soul, R&B y pop alternativo",
+    themeAxis:
+      "Amor propio, vulnerabilidad emocional, identidad femenina, relaciones afectivas y belleza desde la autenticidad",
     shortBio:
-      "Rigoberta Bandini es el proyecto musical de Paula Ribó, artista barcelonesa que combina pop, ironía, teatralidad y una mirada crítica sobre la vida cotidiana. Su obra convierte temas aparentemente íntimos, como el cuerpo, el deseo, la maternidad, la soledad o la vergüenza, en canciones coreables que funcionan a la vez como celebración y como comentario social.",
+      "Olivia Dean es una cantante y compositora británica nacida en Londres. Su música combina soul, pop y R&B con una sensibilidad cálida, elegante y profundamente emocional. Formada en la BRIT School, comenzó a ganar reconocimiento con canciones como The Hardest Part, Dive y Slowly, y consolidó su identidad artística con su álbum Messy, nominado al Mercury Prize. Más adelante, su segundo álbum, The Art of Loving, reforzó su imagen como una de las voces más destacadas del soul pop contemporáneo, centrada en explorar el amor, la vulnerabilidad y las relaciones humanas desde una mirada íntima y honesta.",
     dayRelation:
-      "Rigoberta Bandini encaja en el segundo día de ESCLAT porque aborda el cuerpo femenino desde el humor, la contradicción y la reivindicación. Su música permite hablar de maternidad, presión estética, deseo, libertad y mirada social sin solemnidad, mostrando que la crítica a los estándares también puede ser festiva, incómoda y popular.",
+      "Olivia Dean encaja en el segundo día de ESCLAT porque propone una forma de belleza alejada de la perfección artificial y de los estándares rígidos. Su música habla de quererse, equivocarse, sanar, desear y sentirse insegura sin convertir esas emociones en debilidad. Frente a una cultura que muchas veces exige a las mujeres mostrarse siempre seguras, atractivas y emocionalmente controladas, Olivia Dean reivindica la vulnerabilidad como una forma de fuerza. Su estética suave, natural y elegante permite hablar del cuerpo y de la identidad femenina desde la calma, la sensibilidad y la autenticidad.",
     recommendedSongs: [
       {
-        title: "Ay mamá",
-        description: "El cuerpo que cambia, pare, envejece y se reivindica como algo digno y hermoso.",
+        title: "Dive",
+        description: "El deseo y la entrega afectiva desde una mirada luminosa, libre y segura.",
       },
       {
-        title: "Too Many Drugs",
-        description: "El escapismo como respuesta a la presión estética y emocional constante.",
+        title: "The Hardest Part",
+        description: "El crecimiento personal después de una ruptura y la aceptación de una nueva versión de una misma.",
       },
       {
-        title: "In Spain We Call It Soledad",
-        description: "La soledad de no encajar en ninguno de los moldes que se esperan de una mujer.",
+        title: "Slowly",
+        description: "La importancia de respetar los propios tiempos emocionales en el amor y en la vida.",
       },
       {
-        title: "Perra",
-        description: "El momento en que la celebración se convierte en rabia y la rabia en liberación.",
+        title: "Messy",
+        description: "La reivindicación de ser imperfecta, contradictoria y humana sin pedir perdón por ello.",
       },
     ],
     festivalReason:
-      "Rigoberta Bandini aporta al Día 2 una voz local capaz de unir crítica feminista, cultura pop y sentido del humor. Dentro de ESCLAT funciona como puente entre la reflexión sobre belleza e identidad y el público cercano, recordando que hablar del cuerpo también puede implicar reír, bailar, exagerar y devolver la mirada.",
-    spotifyUrl: "https://open.spotify.com/search/Rigoberta%20Bandini",
-    videoTitle: "Rigoberta Bandini - Ay mamá",
+      "Olivia Dean aporta al Día 2 una perspectiva íntima, emocional y contemporánea sobre los estándares de belleza. Su presencia permite ampliar el discurso del festival más allá de la crítica directa al cuerpo femenino, incorporando también la presión emocional que existe sobre las mujeres: ser deseables, estar bien, amar correctamente y mostrarse siempre completas. Dentro de ESCLAT, Olivia Dean funciona como una voz que defiende la belleza de lo imperfecto, lo sensible y lo real, conectando con una generación que busca referentes más honestos y menos idealizados.",
+    spotifyUrl: "https://open.spotify.com/search/Olivia%20Dean",
+    videoTitle: "Olivia Dean - Dive",
   },
   raye: {
     artisticName: "RAYE",

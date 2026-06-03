@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue"
 import { CirclePlus } from "lucide-vue-next"
 import { RouterLink } from "vue-router"
-import type { Artist } from "@/data/festival"
 import {
   Carousel,
   CarouselContent,
@@ -10,406 +8,29 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { artistDetails, artistsCarouselItems } from "@/data/festival"
+import { useArtistsSection } from "./useArtistsSection"
 
 const spotifyLogoUrl = "/img/logos/spotify_logo.png"
 
-const tabItems = [
-  { id: "artistas", label: "ARTISTAS" },
-  { id: "cartel", label: "CARTEL" },
-] as const
-
-type TabId = (typeof tabItems)[number]["id"]
-
-const artistFilterItems = [
-  { id: "todos", label: "Todos" },
-  { id: "23/10", label: "23/10" },
-  { id: "24/10", label: "24/10" },
-  { id: "25/10", label: "25/10" },
-] as const
-
-type ArtistFilter = (typeof artistFilterItems)[number]["id"]
-type ArtistDateFilter = Exclude<ArtistFilter, "todos">
-
-type StoredArtistsViewState = {
-  expanded: boolean
-  filter: ArtistFilter
-}
-
-const artistsViewStorageKey = "esclat-artists-view-state"
-const defaultArtistsViewState: StoredArtistsViewState = {
-  expanded: false,
-  filter: "todos",
-}
-
-function isArtistFilter(value: unknown): value is ArtistFilter {
-  return artistFilterItems.some((item) => item.id === value)
-}
-
-function readStoredArtistsViewState(): StoredArtistsViewState {
-  if (typeof window === "undefined") {
-    return defaultArtistsViewState
-  }
-
-  try {
-    const rawState = window.sessionStorage.getItem(artistsViewStorageKey)
-
-    if (!rawState) {
-      return defaultArtistsViewState
-    }
-
-    const parsedState = JSON.parse(rawState) as Partial<StoredArtistsViewState> | null
-
-    if (!parsedState || typeof parsedState !== "object") {
-      return defaultArtistsViewState
-    }
-
-    return {
-      expanded: parsedState.expanded === true,
-      filter: isArtistFilter(parsedState.filter) ? parsedState.filter : "todos",
-    }
-  } catch {
-    return defaultArtistsViewState
-  }
-}
-
-function writeStoredArtistsViewState(state: StoredArtistsViewState) {
-  if (typeof window === "undefined") {
-    return
-  }
-
-  try {
-    window.sessionStorage.setItem(artistsViewStorageKey, JSON.stringify(state))
-  } catch {
-    // If storage is blocked, keep the in-memory Vue state working.
-  }
-}
-
-const storedArtistsViewState = readStoredArtistsViewState()
-
-const activeTab = ref<TabId>("artistas")
-
-const showExpandedArtists = ref(storedArtistsViewState.expanded)
-const expandedActiveFilter = ref<ArtistFilter>(storedArtistsViewState.filter)
-const visibleCount = ref<6 | 8 | 10>(6)
-const carouselRepeatCount = 3
-const sourceColumnCount = Math.ceil(artistsCarouselItems.length / 2)
-
-let mediumQuery: MediaQueryList | undefined
-let largeQuery: MediaQueryList | undefined
-let extraLargeQuery: MediaQueryList | undefined
-
-const carouselOptions = {
-  align: "start",
-  loop: true,
-  slidesToScroll: 1,
-  startIndex: sourceColumnCount,
-} as const
-
-type CarouselArtist = Artist & {
-  image?: string
-}
-
-type ArtistColumn = {
-  key: string
-  artists: CarouselArtist[]
-}
-
-type PlaylistSong = {
-  artistName: string
-  title: string
-  description: string
-  duration: string
-}
-
-type PlaylistCoverImage = {
-  src: string
-  alt: string
-}
-
-type PlaylistTheme = {
-  title: string
-  subtitle: string
-  color: string
-  listColor: string
-  coverColor: string
-  textColor: string
-  mutedTextColor: string
-  subtleTextColor: string
-  badgeBackground: string
-  badgeTextColor: string
-  borderColor: string
-}
-
-type PlaylistColumn = PlaylistTheme & {
-  date: ArtistDateFilter
-  coverImages: PlaylistCoverImage[]
-  songs: PlaylistSong[]
-}
-
-const playlistThemes: Record<ArtistDateFilter, PlaylistTheme> = {
-  "23/10": {
-    title: "DAY 23",
-    subtitle: "Amor propio y salud mental",
-    color: "#000000",
-    listColor: "#111111",
-    coverColor: "#1f1f1f",
-    textColor: "#ffffff",
-    mutedTextColor: "rgb(255 255 255 / 72%)",
-    subtleTextColor: "rgb(255 255 255 / 45%)",
-    badgeBackground: "rgb(255 255 255 / 14%)",
-    badgeTextColor: "#ffffff",
-    borderColor: "rgb(255 255 255 / 18%)",
-  },
-  "24/10": {
-    title: "DAY 24",
-    subtitle: "Cuerpo, identidad y belleza",
-    color: "var(--turquesa)",
-    listColor: "color-mix(in oklch, var(--turquesa) 88%, black)",
-    coverColor: "color-mix(in oklch, var(--turquesa) 78%, white)",
-    textColor: "var(--foreground)",
-    mutedTextColor: "color-mix(in oklch, var(--foreground) 72%, transparent)",
-    subtleTextColor: "color-mix(in oklch, var(--foreground) 48%, transparent)",
-    badgeBackground: "rgb(0 0 0 / 14%)",
-    badgeTextColor: "var(--foreground)",
-    borderColor: "rgb(0 0 0 / 16%)",
-  },
-  "25/10": {
-    title: "DAY 25",
-    subtitle: "Fama, industria e imagen pública",
-    color: "#ffffff",
-    listColor: "#f2f2f2",
-    coverColor: "color-mix(in oklch, var(--background) 90%, black)",
-    textColor: "var(--foreground)",
-    mutedTextColor: "color-mix(in oklch, var(--foreground) 72%, transparent)",
-    subtleTextColor: "color-mix(in oklch, var(--foreground) 48%, transparent)",
-    badgeBackground: "rgb(0 0 0 / 12%)",
-    badgeTextColor: "var(--foreground)",
-    borderColor: "rgb(0 0 0 / 18%)",
-  },
-}
-
-const playlistArtistOrder: Record<ArtistDateFilter, string[]> = {
-  "23/10": ["aurora", "laufey", "amaia", "olivia-rodrigo", "bts"],
-  "24/10": ["meghan-trainor", "hwasa", "rigoberta-bandini", "raye", "gidle"],
-  "25/10": ["pablo-alboran", "benson-boone", "the-marias", "iu", "lana-del-rey"],
-}
-
-const visibleColumnCount = computed(() => Math.max(1, Math.floor(visibleCount.value / 2)))
-const columnBasisClass = computed(() => {
-  switch (visibleCount.value) {
-    case 10:
-      return "basis-[calc((100%-2.25rem)/5)]"
-    case 8:
-      return "basis-[calc((100%-1.75rem)/4)]"
-    case 6:
-    default:
-      return "basis-[calc((100%-1rem)/3)]"
-  }
-})
-
-const carouselItems = computed<CarouselArtist[]>(() => {
-  return artistsCarouselItems.map((artist, index) => ({
-    ...artist,
-    image: `/img/artists/artist${index + 1}.jpg`,
-  }))
-})
-
-const sourceArtistColumns = computed<CarouselArtist[][]>(() => {
-  const columns: CarouselArtist[][] = []
-
-  for (let index = 0; index < carouselItems.value.length; index += 2) {
-    columns.push(carouselItems.value.slice(index, index + 2))
-  }
-
-  return columns
-})
-
-const artistColumns = computed<ArtistColumn[]>(() => {
-  return Array.from({ length: carouselRepeatCount }, (_, repeatIndex) =>
-    sourceArtistColumns.value.map((artists, columnIndex) => ({
-      key: `${repeatIndex}-${columnIndex}-${artists.map((artist) => artist.id).join("-")}`,
-      artists,
-    })),
-  ).flat()
-})
-
-const expandedArtists = computed(() => {
-  if (expandedActiveFilter.value === "todos") {
-    return carouselItems.value
-  }
-
-  return orderedArtistsForDate(expandedActiveFilter.value)
-})
-
-const expandedArtistsGridClass = computed(() => {
-  return expandedActiveFilter.value === "todos"
-    ? "artists-expanded-grid--all"
-    : "artists-expanded-grid--day"
-})
-const showExpandedArtistName = computed(() => expandedActiveFilter.value !== "todos")
-
-const playlistColumns = computed<PlaylistColumn[]>(() => {
-  const dates: ArtistDateFilter[] = expandedActiveFilter.value === "todos"
-    ? ["23/10", "24/10", "25/10"]
-    : [expandedActiveFilter.value]
-
-  return dates.map((date) => ({
-    date,
-    ...playlistThemes[date],
-    coverImages: coverImagesForDate(date),
-    songs: songsForDate(date),
-  }))
-})
-
-function coverImagesForDate(date: ArtistDateFilter): PlaylistCoverImage[] {
-  return orderedArtistsForDate(date)
-    .filter((artist) => artist.image)
-    .slice(0, 4)
-    .map((artist) => ({
-      src: artist.image as string,
-      alt: artist.name,
-    }))
-}
-
-function orderedArtistsForDate(date: ArtistDateFilter): CarouselArtist[] {
-  const artistsForDate = carouselItems.value.filter((artist) => artist.date === date && !artist.isPlaceholder)
-  const orderedArtists = playlistArtistOrder[date]
-    .map((artistId) => artistsForDate.find((artist) => artist.id === artistId))
-    .filter((artist): artist is CarouselArtist => Boolean(artist))
-
-  const remainingArtists = artistsForDate.filter(
-    (artist) => !playlistArtistOrder[date].includes(artist.id),
-  )
-
-  return [...orderedArtists, ...remainingArtists]
-}
-
-function songsForDate(date: ArtistDateFilter): PlaylistSong[] {
-  const songs: PlaylistSong[] = []
-
-  orderedArtistsForDate(date)
-    .forEach((artist) => {
-      const detail = artistDetails[artist.id]
-
-      if (!detail) {
-        return
-      }
-
-      detail.recommendedSongs.forEach((song) => {
-        songs.push({
-          artistName: artist.name,
-          title: song.title,
-          description: song.description,
-          duration: playlistDuration(song.title, songs.length),
-        })
-      })
-    })
-
-  return songs
-}
-
-function playlistDuration(title: string, index: number) {
-  const firstChar = title.charCodeAt(0) || 0
-  const minutes = 2 + ((firstChar + index) % 3)
-  const seconds = 12 + ((title.length * 7 + index * 11) % 48)
-
-  return `${minutes}:${String(seconds).padStart(2, "0")}`
-}
-
-async function scrollToArtistsStart() {
-  await nextTick()
-
-  document.querySelector("#artistas")?.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  })
-}
-
-async function showExpandedArtistsView() {
-  showExpandedArtists.value = true
-  expandedActiveFilter.value = "todos"
-  await scrollToArtistsStart()
-}
-
-async function hideExpandedArtistsView() {
-  showExpandedArtists.value = false
-  await scrollToArtistsStart()
-}
-
-function updateLayout() {
-  if (extraLargeQuery?.matches) {
-    visibleCount.value = 10
-    return
-  }
-
-  if (largeQuery?.matches) {
-    visibleCount.value = 8
-    return
-  }
-
-  if (mediumQuery?.matches) {
-    visibleCount.value = 6
-    return
-  }
-
-  // small screens: show 3 columns (1 carousel item = 1 column with 2 rows)
-  visibleCount.value = 6
-}
-
-function artistOriginClass(columnIndex: number, rowIndex: number) {
-  const visibleLastColumn = visibleColumnCount.value - 1
-  const visibleColumn = ((columnIndex % visibleColumnCount.value) + visibleColumnCount.value) % visibleColumnCount.value
-  const isTopRow = rowIndex === 0
-  const isFirstColumn = visibleColumn === 0
-  const isLastColumn = visibleColumn === visibleLastColumn
-
-  if (isTopRow && isFirstColumn) {
-    return "origin-top-left"
-  }
-
-  if (isTopRow && isLastColumn) {
-    return "origin-top-right"
-  }
-
-  if (!isTopRow && isFirstColumn) {
-    return "origin-bottom-left"
-  }
-
-  if (!isTopRow && isLastColumn) {
-    return "origin-bottom-right"
-  }
-
-  return isTopRow ? "origin-top" : "origin-bottom"
-}
-
-function artistDetailRoute(artist: CarouselArtist) {
-  if (artist.isPlaceholder || !artistDetails[artist.id]) {
-    return undefined
-  }
-
-  return { name: "artist-detail", params: { id: artist.id } }
-}
-
-watch([showExpandedArtists, expandedActiveFilter], ([expanded, filter]) => {
-  writeStoredArtistsViewState({ expanded, filter })
-})
-
-onMounted(() => {
-  mediumQuery = window.matchMedia("(min-width: 640px)")
-  largeQuery = window.matchMedia("(min-width: 1024px)")
-  extraLargeQuery = window.matchMedia("(min-width: 1280px)")
-  updateLayout()
-  mediumQuery.addEventListener("change", updateLayout)
-  largeQuery.addEventListener("change", updateLayout)
-  extraLargeQuery.addEventListener("change", updateLayout)
-})
-
-onBeforeUnmount(() => {
-  mediumQuery?.removeEventListener("change", updateLayout)
-  largeQuery?.removeEventListener("change", updateLayout)
-  extraLargeQuery?.removeEventListener("change", updateLayout)
-})
+const {
+  activeTab,
+  artistColumns,
+  artistDetailRoute,
+  artistFilterItems,
+  artistOriginClass,
+  carouselOptions,
+  columnBasisClass,
+  expandedActiveFilter,
+  expandedArtists,
+  expandedArtistsGridClass,
+  hideExpandedArtistsView,
+  playlistColumns,
+  showExpandedArtistName,
+  showExpandedArtists,
+  showExpandedArtistsView,
+  sourceColumnCount,
+  tabItems,
+} = useArtistsSection()
 </script>
 
 <template>
@@ -592,7 +213,7 @@ onBeforeUnmount(() => {
               <article
                 v-for="playlist in playlistColumns"
                 :key="playlist.date"
-                class="overflow-hidden rounded-lg border border-[var(--playlist-border-color)] bg-(--playlist-list-color) text-[var(--playlist-text-color)] shadow-[0_1rem_2.5rem_rgba(0,0,0,0.16)]"
+                class="overflow-hidden rounded-lg border border-(--playlist-border-color) bg-(--playlist-list-color) text-(--playlist-text-color) shadow-[0_1rem_2.5rem_rgba(0,0,0,0.16)]"
                 :style="{
                   '--playlist-color': playlist.color,
                   '--playlist-list-color': playlist.listColor,
@@ -613,7 +234,7 @@ onBeforeUnmount(() => {
                     loading="lazy"
                   />
 
-                  <div class="grid size-24 grid-cols-2 overflow-hidden rounded-md border border-[var(--playlist-border-color)] bg-(--playlist-cover-color) sm:size-28 xl:size-[8.5rem]">
+                  <div class="grid size-24 grid-cols-2 overflow-hidden rounded-md border border-(--playlist-border-color) bg-(--playlist-cover-color) sm:size-28 xl:size-34">
                     <img
                       v-for="cover in playlist.coverImages"
                       :key="cover.src"
@@ -626,27 +247,27 @@ onBeforeUnmount(() => {
 
                   <div class="flex min-w-0 flex-col justify-between pr-10">
                     <div>
-                      <h4 class="max-w-full text-3xl font-bold uppercase leading-none text-[var(--playlist-text-color)] sm:text-4xl lg:text-3xl xl:text-4xl">
+                      <h4 class="max-w-full text-3xl font-bold uppercase leading-none text-(--playlist-text-color) sm:text-4xl lg:text-3xl xl:text-4xl">
                         {{ playlist.title }}
                       </h4>
 
                       <div class="mt-2 flex flex-wrap items-center gap-2">
-                        <span class="rounded-sm bg-[var(--playlist-badge-bg)] px-2 py-1 text-xs font-bold uppercase leading-none text-[var(--playlist-badge-text)]">
+                        <span class="rounded-sm bg-(--playlist-badge-bg) px-2 py-1 text-xs font-bold uppercase leading-none text-(--playlist-badge-text)">
                           Muestra
                         </span>
-                        <p class="text-lg font-semibold leading-none text-[var(--playlist-muted-color)]">
+                        <p class="text-lg font-semibold leading-none text-(--playlist-muted-color)">
                           ESCLAT Festival
                         </p>
                       </div>
 
-                      <p class="mt-2 text-sm font-medium leading-tight text-[var(--playlist-muted-color)]">
+                      <p class="mt-2 text-sm font-medium leading-tight text-(--playlist-muted-color)">
                         {{ playlist.subtitle }}
                       </p>
 
                       <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
                         <button
                           type="button"
-                          class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--playlist-text-color)] transition-opacity hover:opacity-75"
+                          class="inline-flex items-center gap-2 text-sm font-semibold text-(--playlist-text-color) transition-opacity hover:opacity-75"
                         >
                           <CirclePlus class="size-5" aria-hidden="true" />
                           Guardar en Spotify
@@ -658,7 +279,7 @@ onBeforeUnmount(() => {
 
                 <ol
                   :class="[
-                    'playlist-song-list m-0 list-none bg-[var(--playlist-list-color)] px-4 py-3',
+                    'playlist-song-list m-0 list-none bg-(--playlist-list-color) px-4 py-3',
                     expandedActiveFilter === 'todos'
                       ? 'max-h-56 overflow-y-auto'
                       : 'playlist-song-list--day overflow-y-auto',
@@ -670,12 +291,12 @@ onBeforeUnmount(() => {
                     class="grid grid-cols-[1.75rem_minmax(0,1fr)_3.25rem] items-center gap-3 py-2.5"
                     :title="song.description"
                   >
-                    <span class="text-sm font-semibold text-[var(--playlist-subtle-color)]">{{ songIndex + 1 }}</span>
+                    <span class="text-sm font-semibold text-(--playlist-subtle-color)">{{ songIndex + 1 }}</span>
                     <span class="min-w-0">
-                      <span class="block truncate text-sm font-bold uppercase leading-tight text-[var(--playlist-text-color)]">{{ song.title }}</span>
-                      <span class="mt-1 block truncate text-xs font-semibold leading-tight text-[var(--playlist-muted-color)]">{{ song.artistName }}</span>
+                      <span class="block truncate text-sm font-bold uppercase leading-tight text-(--playlist-text-color)">{{ song.title }}</span>
+                      <span class="mt-1 block truncate text-xs font-semibold leading-tight text-(--playlist-muted-color)">{{ song.artistName }}</span>
                     </span>
-                    <span class="text-right text-sm font-semibold text-[var(--playlist-muted-color)]">{{ song.duration }}</span>
+                    <span class="text-right text-sm font-semibold text-(--playlist-muted-color)">{{ song.duration }}</span>
                   </li>
                 </ol>
               </article>

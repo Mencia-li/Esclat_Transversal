@@ -29,11 +29,7 @@ function dayBorderClass(index: number) {
 }
 
 function dayRoute(dayId: string) {
-  if (dayRouteNames[dayId]) {
-    return { name: dayRouteNames[dayId] }
-  }
-
-  return { name: "program-detail", params: { dia: dayId } }
+  return { name: dayRouteNames[dayId] ?? "program-dia-23" }
 }
 </script>
 
@@ -69,8 +65,8 @@ function dayRoute(dayId: string) {
         ]"
       >
         <div class="space-y-2">
-          <p class="max-w-xs break-words text-xs font-medium leading-snug sm:text-sm lg:text-base">{{ day.theme }}.</p>
-          <p class="max-w-xs break-words text-[0.72rem] leading-snug opacity-90 sm:text-xs lg:text-sm">{{ day.summary }}</p>
+          <p class="w-full wrap-break-word text-xs font-medium leading-snug sm:text-sm lg:text-base">{{ day.theme }}.</p>
+          <p class="w-full wrap-break-word text-[0.72rem] leading-snug opacity-90 sm:text-xs lg:text-sm">{{ day.summary }}</p>
         </div>
 
         <p class="self-end text-lg leading-none sm:text-xl lg:text-2xl">{{ day.date }}</p>

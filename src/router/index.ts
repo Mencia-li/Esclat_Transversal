@@ -1,16 +1,12 @@
-import Home from "@/pages/01_home/Home.vue"
-import RouteShell from "@/pages/detail/RouteShell.vue"
+import Home from "@/pages/Home.vue"
+import RouteShell from "@/router/RouteShell.vue"
 import ArtistDetail from "@/pages/03_artists/ArtistDetail.vue"
-import ProgramDetail from "@/pages/02_program/ProgramDetail.vue"
-import Day23Page from "@/pages/02_program/days/Day23Page.vue"
-import Day24Page from "@/pages/02_program/days/Day24Page.vue"
-import Day25Page from "@/pages/02_program/days/Day25Page.vue"
+import DayProgramPage from "@/pages/02_program/DayProgramPage.vue"
 import FestivalPage from "@/pages/02_program/festival/FestivalPage.vue"
-import CharlasPage from "@/pages/04_activities/charlas/CharlasPage.vue"
-import ExposicionesPage from "@/pages/04_activities/exposiciones/ExposicionesPage.vue"
-import TalleresPage from "@/pages/04_activities/talleres/TalleresPage.vue"
-import EntriesPage from "@/pages/05_entries/EntriesPage.vue"
-import StorePage from "@/pages/07_store/StorePage.vue"
+import CharlasPage from "@/pages/04_experience/charlas/CharlasPage.vue"
+import ExposicionesPage from "@/pages/04_experience/exposiciones/ExposicionesPage.vue"
+import TalleresPage from "@/pages/04_experience/talleres/TalleresPage.vue"
+import StorePage from "@/pages/04_experience/store/StorePage.vue"
 import { createRouter, createWebHashHistory } from "vue-router"
 
 // Hash history mantiene URLs tipo /#/programa, practicas para hosting estatico.
@@ -52,24 +48,38 @@ export const router = createRouter({
           redirect: { name: "program-dia-23" },
         },
         {
+          path: "23-10",
+          redirect: { name: "program-dia-23" },
+        },
+        {
+          path: "24-10",
+          redirect: { name: "program-dia-24" },
+        },
+        {
+          path: "25-10",
+          redirect: { name: "program-dia-25" },
+        },
+        {
           path: "dia-23",
           name: "program-dia-23",
-          component: Day23Page,
+          component: DayProgramPage,
+          props: { dayId: "23-10" },
         },
         {
           path: "dia-24",
           name: "program-dia-24",
-          component: Day24Page,
+          component: DayProgramPage,
+          props: { dayId: "24-10" },
         },
         {
           path: "dia-25",
           name: "program-dia-25",
-          component: Day25Page,
+          component: DayProgramPage,
+          props: { dayId: "25-10" },
         },
         {
           path: ":dia",
-          name: "program-detail",
-          component: ProgramDetail,
+          redirect: { path: "/", hash: "#programa" },
         },
       ],
     },
@@ -100,8 +110,7 @@ export const router = createRouter({
     },
     {
       path: "/entradas",
-      name: "entries",
-      component: EntriesPage,
+      redirect: { name: "program-dia-23", hash: "#entradas-dia" },
     },
     {
       path: "/tienda",

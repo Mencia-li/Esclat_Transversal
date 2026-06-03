@@ -1,41 +1,10 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue"
-import { RouterLink, useRoute } from "vue-router"
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue"
+import { RouterLink } from "vue-router"
 import { ArrowLeft, CirclePlay } from "lucide-vue-next"
-import { artistDetails, artists } from "@/data/festival"
+import { useArtistDetail } from "./useArtistDetail"
 
-const route = useRoute()
-
-const artistId = computed(() => String(route.params.id ?? ""))
-const artist = computed(() => artists.find((item) => item.id === artistId.value))
-const artistIndex = computed(() => artists.findIndex((item) => item.id === artistId.value))
-const detail = computed(() => artistDetails[artistId.value])
-
-const artistImage = computed(() => {
-  if (artistIndex.value < 0) {
-    return ""
-  }
-
-  return `/img/artists/artist${artistIndex.value + 1}.jpg`
-})
-
-const displayName = computed(() => detail.value?.artisticName ?? artist.value?.name ?? "Artista")
-const videoTitle = computed(() => detail.value?.videoTitle ?? `${displayName.value} en ESCLAT`)
-
-const factRows = computed(() => {
-  if (!detail.value) {
-    return []
-  }
-
-  return [
-    { label: "Nombre artístico", value: detail.value.artisticName },
-    { label: detail.value.realNameLabel ?? "Nombre real", value: detail.value.realName },
-    { label: "Procedencia", value: detail.value.origin },
-    { label: "Disciplina", value: detail.value.discipline },
-    { label: "Género musical", value: detail.value.genre },
-    { label: "Eje temático en ESCLAT", value: detail.value.themeAxis },
-  ]
-})
+const { artist, artistId, artistImage, detail, displayName, factRows, videoTitle } = useArtistDetail()
 
 const songsScrollRef = ref<HTMLOListElement | null>(null)
 const songsThumbStyle = ref<Record<string, string>>({})
@@ -165,7 +134,7 @@ watch(
     <div class="border-b border-foreground bg-blue_ice px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <article
         v-if="artist && detail"
-        class="mx-auto w-full max-w-[96rem] border border-foreground bg-background"
+        class="mx-auto w-full max-w-384 border border-foreground bg-background"
       >
         <div class="grid gap-6 p-4 sm:p-6 lg:grid-cols-[minmax(16rem,22rem)_1fr] lg:gap-8 lg:p-8">
           <aside class="space-y-3">
@@ -209,7 +178,7 @@ watch(
               </span>
             </div>
 
-            <p class="mt-6 max-w-4xl text-lg leading-snug text-muted-foreground">
+            <p class="mt-6 w-full text-lg leading-snug text-muted-foreground">
               {{ artist.summary }}
             </p>
 
@@ -231,21 +200,21 @@ watch(
             <div class="space-y-8">
               <section>
                 <h3 class="text-2xl font-normal uppercase leading-none text-foreground sm:text-3xl">Biografía:</h3>
-                <p class="mt-4 max-w-5xl text-base leading-relaxed text-foreground sm:text-lg">
+                <p class="mt-4 w-full text-base leading-relaxed text-foreground sm:text-lg">
                   {{ detail.shortBio }}
                 </p>
               </section>
 
               <section>
                 <h3 class="text-2xl font-normal uppercase leading-none text-foreground sm:text-3xl">Relación con el concepto del día:</h3>
-                <p class="mt-4 max-w-5xl text-base leading-relaxed text-foreground sm:text-lg">
+                <p class="mt-4 w-full text-base leading-relaxed text-foreground sm:text-lg">
                   {{ detail.dayRelation }}
                 </p>
               </section>
 
               <section>
                 <h3 class="text-2xl font-normal uppercase leading-none text-foreground sm:text-3xl">Por qué forma parte de ESCLAT:</h3>
-                <p class="mt-4 max-w-5xl text-base leading-relaxed text-foreground sm:text-lg">
+                <p class="mt-4 w-full text-base leading-relaxed text-foreground sm:text-lg">
                   {{ detail.festivalReason }}
                 </p>
               </section>
@@ -259,7 +228,7 @@ watch(
               <div class="relative mt-5">
                 <ol
                   ref="songsScrollRef"
-                  class="artist-songs-scroll max-h-[28rem] space-y-4 overflow-y-auto pr-7 lg:max-h-[32rem]"
+                  class="artist-songs-scroll max-h-112 space-y-4 overflow-y-auto pr-7 lg:max-h-128"
                   @scroll="updateSongsScrollbar"
                 >
                   <li v-for="song in detail.recommendedSongs" :key="song.title" class="border-b border-foreground pb-4 last:border-b-0">
