@@ -744,7 +744,8 @@ function prepareOrder() {
         <section data-reveal class="mb-5 border border-foreground bg-blue_ice">
           <div class="grid gap-5 p-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)_auto] md:items-center lg:p-5">
             <h2 class="text-2xl font-normal leading-tight text-foreground lg:text-3xl">
-              Diseñado para durar. Hecho con materiales reciclados.
+              <span class="block">Diseñado para durar.</span>
+              <span class="block">Hecho con materiales reciclados.</span>
             </h2>
 
             <p class="w-full text-sm font-semibold leading-relaxed text-foreground/90 lg:text-base">

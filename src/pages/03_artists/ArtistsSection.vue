@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { CirclePlus } from "lucide-vue-next"
+import { ref } from "vue"
+import { ArrowLeft, ArrowRight, CirclePlus } from "lucide-vue-next"
 import { RouterLink } from "vue-router"
 import {
   Carousel,
@@ -8,9 +9,48 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import type { CarouselApi } from "@/components/ui/carousel"
 import { useArtistsSection } from "./useArtistsSection"
 
 const spotifyLogoUrl = "/img/logos/spotify_logo.png"
+const posterCarouselApi = ref<CarouselApi>()
+const activePosterIndex = ref(0)
+const posterCarouselOptions = {
+  align: "center",
+  loop: true,
+} as const
+const posterImages = [
+  {
+    src: "/img/artists/carteles/cartel-v1.jpg",
+    alt: "Cartel del festival Esclat, version 1",
+    label: "Cartel 1",
+  },
+  {
+    src: "/img/artists/carteles/cartel-v2.jpg",
+    alt: "Cartel del festival Esclat, version 2",
+    label: "Cartel 2",
+  },
+  {
+    src: "/img/artists/carteles/cartel-v3.jpg",
+    alt: "Cartel del festival Esclat, version 3",
+    label: "Cartel 3",
+  },
+]
+
+function updatePosterIndex(api = posterCarouselApi.value) {
+  activePosterIndex.value = api?.selectedScrollSnap() ?? 0
+}
+
+function setPosterCarouselApi(api: CarouselApi) {
+  posterCarouselApi.value = api
+  updatePosterIndex(api)
+  api?.on("select", updatePosterIndex)
+  api?.on("reInit", updatePosterIndex)
+}
+
+function scrollToPoster(index: number) {
+  posterCarouselApi.value?.scrollTo(index)
+}
 
 const {
   activeTab,
@@ -325,15 +365,68 @@ const {
       style="--reveal-delay: 120ms"
       class="px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10"
     >
-      <div class="mx-auto flex w-full max-w-6xl justify-center">
-        <div class="w-full max-w-152 overflow-hidden border border-foreground bg-[#F4F4F4] shadow-[0_1rem_2.5rem_rgba(0,0,0,0.08)] sm:max-w-2xl lg:max-w-184">
-          <img
-            src="/img/artists/cartel.png"
-            alt="Cartel de artistas del festival Esclat"
-            class="block h-auto w-full"
-            loading="lazy"
+      <Carousel
+        :opts="posterCarouselOptions"
+        class="poster-carousel relative mx-auto w-full max-w-160 px-14 sm:max-w-180 sm:px-26 lg:max-w-208 lg:px-44"
+        aria-label="Carrusel de carteles del festival"
+        @init-api="setPosterCarouselApi"
+      >
+        <CarouselContent class="ml-0">
+          <CarouselItem
+            v-for="poster in posterImages"
+            :key="poster.src"
+            class="pl-0"
+          >
+            <div class="overflow-hidden border border-foreground bg-[#F4F4F4] shadow-[0_1rem_2.5rem_rgba(0,0,0,0.08)]">
+              <img
+                :src="poster.src"
+                :alt="poster.alt"
+                class="block h-auto w-full"
+                loading="lazy"
+              />
+            </div>
+          </CarouselItem>
+        </CarouselContent>
+
+        <CarouselPrevious
+          variant="ghost"
+          size="icon-lg"
+          class="group left-0 size-11 rounded-none border border-foreground bg-background text-foreground shadow-none transition-colors hover:bg-foreground hover:text-background disabled:pointer-events-none disabled:opacity-40 sm:size-12"
+        >
+          <ArrowLeft
+            class="size-6 stroke-[1.4] transition-transform duration-200 group-hover:-translate-x-1 sm:size-7"
+            aria-hidden="true"
           />
-        </div>
+          <span class="sr-only">Cartel anterior</span>
+        </CarouselPrevious>
+        <CarouselNext
+          variant="ghost"
+          size="icon-lg"
+          class="group right-0 size-11 rounded-none border border-foreground bg-background text-foreground shadow-none transition-colors hover:bg-foreground hover:text-background disabled:pointer-events-none disabled:opacity-40 sm:size-12"
+        >
+          <ArrowRight
+            class="size-6 stroke-[1.4] transition-transform duration-200 group-hover:translate-x-1 sm:size-7"
+            aria-hidden="true"
+          />
+          <span class="sr-only">Cartel siguiente</span>
+        </CarouselNext>
+      </Carousel>
+
+      <div class="mt-4 flex justify-center gap-2" aria-label="Seleccionar cartel">
+        <button
+          v-for="(poster, index) in posterImages"
+          :key="poster.label"
+          type="button"
+          :aria-label="`Mostrar ${poster.label}`"
+          :aria-current="activePosterIndex === index ? 'true' : undefined"
+          :class="[
+            'size-3 border border-foreground transition-colors focus-visible:ring-2 focus-visible:ring-turquesa',
+            activePosterIndex === index ? 'bg-foreground' : 'bg-grey hover:bg-blue_ice',
+          ]"
+          @click="scrollToPoster(index)"
+        >
+          <span class="sr-only">{{ poster.label }}</span>
+        </button>
       </div>
     </div>
   </section>

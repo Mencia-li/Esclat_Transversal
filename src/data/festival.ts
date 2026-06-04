@@ -864,7 +864,8 @@ export const artistDetails: Partial<Record<string, ArtistDetail>> = {
     festivalReason:
       "Olivia Dean aporta al Día 2 una perspectiva íntima, emocional y contemporánea sobre los estándares de belleza. Su presencia permite ampliar el discurso del festival más allá de la crítica directa al cuerpo femenino, incorporando también la presión emocional que existe sobre las mujeres: ser deseables, estar bien, amar correctamente y mostrarse siempre completas. Dentro de ESCLAT, Olivia Dean funciona como una voz que defiende la belleza de lo imperfecto, lo sensible y lo real, conectando con una generación que busca referentes más honestos y menos idealizados.",
     spotifyUrl: "https://open.spotify.com/search/Olivia%20Dean",
-    videoTitle: "Olivia Dean - Dive",
+    videoEmbedUrl: "https://www.youtube.com/embed/3sur4BmjQt8",
+    videoTitle: "Olivia Dean - So Easy (To Fall In Love)",
   },
   raye: {
     artisticName: "RAYE",
