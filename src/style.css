@@ -295,7 +295,7 @@
   }
 
   .section-container {
-    @apply mx-auto w-full max-w-[92rem] px-6 py-12 md:py-14 lg:px-8;
+    @apply mx-auto w-full max-w-368 px-6 py-12 md:py-14 lg:px-8;
   }
 
   .section-container-narrow {
