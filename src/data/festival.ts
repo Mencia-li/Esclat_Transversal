@@ -116,7 +116,7 @@ export const festivalDays: FestivalDay[] = [
       "Eighth Grade",
       "Amy",
       "Produce tu estado de ánimo",
-      "Lo que mi canción favorita dice de mí",
+      "Lo que mi canción dice",
       "Cómo suena la ansiedad",
     ],
     schedule: [
@@ -168,7 +168,7 @@ export const festivalDays: FestivalDay[] = [
         id: "adivina",
         time: "16:25 y 17:35",
         category: "Taller",
-        title: "Lo que mi canción favorita dice de mí",
+        title: "Lo que mi canción dice",
         summary:
           "Cada participante comparte 30 segundos de su canción favorita y recibe una lectura colectiva de lo que transmite.",
         space: "Sala Visual Room · Nave 1",

@@ -146,8 +146,8 @@ const fridayScheduleBlocks: ScheduleBlock[] = [
   { id: "viernes-escucha", rowId: "hall", title: "El cuarto de escucha", meta: "16:00-20:00", start: 16.0, end: 20.0 },
   { id: "viernes-taller-a-1", rowId: "sala-factoria", title: "Taller A - Produce tu estado de ánimo", meta: "16:15-16:55", start: 16.25, end: 16.92 },
   { id: "viernes-taller-a-2", rowId: "sala-factoria", title: "Taller A - Produce tu estado de ánimo", meta: "17:25-18:05", start: 17.42, end: 18.08 },
-  { id: "viernes-taller-b-1", rowId: "sala-visual", title: "Taller B - Lo que mi canción favorita dice de mí", meta: "16:25-17:05", start: 16.42, end: 17.08 },
-  { id: "viernes-taller-b-2", rowId: "sala-visual", title: "Taller B - Lo que mi canción favorita dice de mí", meta: "17:35-18:15", start: 17.58, end: 18.25 },
+  { id: "viernes-taller-b-1", rowId: "sala-visual", title: "Taller B - Lo que mi canción dice", meta: "16:25-17:05", start: 16.42, end: 17.08 },
+  { id: "viernes-taller-b-2", rowId: "sala-visual", title: "Taller B - Lo que mi canción dice", meta: "17:35-18:15", start: 17.58, end: 18.25 },
   { id: "viernes-pausa", rowId: "todos", title: "Pausa libre", meta: "18:15-18:30", start: 18.25, end: 18.5 },
   { id: "viernes-charla", rowId: "la-polivalent", title: "Cómo suena la ansiedad", meta: "18:30-19:30", start: 18.5, end: 19.5 },
   { id: "viernes-cierre", rowId: "patios", title: "Cierre de actividades", meta: "19:30-20:00", start: 19.5, end: 20.0 },
@@ -345,8 +345,8 @@ const timelineHeaderSlots = computed(() =>
   ),
 )
 const scheduleLocationColumnWidth = "clamp(6.75rem, 30vw, 12rem)"
-const scheduleVisibleQuarterSlotCount = 12
-const scheduleQuarterColumnWidth = computed(() => `max(2.75rem, calc((100vw - ${scheduleLocationColumnWidth}) / ${scheduleVisibleQuarterSlotCount}))`)
+const scheduleVisibleQuarterSlotCount = 17
+const scheduleQuarterColumnWidth = computed(() => `max(2.5rem, calc((100vw - ${scheduleLocationColumnWidth}) / ${scheduleVisibleQuarterSlotCount}))`)
 const scheduleTableStyle = computed(() => ({
   width: `calc(${scheduleLocationColumnWidth} + ${Array.from(
     { length: scheduleQuarterSlotCount.value },
@@ -365,8 +365,8 @@ const scheduleRowGridStyle = computed(() => ({
 const scheduleTimelineStyle = computed(() => ({
   gridTemplateColumns: `repeat(${scheduleQuarterSlotCount.value}, ${scheduleQuarterColumnWidth.value})`,
 }))
-const stackedBlockMinHeightRem = 2.75
-const stackedBlockGapRem = 3
+const stackedBlockMinHeightRem = 4.25
+const stackedBlockGapRem = 4.75
 
 function blocksForRow(rowId: ScheduleRow["id"]): ScheduleLayoutBlock[] {
   const levelEnds: number[] = []
@@ -403,16 +403,24 @@ function blockStyle(block: ScheduleLayoutBlock) {
   // Posicionamiento proporcional dentro de la línea temporal horizontal.
   const safeStart = Math.max(block.start, scheduleStart.value)
   const safeEnd = Math.min(block.end, scheduleEnd.value)
+  const duration = safeEnd - safeStart
   const left = ((safeStart - scheduleStart.value) / scheduleSpan.value) * 100
   const width = ((safeEnd - safeStart) / scheduleSpan.value) * 100
   const top = 0.5 + block.layoutLevel * stackedBlockGapRem
-
-  return {
+  const needsReadableWidth = duration <= 1 && block.title.length >= 28
+  const baseStyle = {
     left: `${left}%`,
     width: `${width}%`,
     top: `${top}rem`,
     minHeight: `${stackedBlockMinHeightRem}rem`,
   }
+
+  return needsReadableWidth
+    ? {
+        ...baseStyle,
+        minWidth: "clamp(10rem, 16vw, 11rem)",
+      }
+    : baseStyle
 }
 
 function formatHour(hour: number) {
@@ -610,10 +618,11 @@ const activityBlocks = [
                 v-for="block in blocksForRow(row.id)"
                 :key="block.id"
                 :style="blockStyle(block)"
-                class="absolute min-w-20 rounded-sm border border-grey border-l-4 border-l-turquesa bg-white px-1.5 py-1 text-[0.58rem] leading-tight sm:min-w-28 sm:px-2 sm:text-[1rem]"
+                :title="block.title"
+                class="absolute min-w-20 rounded-sm border border-grey border-l-4 border-l-turquesa bg-white px-1.5 py-1.5 text-[0.58rem] leading-tight sm:min-w-32 sm:px-2 sm:text-[0.78rem] lg:text-[1rem]"
               >
-                <p class="font-medium text-black">{{ block.title }}</p>
-                <p v-if="block.meta" class="mt-0.5 text-[0.54rem] font-semibold text-turquesa sm:mt-1 sm:text-[0.8rem]">{{ block.meta }}</p>
+                <p class="line-clamp-2 font-medium text-black">{{ block.title }}</p>
+                <p v-if="block.meta" class="mt-0.5 text-[0.54rem] font-semibold text-turquesa sm:mt-1 sm:text-[0.68rem] lg:text-[0.8rem]">{{ block.meta }}</p>
               </div>
             </div>
           </div>

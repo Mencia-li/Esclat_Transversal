@@ -45,10 +45,10 @@ const accessModes = [
 
     <div class="mx-auto w-full max-w-368 border-x border-foreground">
       <div class="grid border-b border-foreground lg:grid-cols-[1fr_1.15fr]">
-        <div class="relative min-h-64 overflow-hidden border-b border-foreground bg-background lg:min-h-80 lg:border-b-0 lg:border-r">
+        <div class="relative min-h-64 overflow-hidden border-b border-foreground bg-black lg:min-h-80 lg:border-b-0 lg:border-r">
           <div class="relative z-10 flex h-full items-center justify-center p-8">
             <img
-              src="/img/logos/esclat/png/72/vertical-black.png"
+              src="/img/logos/esclat/svg/vertical-white.svg"
               alt="Logo de Esclat"
               class="w-28 sm:w-36 lg:w-44"
             />

@@ -46,7 +46,7 @@ export const workshopDays: ActivityDetailDay[] = [
         id: "viernes-adivina",
         label: "Taller",
         labelClass: "bg-turquesa",
-        title: "Taller B — Lo que mi canción favorita dice de mí",
+        title: "Taller B — Lo que mi canción dice",
         time: "16:25-17:05 h y 17:35-18:15 h",
         space: "Sala Visual Room · Nave 1, 1ª planta",
         description:
