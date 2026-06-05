@@ -78,7 +78,7 @@ Puntos importantes:
 - `02_program` contiene el bloque de programa, las páginas de cada día y el bloque real de entradas del header.
 - `04_experience` contiene los recuadros de experiencia: talleres, charlas, exposiciones y tienda.
 - `/tienda` sigue siendo una ruta propia, pero su página vive dentro de `04_experience/store` porque nace desde ese hueco visual.
-- `src/router/RouteShell.vue` solo existe para renderizar rutas hijas de `/programa`.
+- `src/router/ProgramLayout.vue` es el layout propio de `/programa` y renderiza sus rutas hijas con su `RouterView`.
 - La carpeta `Portfolio_Mencia_Li/`, si aparece en local, es referencia externa y no forma parte de la app ESCLAT.
 
 ```
@@ -130,7 +130,7 @@ Puntos importantes:
 │
 │   ├── router/
 │   │   ├── index.ts                     # Rutas: home, festival, programa, artistas, talleres, charlas, exposiciones, entradas y tienda
-│   │   └── RouteShell.vue               # Envoltorio de rutas hijas, usado por /programa
+│   │   └── ProgramLayout.vue            # Layout de /programa con RouterView propio para rutas hijas
 │
 │   └── pages/
 │       ├── Home.vue                     # Ensambla la home: inicio, programa, artistas, experiencia, FAQs y partners

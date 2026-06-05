@@ -1,5 +1,5 @@
 import Home from "@/pages/Home.vue"
-import RouteShell from "@/router/RouteShell.vue"
+import ProgramLayout from "@/router/ProgramLayout.vue"
 import ArtistDetail from "@/pages/03_artists/ArtistDetail.vue"
 import DayProgramPage from "@/pages/02_program/DayProgramPage.vue"
 import FestivalPage from "@/pages/02_program/festival/FestivalPage.vue"
@@ -39,7 +39,7 @@ export const router = createRouter({
     },
     {
       path: "/programa",
-      component: RouteShell,
+      component: ProgramLayout,
       redirect: { path: "/", hash: "#programa" },
       children: [
         // Los tres dias usan el mismo componente base con distinto dayId.
