@@ -1,10 +1,19 @@
 # Esclat Festival
 
-Aplicación web responsive para presentar ESCLAT: festival de música, pensamiento y creatividad (Las Naves, Valencia). La app centraliza información del festival, programa por días, artistas, actividades, entradas, tienda y FAQs.
+Proyecto transversal desarrollado por el **Grupo 7**.
 
-## Descripción breve
+**Integrantes**
 
-Sitio construido con Vue 3 y TypeScript, donde utiliza Vite como bundler y Tailwind CSS para estilos. 
+- Jiayi Li
+- María José Pineda
+- Lucía Li Miralles
+- Jiaqi Ye
+
+Aplicación web responsive para presentar **ESCLAT**, un festival de música, pensamiento y creatividad celebrado en Las Naves, Valencia. La web reúne la identidad visual del evento, el programa por días, artistas, actividades, entradas, tienda y FAQs en una experiencia navegable y adaptada a distintos formatos de pantalla.
+
+## Descripción
+
+Sitio construido con Vue 3 y TypeScript. Utiliza Vite como entorno de desarrollo y bundler, Tailwind CSS para estilos, Vue Router para navegación y componentes reutilizables para mantener una interfaz consistente.
 
 Los datos principales están embebidos en el frontend en `src/data/festival.ts` y se renderizan con componentes y rutas definidas en `src/router`.
 
@@ -126,8 +135,8 @@ Puntos importantes:
 │   └── pages/
 │       ├── Home.vue                     # Ensambla la home: inicio, programa, artistas, experiencia, FAQs y partners
 │       │
-│       ├── 01_home/
-│       │   └── HeroSection.vue          # Portada inicial con vídeo y mensaje principal
+│       ├── 01_start/
+│       │   └── HeroSection.vue          # Inicio: vídeo de portada con control de sonido
 │       │
 │       ├── 02_program/
 │       │   ├── CalendarSection.vue      # Recuadros de programa en la home: Festival, 23/10, 24/10 y 25/10
@@ -179,7 +188,7 @@ Puntos importantes:
 | Navegación superior o menú móvil | `src/components/layout/SiteHeader.vue` |
 | Footer, contacto, redes o acceso | `src/components/layout/SiteFooter.vue` |
 | Orden de secciones de la home | `src/pages/Home.vue` |
-| Hero inicial | `src/pages/01_home/HeroSection.vue` |
+| Hero inicial | `src/pages/01_start/HeroSection.vue` |
 | Programa, días, temas y horarios base | `src/data/festival.ts` |
 | Recuadros Festival / 23/10 / 24/10 / 25/10 | `src/pages/02_program/CalendarSection.vue` |
 | Páginas de cada día y bloque `ENTRADAS` del header | `src/pages/02_program/DayProgramPage.vue`; el `dayId` se pasa desde `src/router/index.ts` |

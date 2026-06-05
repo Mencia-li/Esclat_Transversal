@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import HeroSection from "@/pages/01_home/HeroSection.vue"
+import HeroSection from "@/pages/01_start/HeroSection.vue"
 import CalendarSection from "@/pages/02_program/CalendarSection.vue"
 import ArtistsSection from "@/pages/03_artists/ArtistsSection.vue"
 import ActivitiesSection from "@/pages/04_experience/ActivitiesSection.vue"
