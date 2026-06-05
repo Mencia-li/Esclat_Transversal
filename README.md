@@ -79,7 +79,6 @@ Puntos importantes:
 - `04_experience` contiene los recuadros de experiencia: talleres, charlas, exposiciones y tienda.
 - `/tienda` sigue siendo una ruta propia, pero su página vive dentro de `04_experience/store` porque nace desde ese hueco visual.
 - `src/router/ProgramLayout.vue` es el layout propio de `/programa` y renderiza sus rutas hijas con su `RouterView`.
-- La carpeta `Portfolio_Mencia_Li/`, si aparece en local, es referencia externa y no forma parte de la app ESCLAT.
 
 ```
 .
