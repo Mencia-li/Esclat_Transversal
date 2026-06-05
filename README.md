@@ -9,7 +9,9 @@ Proyecto transversal desarrollado por el **Grupo 7**.
 - Lucía Li Miralles
 - Jiaqi Ye
 
-Aplicación web responsive para presentar **ESCLAT**, un festival de música, pensamiento y creatividad celebrado en Las Naves, Valencia. La web reúne la identidad visual del evento, el programa por días, artistas, actividades, entradas, tienda y FAQs en una experiencia navegable y adaptada a distintos formatos de pantalla.
+Aplicación web responsive para presentar **ESCLAT**, un festival de música, pensamiento y creatividad celebrado en Las Naves, Valencia. 
+
+La web reúne la identidad visual del evento, el programa por días, artistas, actividades, entradas, tienda y FAQs en una experiencia navegable y adaptada a distintos formatos de pantalla.
 
 ## Descripción
 
@@ -38,15 +40,13 @@ La interfaz debe mantenerse dentro de la gama visual de ESCLAT:
 | Blue ice | `bg-blue_ice`, `text-blue_ice` | `#b2f2f4` |
 | Gris | `bg-grey`, `border-grey`, `text-grey` | `#D5D4D8` |
 
-Evita colores arbitrarios (`text-[#...]`, `bg-[#...]`, hex directos o nuevos colores Tailwind) salvo que sean assets, swatches de producto o una excepción documentada. Si un componente necesita un matiz, primero intenta resolverlo con opacidades de los tokens existentes (`foreground/70`, `background/80`, etc.).
-
 ## Instalación
 
 ```bash
 npm install
 ```
 
-## Desarrollo
+## Desarrollo y build del servidor
 
 Inicia el servidor de desarrollo:
 
@@ -54,18 +54,10 @@ Inicia el servidor de desarrollo:
 npm run dev
 ```
 
-## Build y vista previa de producción
-
 Genera la build de producción:
 
 ```bash
 npm run build
-```
-
-Previsualiza la build:
-
-```bash
-npm run preview
 ```
 
 ## Estructura principal
@@ -232,11 +224,4 @@ Puntos importantes:
 
 Las rutas públicas sirven assets con rutas absolutas como `/img/...` o `/video/...`.
 
-Cuando añadas imágenes grandes, crea versiones optimizadas para web antes de referenciarlas desde Vue. Los archivos originales de trabajo pueden vivir fuera de `public`, pero lo que se sirve en la app debe estar en `public/img/...` con un peso razonable.
-
-## Notas de mantenimiento
-
-- Ejecuta `npm run build` antes de cerrar cambios de UI o rutas.
-- La carpeta `dist/` se regenera con hashes de build; evita mezclar cambios de `dist/index.html` si solo estás tocando código fuente.
-- Las páginas y componentes usan rutas absolutas para assets públicos (`/img/...`, `/video/...`).
-- Para carruseles, reutiliza `src/components/ui/carousel` antes de crear un control propio.
+Cuando añadas imágenes grandes, crea versiones optimizadas para web antes de referenciarlas desde Vue. Los archivos originales de trabajo pueden vivir fuera de `public`, pero lo que se sirve en la app debe estar en `public/img/...`.
